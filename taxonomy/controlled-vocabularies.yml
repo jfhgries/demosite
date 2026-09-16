@@ -1,0 +1,24 @@
+schema_version: "1.0"
+
+categories: [acquisition, application, decisioning, financing, checkout, servicing]
+subcategories: [prequalification, income_verification, identity_verification, application_decision]
+lifecycle_statuses: [active, pilot, future, paused, deprecated]
+review_statuses: [current, review_needed, archived]
+representations: [production, pilot, prototype, recording, screenshot_flow, simulated]
+
+journey_stages: [awareness, consideration, prequalification, application, verification, decision, approval, funding, checkout, servicing, retention]
+entry_points: [marketing_page, credit_card_product_page, product_detail_page, cart, checkout, email, sms, qr_code, servicing_portal, partner_website, associate_assisted]
+outcomes: [approved, declined, pending, conditional_approval, partial_amount_or_offer, verification_required, additional_information_required, multiple_possible_outcomes]
+
+capability_tags: [prequalification, full_application, soft_credit_inquiry, hard_credit_inquiry, income_navigator, cash_atlas, rtps, identity_verification, income_verification, bank_account_connection, one_time_passcode, fraud_review, waterfall_lending, account_assure, split_pay, pay_in_4, installment_plan, deferred_interest, credit_line_increase, digital_card, add_to_wallet]
+audiences: [new_customer, existing_customer, cardmember, guest_customer, prime_customer, near_prime_customer, retail_customer, marketplace_customer, business_customer, returning_applicant]
+channels: [desktop_web, mobile_web, native_application, embedded_experience, checkout_integration, retail_partner_site, marketplace, associate_assisted, in_store]
+devices: [desktop, tablet, mobile]
+
+demo_types: [coded_demo, prototype, recording, screenshot_flow, sandbox]
+availability_statuses: [complete, in_progress, not_available, review_needed, not_applicable]
+friction_levels: [low, medium, high, unknown]
+severity_levels: [low, medium, high, critical, unknown]
+regulatory_impact_levels: [low, medium, high, unknown]
+review_frequencies: [monthly, quarterly, semiannual, annual, event_driven]
+archive_statuses: [not_archived, archived]

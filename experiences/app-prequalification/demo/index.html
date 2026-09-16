@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Apply prequalification | Demo</title>
+  <style>
+    :root {
+      --ink: #171717;
+      --body: #4d4d4d;
+      --mute: #888;
+      --hairline: #ebebeb;
+      --canvas: #fff;
+      --soft: #fafafa;
+      --blue: #0070f3;
+      --green: #00a878;
+      --red: #c50000;
+      --amber: #ab570a;
+      --shadow: 0 0 0 1px #00000014 inset, 0 2px 5px #0000000a, 0 8px 20px #0000000a;
+      font-family: Geist, Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      color: var(--ink);
+      background: var(--soft);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-width: 320px; }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    .topbar { height: 64px; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; background: var(--canvas); border-bottom: 1px solid var(--hairline); }
+    .brand { display: flex; gap: 9px; align-items: center; font-weight: 600; letter-spacing: -0.4px; }
+    .mark { width: 20px; height: 20px; background: var(--ink); transform: rotate(45deg); border-radius: 3px; }
+    .nav { display: flex; align-items: center; gap: 8px; color: var(--body); font-size: 14px; }
+    .nav a { color: inherit; text-decoration: none; padding: 6px 10px; border-radius: 6px; }
+    .nav a:hover { background: var(--soft); color: var(--ink); }
+    .shell { max-width: 1120px; margin: 0 auto; padding: 0 32px 80px; }
+    .hero { position: relative; overflow: hidden; margin: 0 -32px; padding: 76px 32px 64px; background: var(--canvas); border-bottom: 1px solid var(--hairline); }
+    .hero::after { content: ""; position: absolute; width: 700px; height: 350px; right: 2%; top: -140px; opacity: .19; filter: blur(34px); background: linear-gradient(115deg, #00dfd8 0 22%, #007cf0 34%, #ff0080 61%, #f9cb28 90%); transform: rotate(-10deg); pointer-events: none; }
+    .eyebrow, .mono { font: 12px/16px ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: 0; text-transform: uppercase; }
+    .eyebrow { position: relative; z-index: 1; color: var(--body); margin-bottom: 20px; }
+    h1 { position: relative; z-index: 1; max-width: 720px; margin: 0; font-size: clamp(38px, 6vw, 64px); line-height: 1.02; letter-spacing: -3px; font-weight: 600; }
+    .hero p { position: relative; z-index: 1; max-width: 570px; margin: 24px 0 0; color: var(--body); font-size: 18px; line-height: 28px; }
+    .content { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 24px; padding-top: 40px; align-items: start; }
+    .panel { background: var(--canvas); border: 1px solid var(--hairline); border-radius: 12px; box-shadow: var(--shadow); }
+    .flow { padding: 32px; }
+    .flow-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; padding-bottom: 28px; border-bottom: 1px solid var(--hairline); }
+    .flow-header h2 { margin: 0 0 6px; font-size: 24px; line-height: 32px; letter-spacing: -.96px; }
+    .flow-header p { margin: 0; color: var(--body); font-size: 14px; line-height: 20px; }
+    .status { color: var(--green); font: 12px/16px ui-monospace, monospace; white-space: nowrap; }
+    .steps { display: flex; gap: 8px; padding: 24px 0 32px; }
+    .step { height: 4px; flex: 1; background: var(--hairline); border-radius: 4px; }
+    .step.active { background: var(--ink); }
+    .step.done { background: var(--blue); }
+    .screen h3 { margin: 0; font-size: 20px; line-height: 28px; letter-spacing: -.6px; }
+    .screen > p { color: var(--body); font-size: 14px; line-height: 20px; margin: 8px 0 24px; }
+    .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    label { display: grid; gap: 7px; color: var(--body); font-size: 14px; line-height: 20px; }
+    input { width: 100%; border: 1px solid #a1a1a1; border-radius: 6px; padding: 11px 12px; color: var(--ink); background: var(--canvas); outline: none; }
+    input:focus { border-color: var(--ink); box-shadow: 0 0 0 3px #1717171a; }
+    .consent { display: flex; grid-template-columns: none; flex-direction: row; align-items: flex-start; gap: 9px; margin-top: 20px; color: var(--body); font-size: 12px; line-height: 16px; }
+    .consent input { width: 16px; margin-top: 1px; accent-color: var(--ink); }
+    .actions { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 32px; }
+    .button { min-height: 44px; border: 0; border-radius: 100px; padding: 0 20px; font-size: 14px; font-weight: 500; }
+    .button.primary { background: var(--ink); color: #fff; }
+    .button.primary:hover { background: #383838; }
+    .button.secondary { background: var(--canvas); color: var(--ink); border: 1px solid var(--hairline); }
+    .button:disabled { opacity: .4; cursor: not-allowed; }
+    .scenario { padding: 24px; }
+    .scenario h2 { margin: 0 0 20px; font-size: 16px; line-height: 24px; }
+    .scenario h3 { margin: 20px 0 8px; font-size: 12px; line-height: 16px; color: var(--body); text-transform: uppercase; letter-spacing: .04em; }
+    .scenario h3:first-of-type { margin-top: 0; }
+    .chip-group { display: grid; gap: 8px; }
+    .chip { position: relative; display: flex; align-items: center; gap: 8px; min-height: 38px; padding: 8px 10px; background: var(--canvas); color: var(--body); border: 1px solid var(--hairline); border-radius: 6px; font-size: 13px; cursor: pointer; }
+    .chip:hover, .chip:has(input:checked) { border-color: var(--ink); color: var(--ink); }
+    .chip input { width: 16px; height: 16px; margin: 0; accent-color: var(--ink); }
+    .brand-search { display: grid; gap: 7px; color: var(--body); font-size: 13px; }
+    .brand-search input { padding: 9px 10px; font-size: 13px; }
+    .scenario p { color: var(--mute); font-size: 12px; line-height: 16px; margin: 20px 0 0; }
+    .scenario p { color: var(--mute); font-size: 12px; line-height: 16px; margin: 20px 0 0; }
+    .result { border-radius: 8px; padding: 20px; background: var(--soft); border: 1px solid var(--hairline); }
+    .result strong { display: block; font-size: 18px; margin-bottom: 8px; }
+    .result p { margin: 0; color: var(--body); font-size: 14px; line-height: 20px; }
+    .result.offer { border-color: #a5e8d4; background: #f2fcf8; }
+    .result.pending { border-color: #f1d49d; background: #fffaf0; }
+    .result.decline { border-color: #edb8bb; background: #fff7f7; }
+    .fineprint { color: var(--mute); font-size: 12px; line-height: 16px; margin: 24px 0 0; }
+    .instant-credit { margin: -32px; background: #fff; min-height: 560px; color: #1f2933; }
+    .instant-header { padding: 20px 28px 0; }
+    .instant-brand-row { display: flex; align-items: center; justify-content: space-between; min-height: 34px; }
+    .instant-brand { display: flex; align-items: center; gap: 8px; color: #16212b; font-size: 15px; font-weight: 700; }
+    .instant-brand-mark { width: 22px; height: 22px; background: #16212b; transform: rotate(45deg); border-radius: 3px; }
+    .instant-close { color: #425466; font-size: 25px; line-height: 1; border: 0; background: transparent; padding: 0 4px; }
+    .instant-divider { height: 1px; margin-top: 18px; background: #d9dee3; }
+    .instant-back { display: inline-flex; gap: 6px; margin-top: 18px; color: #425466; background: transparent; border: 0; padding: 0; font-size: 14px; }
+    .instant-modal { max-width: 520px; margin: 30px auto 0; padding: 0 28px 28px; }
+    .instant-modal h3 { margin: 0; color: #1f2933; font-size: 26px; line-height: 34px; letter-spacing: -.5px; }
+    .instant-subtitle { margin: 10px 0 28px; color: #52606d; font-size: 14px; line-height: 21px; }
+    .instant-fields { display: grid; gap: 24px; }
+    .instant-field { display: grid; gap: 5px; color: #52606d; font-size: 14px; }
+    .instant-field input { border: 0; border-bottom: 1px solid #9aa5b1; border-radius: 0; padding: 7px 0 9px; color: #1f2933; }
+    .instant-field input:focus { border-color: #1f2933; box-shadow: none; }
+    .security-message { display: flex; align-items: center; gap: 10px; margin-top: 28px; color: #52606d; font-size: 13px; }
+    .lock { width: 18px; height: 18px; border: 2px solid #52606d; border-radius: 4px; position: relative; }
+    .lock::before { content: ""; position: absolute; width: 8px; height: 7px; left: 3px; top: -7px; border: 2px solid #52606d; border-bottom: 0; border-radius: 8px 8px 0 0; }
+    .instant-privacy { margin-top: 24px; color: #697586; font-size: 10px; line-height: 15px; }
+    .instant-privacy strong { color: #52606d; }
+    .instant-actions { display: grid; gap: 15px; margin-top: 28px; }
+    .instant-continue { width: 100%; min-height: 46px; border: 0; border-radius: 4px; background: #d4d9de; color: #fff; font-size: 15px; font-weight: 600; }
+    .instant-continue.ready { background: #1f2933; cursor: pointer; }
+    .instant-cancel { justify-self: center; color: #52606d; background: transparent; border: 0; border-bottom: 1px solid #52606d; padding: 0 0 2px; font-size: 13px; }
+    .instant-footer { display: flex; align-items: center; justify-content: center; gap: 7px; padding: 22px 28px; color: #52606d; font-size: 11px; }
+    .instant-footer-mark { width: 18px; height: 18px; border: 1px solid #52606d; border-radius: 50%; }
+    .application-page { max-width: 650px; margin: 0 auto; padding: 8px 4px; }
+    .application-page h3 { margin: 0; font-size: 26px; line-height: 34px; letter-spacing: -.5px; }
+    .application-page h4 { margin: 0; font-size: 15px; line-height: 22px; }
+    .application-page p { color: #52606d; font-size: 14px; line-height: 21px; }
+    .application-page .subtitle { margin: 8px 0 28px; }
+    .application-header { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 26px; }
+    .application-back { color: #52606d; background: transparent; border: 0; padding: 3px 0; font-size: 14px; }
+    .application-fields { display: grid; gap: 20px; }
+    .application-fields .field-grid { gap: 18px 16px; }
+    .application-field { display: grid; gap: 5px; color: #52606d; font-size: 13px; }
+    .application-field input, .application-field select { border: 0; border-bottom: 1px solid #9aa5b1; border-radius: 0; padding: 8px 0; color: #1f2933; background: transparent; }
+    .application-field input:focus, .application-field select:focus { border-color: #1f2933; box-shadow: none; }
+    .verified-mobile { display: flex; align-items: center; gap: 8px; color: #52606d; font-size: 13px; }
+    .verified-mobile strong { color: #1f2933; }
+    .verified-badge { color: #00a878; font-size: 12px; }
+    .application-actions { display: flex; flex-direction: column; align-items: center; gap: 16px; margin-top: 30px; }
+    .application-actions .button { min-width: 180px; }
+    .text-action { color: #52606d; background: transparent; border: 0; border-bottom: 1px solid #52606d; padding: 0 0 2px; font-size: 13px; }
+    .secure-code { max-width: 500px; margin: 0 auto; }
+    .secure-code input { font-size: 20px; letter-spacing: 7px; }
+    .secure-code .button { width: 100%; }
+    .secure-note { margin-top: 24px; font-size: 12px; }
+    .choice-row { display: flex; gap: 24px; margin-top: 12px; }
+    .choice { display: flex; align-items: center; gap: 8px; color: #1f2933; font-size: 14px; }
+    .choice input { width: 16px; height: 16px; accent-color: #1f2933; }
+    .assure { margin-top: 34px; padding-top: 24px; border-top: 1px solid #d9dee3; }
+    .assure ul { padding-left: 20px; color: #52606d; font-size: 13px; line-height: 22px; }
+    .consent-card { padding: 18px; background: #f7f8f9; border: 1px solid #d9dee3; color: #52606d; font-size: 13px; line-height: 20px; }
+    .consent-card strong { color: #1f2933; }
+    .approval-page { text-align: center; max-width: 680px; margin: 0 auto; }
+    .approval-page h3 { font-size: 28px; line-height: 36px; }
+    .approval-amount { margin-top: 26px; color: #1f2933; font-size: 42px; line-height: 48px; font-weight: 700; }
+    .approval-label { color: #52606d; font-size: 14px; }
+    .approval-message { max-width: 500px; margin: 24px auto; }
+    .approval-card { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; text-align: left; margin-top: 30px; padding: 22px; border: 1px solid #d9dee3; border-radius: 8px; }
+    .approval-card strong { display: block; margin-top: 5px; color: #1f2933; font-size: 17px; }
+    .approval-detail { color: #697586; font-size: 12px; }
+    .approval-footer { margin-top: 26px; padding-top: 20px; border-top: 1px solid #d9dee3; color: #52606d; font-size: 13px; }
+    .hidden { display: none; }
+    @media (max-width: 760px) {
+      .topbar { padding: 0 20px; }
+      .nav a:first-child { display: none; }
+      .shell { padding: 0 20px 56px; }
+      .hero { margin: 0 -20px; padding: 56px 20px 48px; }
+      h1 { letter-spacing: -2px; }
+      .content { grid-template-columns: 1fr; padding-top: 24px; }
+      .flow { padding: 24px; }
+      .instant-credit { margin: -24px; }
+      .instant-header { padding: 18px 20px 0; }
+      .instant-modal { padding: 0 20px 24px; }
+      .field-grid { grid-template-columns: 1fr; }
+      .flow-header { display: block; }
+      .status { display: block; margin-top: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="mark" aria-hidden="true"></span><span>Demo brand</span></div>
+    <nav class="nav" aria-label="Primary"><a href="#about">About</a><a href="#support">Support</a><a href="#" class="mono">Prototype</a></nav>
+  </header>
+  <main class="shell">
+    <section class="hero" id="about">
+      <div class="eyebrow">Credit products / Prequalification</div>
+      <h1>See what may fit before you apply.</h1>
+      <p>Answer a few questions to explore your options. This takes about two minutes and uses a soft credit inquiry, which does not affect your credit score.</p>
+    </section>
+    <div class="content">
+      <section class="panel flow" aria-labelledby="flow-title">
+        <div class="flow-header"><div><h2 id="flow-title">Let's get started</h2><p id="step-copy">Tell us a little about yourself.</p></div><span class="status" id="status">SIMULATED DEMO</span></div>
+        <div class="steps" aria-label="Progress"><span class="step active"></span><span class="step"></span><span class="step"></span><span class="step"></span></div>
+        <div id="details-screen" class="screen">
+          <div id="standard-details">
+          <h3>Your details</h3>
+          <p>We use this information to find a starting point for your options.</p>
+          <div class="field-grid">
+            <label>First name<input id="first-name" autocomplete="given-name" value="Alex"></label>
+            <label>Last name<input id="last-name" autocomplete="family-name" value="Morgan"></label>
+            <label>Email address<input id="email" type="email" autocomplete="email" value="alex@example.com"></label>
+            <label>ZIP code<input id="zip" inputmode="numeric" autocomplete="postal-code" value="94107"></label>
+          </div>
+          <label class="consent"><input id="consent" type="checkbox" checked><span>I agree to the soft credit inquiry and understand that this is not a final credit decision.</span></label>
+          <div class="actions"><span class="fineprint">Your information is simulated for this demo.</span><button class="button primary" id="continue">Continue</button></div>
+          </div>
+          <div id="instant-credit-details" class="instant-credit hidden">
+            <div class="instant-header">
+              <div class="instant-brand-row"><div class="instant-brand"><span class="instant-brand-mark" aria-hidden="true"></span><span>Demo brand</span></div><button class="instant-close" aria-label="Close application">&times;</button></div>
+              <div class="instant-divider"></div>
+              <button class="instant-back" type="button"><span aria-hidden="true">&lt;</span><span>Back</span></button>
+            </div>
+            <div class="instant-modal">
+              <h3>Let’s Get Started</h3>
+              <p class="instant-subtitle">Providing this info helps us securely prefill some of your application, saving you time.</p>
+              <div class="instant-fields">
+                <label class="instant-field">Mobile Number<input id="instant-mobile" type="tel" autocomplete="tel"></label>
+                <label class="instant-field">Last 4 of SSN<input id="instant-ssn" inputmode="numeric" maxlength="4"></label>
+                <label class="instant-field">ZIP Code<input id="instant-zip" inputmode="numeric" maxlength="5" autocomplete="postal-code"></label>
+              </div>
+              <div class="security-message"><span class="lock" aria-hidden="true"></span><span>We’ll encrypt your data.</span></div>
+              <p class="instant-privacy">Note: Credit card offers are subject to credit approval. The credit card account is issued by Comenity Bank. Please read the <strong>Important Credit Card Information</strong> and review Comenity Bank’s <strong>Financial Privacy Policy</strong> and <strong>Online Privacy Policy</strong> for more information. California Residents: Submit a <strong>Data Request Form</strong> to make a Do Not or Share My Personal information request.</p>
+              <div class="instant-actions"><button class="instant-continue" id="instant-continue" disabled>Continue</button><button class="instant-cancel" type="button">Cancel Application</button></div>
+            </div>
+            <div class="instant-footer"><span class="instant-footer-mark" aria-hidden="true"></span><span>Encrypted</span><span>Demo brand</span></div>
+          </div>
+        </div>
+        <div id="review-details-screen" class="screen hidden">
+          <div class="application-page">
+            <div class="application-header"><button class="application-back" id="review-back" type="button">&lt; Back</button><div><h3>Review Your Details</h3><p class="subtitle">Please review and add to your information.</p></div></div>
+            <div class="application-fields">
+              <div class="field-grid">
+                <label class="application-field">Legal First Name<input value="Carol"></label>
+                <label class="application-field">Legal Last Name<input value="Jones"></label>
+              </div>
+              <div class="field-grid">
+                <label class="application-field">Street<input value="123 Main Street"></label>
+                <label class="application-field">Apt./Suite (Optional)<input></label>
+              </div>
+              <div class="field-grid">
+                <label class="application-field">City<input value="Columbus"></label>
+                <label class="application-field">State<input value="OH"></label>
+                <label class="application-field">ZIP Code<input value="41219"></label>
+              </div>
+              <div class="field-grid">
+                <label class="application-field">Email<input type="email"></label>
+                <label class="application-field">Date of Birth (mm/dd/yyyy)<input placeholder="mm/dd/yyyy"></label>
+              </div>
+              <div class="field-grid">
+                <label class="application-field">Annual Income<input inputmode="decimal"></label>
+                <label class="application-field">Last 4 SSN<input value="****" inputmode="numeric" maxlength="4"></label>
+              </div>
+              <div class="verified-mobile"><span>Mobile Number</span><strong>(908) 555-5555</strong><span class="verified-badge">Verified</span></div>
+            </div>
+            <div class="security-message"><span class="lock" aria-hidden="true"></span><span>We’ll encrypt your data.</span></div>
+            <div class="application-actions"><button class="button primary" id="review-next">Next</button><button class="text-action" type="button">Restart</button><button class="text-action" type="button">Cancel Application</button></div>
+          </div>
+        </div>
+        <div id="secure-code-screen" class="screen hidden">
+          <div class="application-page secure-code">
+            <div class="application-header"><button class="application-back" id="secure-back" type="button">&lt; Back</button><div><h3>Secure Code</h3><p class="subtitle">Enter the secure code we sent to your phone number ending in 5555.</p></div></div>
+            <label class="application-field">Secure Code<input id="secure-code-input" value="68134" inputmode="numeric" maxlength="6"></label>
+            <p class="secure-note">Your code expires in 90 seconds.</p>
+            <div class="application-actions"><button class="button primary" id="secure-continue">Continue</button><button class="text-action" type="button">Send a New Code</button><button class="text-action" type="button">Cancel Application</button></div>
+          </div>
+        </div>
+        <div id="authorized-user-screen" class="screen hidden">
+          <div class="application-page">
+            <div class="application-header"><button class="application-back" id="authorized-back" type="button">&lt; Back</button><div><h3>Authorized User</h3><p class="subtitle">You can add someone close to you to your account. As the primary account holder, you’ll be responsible for payments on all purchases.</p></div></div>
+            <h4>Add an authorized user?</h4>
+            <div class="choice-row"><label class="choice"><input type="radio" name="authorized-user" value="yes">Yes</label><label class="choice"><input type="radio" name="authorized-user" value="no" checked>No</label></div>
+            <div class="assure"><h4>Protect Yourself With Account Assure</h4><p>Account Assure provides peace of mind knowing that your eligible account balance can be paid off should one of the following eligible events occur:</p><ul><li>Involuntary Unemployment</li><li>Hospitalization</li><li>Disability</li><li>Loss of Life</li><li>Unpaid family leave of absence</li><li>Identity Theft</li></ul><p>Interested in Account Assure?</p><div class="choice-row"><label class="choice"><input type="radio" name="account-assure" value="yes">Yes</label><label class="choice"><input type="radio" name="account-assure" value="no" checked>No</label></div></div>
+            <div class="application-actions"><button class="button primary" id="authorized-next">Next</button><button class="text-action" type="button">Cancel Application</button></div>
+          </div>
+        </div>
+        <div id="review-submit-screen" class="screen hidden">
+          <div class="application-page">
+            <div class="application-header"><button class="application-back" id="submit-back" type="button">&lt; Back</button><div><h3>Review &amp; Submit</h3><p class="subtitle">Please review the disclosures presented below in the Electronic Consent section of the Terms and Conditions, Credit Card Agreement, Privacy Statement and other information presented in the Terms and Conditions prior to submitting and retain a copy for your records.</p></div></div>
+            <div class="consent-card"><strong>Important Information Regarding Electronic Communication</strong><br>Read this information carefully and keep a copy for your records.</div>
+            <p>By selecting ‘I Consent’ and ‘Submit,’ I am applying for credit with Comenity Bank, agreeing to Comenity’s Terms and Conditions and Financial Privacy Policy and Online and California Privacy Policy, consenting to electronically receiving documents and am electronically signing this application/solicitation.</p>
+            <label class="choice"><input id="application-consent" type="checkbox">I Consent</label>
+            <div class="application-actions"><button class="button primary" id="submit-application" disabled>Submit</button><button class="text-action" type="button">Email Me these Disclosures</button><button class="text-action" type="button">Cancel Application</button></div>
+          </div>
+        </div>
+        <div id="approval-screen" class="screen hidden">
+          <div class="approval-page">
+            <h3>Carol, You’ve Been Approved for the URBrand Credit Card!</h3>
+            <div class="approval-amount">$2,500</div><div class="approval-label">Temporary Credit Limit</div>
+            <p class="approval-message">Great news! Your account is ready to use at checkout. Your new card will arrive in 7-10 business days.</p>
+            <div class="actions"><button class="button primary">Continue Shopping</button><button class="text-action" type="button">Text Me My Shopping Pass</button></div>
+            <div class="approval-card"><div><span class="approval-detail">Temp. Account Number</span><strong>1129744250</strong></div><div><span class="approval-detail">Name on Card</span><strong>Carol Jones</strong></div><div><span class="approval-detail">Temp. Expiration Date</span><strong>12/27</strong></div><div><span class="approval-detail">Temp. Security Code</span><strong>214</strong></div></div>
+            <div class="approval-footer">You have been approved for an APR of 17.99%<br><strong>You have been approved for a credit limit of $4,500.</strong></div>
+          </div>
+        </div>
+        <div id="verify-screen" class="screen hidden">
+          <h3>Confirm your email</h3><p>We sent a six-digit code to <strong>alex@example.com</strong>.</p>
+          <label>Verification code<input id="code" inputmode="numeric" maxlength="6" placeholder="123456"></label>
+          <p class="fineprint">For the demo, enter any six digits.</p>
+          <div class="actions"><button class="button secondary" id="back">Back</button><button class="button primary" id="verify">View options</button></div>
+        </div>
+        <div id="result-screen" class="screen hidden">
+          <h3>Your prequalification result</h3><p>Based on the information provided, here is a simulated next step.</p>
+          <div id="result" class="result offer"><strong id="result-title">You may be a fit</strong><p id="result-copy">You can continue to a full application to see your final options. A full application may require additional information.</p></div>
+          <div class="actions"><button class="button secondary" id="restart">Start over</button><button class="button primary" id="apply">Continue application</button></div>
+          <p class="fineprint">This result is simulated and is not an offer of credit or a guarantee of approval.</p>
+        </div>
+      </section>
+      <aside class="panel scenario" aria-labelledby="scenario-title">
+        <h2 id="scenario-title">Demo scenario</h2>
+        <h3>Capability type</h3>
+        <div class="chip-group" id="capability-types">
+          <label class="chip"><input type="radio" name="capability" value="EDS" checked>EDS</label>
+          <label class="chip"><input type="radio" name="capability" value="Stand Alone">Stand Alone</label>
+          <label class="chip"><input type="radio" name="capability" value="FlexLoan">FlexLoan</label>
+        </div>
+        <div id="capability-options">
+          <h3>Capability</h3>
+          <div class="chip-group" id="eds-options">
+            <label class="chip"><input id="apply-capability" type="radio" name="capability-option" value="Apply">Apply</label>
+            <label class="chip"><input type="radio" name="capability-option" value="Batch Prescreen">Batch Prescreen</label>
+            <label class="chip"><input type="radio" name="capability-option" value="Real Time Prescreen">Real Time Prescreen</label>
+            <label class="chip"><input type="radio" name="capability-option" value="Prequalification">Prequalification</label>
+            <label class="chip"><input type="radio" name="capability-option" value="Prequalification with Bread Pay">Prequalification with Bread Pay</label>
+          </div>
+          <div class="chip-group hidden" id="stand-alone-options">
+            <label class="chip"><input type="radio" name="capability-option" value="Instant Credit">Instant Credit</label>
+            <label class="chip"><input type="radio" name="capability-option" value="Frictionless Mobile Credit (QR Code)">Frictionless Mobile Credit (QR Code)</label>
+            <label class="chip"><input type="radio" name="capability-option" value="Prequal (Credit Card only)">Prequal (Credit Card only)</label>
+          </div>
+        </div>
+        <h3>Brand</h3>
+        <label class="brand-search">Search brands
+          <input id="brand" list="brand-list" placeholder="Start typing a brand" autocomplete="off">
+          <datalist id="brand-list">
+            <option value="Ann Taylor"><option value="The Home Depot"><option value="Academy Sports + Outdoors"><option value="Dell Pay"><option value="Ross"><option value="Caesars"><option value="Good Sam"><option value="Loft"><option value="Burlington"><option value="AAA"><option value="All Pet"><option value="Alphaeon"><option value="Boscovs"><option value="Ashley Stewart"><option value="B&H Photo"><option value="Ballard Designs"><option value="Avenue"><option value="Bealls"><option value="Beyond Inc."><option value="Blue Nile"><option value="Bread Cashback"><option value="Bread Rewards"><option value="Brylane Home"><option value="Buckle"><option value="Carters"><option value="DentalFirst Financing"><option value="Ethan Allen"><option value="Fanatics"><option value="Torrid"><option value="Famous Footwear"><option value="Ford"><option value="Gamestop"><option value="Full Beauty"><option value="Hard Rock"><option value="HP">
+          </datalist>
+        </label>
+        <h3>Decisioning outcome</h3>
+        <div class="chip-group" id="outcomes">
+          <label class="chip"><input type="radio" name="outcome" value="approved" checked>Approved</label>
+          <label class="chip"><input type="radio" name="outcome" value="declined">Declined</label>
+          <label class="chip"><input type="radio" name="outcome" value="pended">Pended</label>
+          <label class="chip"><input type="radio" name="outcome" value="fraud-pended">Fraud Pended</label>
+          <label class="chip"><input type="radio" name="outcome" value="technical-glitch">Technical Glitch</label>
+        </div>
+        <p>Scenario controls are available for demonstration and testing only.</p>
+      </aside>
+    </div>
+  </main>
+  <script>
+    const state = { outcome: 'approved' };
+    const details = document.getElementById('details-screen');
+    const standardDetails = document.getElementById('standard-details');
+    const instantDetails = document.getElementById('instant-credit-details');
+    const reviewDetails = document.getElementById('review-details-screen');
+    const secureCode = document.getElementById('secure-code-screen');
+    const authorizedUser = document.getElementById('authorized-user-screen');
+    const reviewSubmit = document.getElementById('review-submit-screen');
+    const approval = document.getElementById('approval-screen');
+    const verify = document.getElementById('verify-screen');
+    const result = document.getElementById('result-screen');
+    const steps = [...document.querySelectorAll('.step')];
+    const resultBox = document.getElementById('result');
+    const resultTitle = document.getElementById('result-title');
+    const resultCopy = document.getElementById('result-copy');
+    const stepCopy = document.getElementById('step-copy');
+    const capabilityTypeInputs = document.querySelectorAll('input[name="capability"]');
+    const applyCapability = document.getElementById('apply-capability');
+    const outcomeInputs = document.querySelectorAll('input[name="outcome"]');
+    function showScenarioDetails() {
+      const edsSelected = document.querySelector('input[name="capability"]:checked')?.value === 'EDS';
+      const approvedSelected = document.querySelector('input[name="outcome"]:checked')?.value === 'approved';
+      const instantFlow = edsSelected && applyCapability.checked && approvedSelected;
+      standardDetails.classList.toggle('hidden', instantFlow);
+      instantDetails.classList.toggle('hidden', !instantFlow);
+      updateInstantContinue();
+    }
+    function updateInstantContinue() {
+      const valid = ['instant-mobile', 'instant-ssn', 'instant-zip'].every(id => document.getElementById(id).value.trim());
+      document.getElementById('instant-continue').disabled = !valid;
+      document.getElementById('instant-continue').classList.toggle('ready', valid);
+    }
+    function showScreen(screen) {
+      const screens = [details, secureCode, reviewDetails, authorizedUser, reviewSubmit, approval, verify, result];
+      const screenCopy = {
+        'details-screen': 'Tell us a little about yourself.',
+        'review-details-screen': 'Review and complete your application.',
+        'secure-code-screen': 'One quick security check.',
+        'authorized-user-screen': 'Customize your account.',
+        'review-submit-screen': 'Review the final disclosures.',
+        'approval-screen': 'Your application is complete.',
+        'verify-screen': 'One quick security check.',
+        'result-screen': 'Review your simulated next step.'
+      };
+      screens.forEach(item => item.classList.toggle('hidden', item !== screen));
+      const screenIndex = screens.indexOf(screen);
+      steps.forEach((item, index) => { item.classList.toggle('active', index === Math.min(screenIndex, steps.length - 1)); item.classList.toggle('done', index < Math.min(screenIndex, steps.length - 1)); });
+      stepCopy.textContent = screenCopy[screen.id];
+    }
+    document.getElementById('continue').addEventListener('click', () => {
+      if (!document.getElementById('consent').checked) { document.getElementById('consent').focus(); return; }
+      showScreen(verify);
+    });
+    document.getElementById('instant-continue').addEventListener('click', () => showScreen(secureCode));
+    document.getElementById('review-next').addEventListener('click', () => showScreen(authorizedUser));
+    document.getElementById('review-back').addEventListener('click', () => showScreen(secureCode));
+    document.getElementById('secure-back').addEventListener('click', () => showScreen(details));
+    document.getElementById('secure-continue').addEventListener('click', () => {
+      if (!/^\d{5,6}$/.test(document.getElementById('secure-code-input').value.trim())) { document.getElementById('secure-code-input').focus(); return; }
+      showScreen(reviewDetails);
+    });
+    document.getElementById('authorized-back').addEventListener('click', () => showScreen(secureCode));
+    document.getElementById('authorized-next').addEventListener('click', () => showScreen(reviewSubmit));
+    document.getElementById('submit-back').addEventListener('click', () => showScreen(authorizedUser));
+    document.getElementById('application-consent').addEventListener('change', event => { document.getElementById('submit-application').disabled = !event.target.checked; });
+    document.getElementById('submit-application').addEventListener('click', () => showScreen(approval));
+    document.getElementById('back').addEventListener('click', () => showScreen(details));
+    document.getElementById('verify').addEventListener('click', () => {
+      if (!/^\\d{6}$/.test(document.getElementById('code').value)) { document.getElementById('code').focus(); return; }
+      const copy = {
+        approved: ['Approved', 'You can continue to a full application to see your final options. A full application may require additional information.', 'offer'],
+        declined: ['Declined', 'You can explore other products or return later. This simulated result does not affect your credit.', 'decline'],
+        pended: ['Pended', 'We need one more step before we can show a result. In a real experience, this could be an additional verification request.', 'pending'],
+        'fraud-pended': ['Fraud Pended', 'Additional review is needed before a result can be shown. This simulated result does not affect your credit.', 'pending'],
+        'technical-glitch': ['Technical Glitch', 'We could not complete this simulated check. Please try again.', 'pending']
+      }[state.outcome];
+      resultTitle.textContent = copy[0]; resultCopy.textContent = copy[1]; resultBox.className = 'result ' + copy[2];
+      document.getElementById('apply').textContent = state.outcome === 'approved' ? 'Continue application' : 'Explore products';
+      showScreen(result);
+    });
+    document.getElementById('restart').addEventListener('click', () => { document.getElementById('code').value = ''; showScreen(details); });
+    capabilityTypeInputs.forEach(input => input.addEventListener('change', () => {
+      const isEds = input.value === 'EDS' && input.checked;
+      document.getElementById('eds-options').classList.toggle('hidden', !isEds);
+      document.getElementById('stand-alone-options').classList.toggle('hidden', isEds);
+      showScenarioDetails();
+    }));
+    outcomeInputs.forEach(input => input.addEventListener('change', () => { state.outcome = input.value; showScenarioDetails(); }));
+    applyCapability.addEventListener('change', showScenarioDetails);
+    ['instant-mobile', 'instant-ssn', 'instant-zip'].forEach(id => document.getElementById(id).addEventListener('input', updateInstantContinue));
+    showScenarioDetails();
+  </script>
+</body>
+</html>
