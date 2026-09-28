@@ -1,0 +1,173 @@
+# Copy this file to experiences/<experience-id>/experience.yml.
+schema_version: "1.0"
+
+experience:
+  experience_id: "APP-PREQUAL-001"
+  name: ""
+  category: "application"
+  subcategory: "prequalification"
+  description: ""
+  representation: "production"
+  lifecycle_status: "future"
+  current_version: "0.1.0"
+  release_date: null
+  last_updated: "YYYY-MM-DD"
+  last_reviewed: "YYYY-MM-DD"
+  review_status: "review_needed"
+
+ownership:
+  product_owner: ""
+  design_owner: ""
+  business_owner: ""
+  engineering_owner: ""
+  compliance_contact: ""
+  legal_contact: null
+  research_contact: null
+  content_owner: ""
+
+coverage:
+  brands_and_partners: []
+  journey_stages: []
+  entry_points: []
+  exit_points: []
+  outcomes: []
+  capability_tags: []
+  audiences: []
+  channels: []
+  supported_devices: []
+
+demo_readiness:
+  available: "not_available"
+  demo_type: "coded_demo"
+  environment: ""
+  credentials_required: false
+  demo_data_included: false
+  external_demonstration_approved: "review_needed"
+  known_limitations: []
+  last_validation_date: null
+  demo_owner: ""
+
+journey:
+  primary_steps: []
+  screen_gallery: []
+  upstream_experiences: []
+  downstream_experiences: []
+  scenarios: []
+
+quick_actions:
+  demo: null
+  prototype: null
+  user_flow: null
+  research: null
+  disclosures: null
+  approved_screens: null
+
+ux_analysis:
+  customer_goal: ""
+  business_goal: ""
+  primary_user_needs: []
+  strengths: []
+  known_pain_points: []
+  friction_level: "unknown"
+  issue_severity: "unknown"
+  supporting_evidence: []
+  accessibility_review_status: "not_available"
+  research_available: false
+  last_research_date: null
+  research_studies: []
+  open_questions: []
+  recommended_improvements: []
+
+accessibility:
+  review_status: "not_available"
+  review_date: null
+  reviewer_or_owner: ""
+  known_issues: []
+  keyboard_behavior: "not_available"
+  screen_reader_considerations: "not_available"
+  color_and_contrast_considerations: "not_available"
+  error_message_accessibility: "not_available"
+  review_link: null
+
+measurement:
+  primary_success_metric: "not_available"
+  secondary_success_metrics: []
+  completion_rate: "not_available"
+  abandonment_or_drop_off: "not_available"
+  verification_completion: "not_available"
+  application_starts: "not_available"
+  application_completions: "not_available"
+  customer_support_contacts: "not_available"
+  measurement_period: "not_available"
+  data_source: "not_available"
+  metric_owner: "not_available"
+
+compliance:
+  compliance_review_status: "review_needed"
+  legal_review_status: "not_applicable"
+  external_demonstration_approval: "review_needed"
+  associated_disclosure_ids: []
+  current_disclosure_version: "not_available"
+  disclosure_effective_date: null
+  disclosure_owner: ""
+  last_disclosure_update: null
+  regulatory_impact_level: "unknown"
+  placement_rules: []
+  known_constraints: []
+
+artifacts:
+  - type: ""
+    label: ""
+    url: ""
+    authoritative: false
+
+related_experiences:
+  upstream: []
+  downstream: []
+  related_capabilities: []
+  comparable_implementations: []
+discovery:
+  alternative_names: []
+  internal_acronyms: []
+  related_products: []
+  associated_capabilities: []
+  partner_names: []
+  journey_stages: []
+  search_keywords: []
+
+governance:
+  page_owner: ""
+  content_approver: ""
+  date_created: "YYYY-MM-DD"
+  created_by: ""
+  last_modified: "YYYY-MM-DD"
+  modified_by: ""
+  next_review_date: "YYYY-MM-DD"
+  review_frequency: "quarterly"
+  archive_status: "not_archived"
+  archive_reason: null
+  change_history: []
+
+readiness_scorecard:
+  demo_available: "not_available"
+  demo_validated: "not_available"
+  mobile_screens_available: "not_available"
+  desktop_screens_available: "not_available"
+  user_flow_documented: "not_available"
+  ux_analysis_complete: "not_available"
+  research_linked: "not_available"
+  accessibility_reviewed: "not_available"
+  disclosures_current: "not_available"
+  compliance_review_current: "not_available"
+  external_demonstration_approved: "not_available"
+  page_reviewed_and_current: "not_available"
+
+next_steps:
+  immediate_improvements: []
+  open_decisions: []
+  research_needs: []
+  content_or_disclosure_updates: []
+  design_opportunities: []
+  technical_dependencies: []
+  named_owners: []
+  target_review_dates: []

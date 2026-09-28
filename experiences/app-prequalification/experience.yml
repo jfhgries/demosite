@@ -1,0 +1,241 @@
+schema_version: "1.0"
+
+experience:
+  experience_id: "APP-PREQUAL-001"
+  name: "Apply prequalification"
+  category: "application"
+  subcategory: "prequalification"
+  description: "A simulated, low-friction prequalification flow that helps a new customer understand likely credit options before starting a full application."
+  representation: "prototype"
+  lifecycle_status: "pilot"
+  current_version: "0.1.0"
+  release_date: null
+  last_updated: "2026-09-16"
+  last_reviewed: "2026-09-16"
+  review_status: "review_needed"
+
+ownership:
+  product_owner: "TBD"
+  design_owner: "TBD"
+  business_owner: "TBD"
+  engineering_owner: "TBD"
+  compliance_contact: "TBD"
+  legal_contact: null
+  research_contact: null
+  content_owner: "TBD"
+
+coverage:
+  brands_and_partners: ["Demo brand"]
+  journey_stages: ["awareness", "consideration", "prequalification", "verification", "decision"]
+  entry_points: ["marketing_page", "credit_card_product_page", "product_detail_page"]
+  exit_points: ["full_application", "product_detail_page", "servicing_portal"]
+  outcomes: ["approved", "declined", "pending", "conditional_approval", "partial_amount_or_offer", "verification_required", "additional_information_required"]
+  capability_tags: ["prequalification", "soft_credit_inquiry", "identity_verification", "income_verification", "one_time_passcode"]
+  audiences: ["new_customer", "guest_customer", "near_prime_customer", "returning_applicant"]
+  channels: ["desktop_web", "mobile_web", "embedded_experience"]
+  supported_devices: ["desktop", "mobile"]
+
+demo_readiness:
+  available: "in_progress"
+  demo_type: "coded_demo"
+  environment: "Local static prototype"
+  credentials_required: false
+  demo_data_included: true
+  external_demonstration_approved: "review_needed"
+  known_limitations:
+    - "No real credit bureau, identity, or income services are connected."
+    - "Decision outcomes are simulated and must not be presented as eligibility or credit advice."
+    - "Disclosure copy is placeholder content pending legal and compliance review."
+  last_validation_date: null
+  demo_owner: "TBD"
+
+journey:
+  primary_steps:
+    - "Choose a product and start prequalification"
+    - "Enter basic personal details"
+    - "Verify identity with a one-time passcode"
+    - "Review simulated offer or next step"
+    - "Continue to a full application or exit"
+  screen_gallery:
+    - name: "Product entry"
+      step: "awareness"
+      description: "Introduces prequalification and sets expectations before data entry."
+      device: "desktop and mobile"
+    - name: "Personal details"
+      step: "prequalification"
+      description: "Collects the minimum information needed to begin a simulated check."
+      device: "desktop and mobile"
+    - name: "Verification"
+      step: "verification"
+      description: "Uses a simulated one-time passcode to demonstrate recovery and error states."
+      device: "desktop and mobile"
+    - name: "Result"
+      step: "decision"
+      description: "Shows an offer, a request for more information, or a decline path."
+      device: "desktop and mobile"
+  upstream_experiences: []
+  downstream_experiences: ["Full application"]
+  scenarios:
+    - id: "approved-offer"
+      name: "Offer available"
+      description: "The customer receives a simulated offer and can continue to the full application."
+    - id: "verification-required"
+      name: "More verification needed"
+      description: "The customer is asked for additional information before a result can be shown."
+    - id: "declined"
+      name: "No offer"
+      description: "The customer receives a neutral simulated result and a path back to product discovery."
+
+quick_actions:
+  demo: "./demo/index.html"
+  prototype: "./demo/index.html"
+  user_flow: "./experience-page.md#journey-snapshot"
+  research: null
+  disclosures: null
+  approved_screens: null
+
+ux_analysis:
+  customer_goal: "Understand whether a product may fit before investing time in a full application."
+  business_goal: "Increase qualified application starts while making the boundary between prequalification and a credit decision clear."
+  primary_user_needs:
+    - "A clear estimate of time and information required"
+    - "Plain-language explanation of the soft credit inquiry"
+    - "Confidence that an offer is not guaranteed until the full application is completed"
+    - "Recovery from verification errors without losing entered information"
+  strengths:
+    - "Short entry path with a visible progress indicator"
+    - "Outcome language separates a simulated prequalification result from final approval"
+    - "Mobile-first fields and large tap targets"
+  known_pain_points:
+    - "The prototype does not yet test whether disclosure placement is understood."
+    - "The decline and pending paths need validated language and recovery options."
+  friction_level: "medium"
+  issue_severity: "unknown"
+  supporting_evidence: []
+  accessibility_review_status: "not_available"
+  research_available: false
+  last_research_date: null
+  research_studies: []
+  open_questions:
+    - "Which fields are truly required for the first prequalification step?"
+    - "How should pending and additional-information outcomes be explained across brands?"
+    - "What is the approved transition from prequalification to a full application?"
+  recommended_improvements:
+    - "Validate disclosure hierarchy with compliance and usability research."
+    - "Add explicit keyboard, screen-reader, and error recovery acceptance criteria."
+
+accessibility:
+  review_status: "not_available"
+  review_date: null
+  reviewer_or_owner: "TBD"
+  known_issues: []
+  keyboard_behavior: "not_available"
+  screen_reader_considerations: "not_available"
+  color_and_contrast_considerations: "not_available"
+  error_message_accessibility: "not_available"
+  review_link: null
+
+measurement:
+  primary_success_metric: "not_available"
+  secondary_success_metrics: []
+  completion_rate: "not_available"
+  abandonment_or_drop_off: "not_available"
+  verification_completion: "not_available"
+  application_starts: "not_available"
+  application_completions: "not_available"
+  customer_support_contacts: "not_available"
+  measurement_period: "not_available"
+  data_source: "not_available"
+  metric_owner: "not_available"
+
+compliance:
+  compliance_review_status: "review_needed"
+  legal_review_status: "review_needed"
+  external_demonstration_approval: "review_needed"
+  associated_disclosure_ids: []
+  current_disclosure_version: "not_available"
+  disclosure_effective_date: null
+  disclosure_owner: "TBD"
+  last_disclosure_update: null
+  regulatory_impact_level: "high"
+  placement_rules:
+    - "Display approved prequalification and soft-inquiry disclosures before personal information is submitted."
+    - "Keep simulated results visibly distinct from final credit decisions."
+  known_constraints:
+    - "Do not use real customer data, credentials, bureau responses, or unapproved disclosure text."
+
+artifacts:
+  - type: "demo"
+    label: "Coded local prototype"
+    url: "./demo/index.html"
+    authoritative: true
+  - type: "experience_page"
+    label: "Apply prequalification experience page"
+    url: "./experience-page.md"
+    authoritative: true
+
+related_experiences:
+  upstream: []
+  downstream: ["Full application"]
+  related_capabilities: ["identity_verification", "income_verification", "bank_account_connection"]
+  comparable_implementations: []
+discovery:
+  alternative_names: ["Prequal", "Apply prequalification", "Prequalification application"]
+  internal_acronyms: ["PQ"]
+  related_products: []
+  associated_capabilities: ["soft_credit_inquiry", "identity_verification", "income_verification"]
+  partner_names: []
+  journey_stages: ["prequalification", "verification", "decision"]
+  search_keywords: ["apply", "prequal", "prequalification", "soft pull", "credit offer"]
+
+governance:
+  page_owner: "TBD"
+  content_approver: "TBD"
+  date_created: "2026-09-16"
+  created_by: "TBD"
+  last_modified: "2026-09-16"
+  modified_by: "TBD"
+  next_review_date: "2026-10-16"
+  review_frequency: "monthly"
+  archive_status: "not_archived"
+  archive_reason: null
+  change_history:
+    - date: "2026-09-16"
+      version: "0.1.0"
+      summary: "Created the initial coded prototype record and simulated journey."
+      reason: "Establish the Apply / Prequalification capability in the demo repository."
+      affected_screens_or_steps: ["Product entry", "Personal details", "Verification", "Result"]
+      disclosure_impact: "Placeholder disclosures require review."
+      owner: "TBD"
+      approval_status: "review_needed"
+
+readiness_scorecard:
+  demo_available: "in_progress"
+  demo_validated: "not_available"
+  mobile_screens_available: "in_progress"
+  desktop_screens_available: "in_progress"
+  user_flow_documented: "complete"
+  ux_analysis_complete: "in_progress"
+  research_linked: "not_available"
+  accessibility_reviewed: "not_available"
+  disclosures_current: "not_available"
+  compliance_review_current: "not_available"
+  external_demonstration_approved: "review_needed"
+  page_reviewed_and_current: "complete"
+
+next_steps:
+  immediate_improvements:
+    - "Complete the coded prototype and validate all primary scenarios."
+    - "Replace placeholder disclosure references with approved disclosure IDs."
+  open_decisions:
+    - "Confirm the minimum data set and partner or brand context."
+  research_needs:
+    - "Test comprehension of soft-inquiry, pending, and decline language."
+  content_or_disclosure_updates:
+    - "Add approved prequalification disclosure copy and effective dates."
+  design_opportunities:
+    - "Test a single-column mobile flow against a two-column desktop layout."
+  technical_dependencies:
+    - "Decide whether the production integration will use identity, income, or bank-account verification services."
+  named_owners: ["TBD"]
+  target_review_dates: ["2026-10-16"]
