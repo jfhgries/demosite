@@ -260,6 +260,8 @@
     .capability-suggestion span:last-child { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: #e7e8e9; font-size: 17px; line-height: 1; }
     .capability-suggestions[hidden] { display: none; }
     .capability-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .capability-show-more { margin-top: 12px; padding: 5px 0; border: 0; border-bottom: 1px solid currentColor; color: var(--body); background: transparent; font-size: 13px; font-weight: 600; }
+    .capability-show-more:hover { color: var(--ink); }
     .capability-pill { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 4px 6px 4px 14px; border: 1px solid transparent; border-radius: 40px; font-size: 13px; line-height: 18px; transition: color 120ms ease, background-color 120ms ease; }
     .capability-pill.selected { color: #fff; background: #242424; }
     .capability-pill.unselected { color: var(--body); background: #f1f2f2; border-color: #dedede; }
@@ -636,6 +638,7 @@
             <div class="capability-suggestions" id="capability-suggestions" role="listbox" hidden></div>
           </div>
           <div class="capability-list" id="capability-list" aria-label="Capability tags"></div>
+          <button class="capability-show-more" id="capability-show-more" type="button" aria-expanded="false">Show More</button>
         </section>
       </div>
       <aside class="panel scenario" aria-labelledby="scenario-title">
@@ -737,9 +740,12 @@
     const applyCapability = document.getElementById('apply-capability');
     const capabilityOptionInputs = document.querySelectorAll('input[name="capability-option"]');
     const outcomeInputs = document.querySelectorAll('input[name="outcome"]');
-    const capabilityTags = ['prequalification', 'full_application', 'soft_credit_inquiry', 'hard_credit_inquiry', 'income_navigator', 'cash_atlas', 'rtps', 'identity_verification', 'income_verification', 'bank_account_connection', 'one_time_passcode', 'fraud_review', 'waterfall_lending', 'account_assure', 'split_pay', 'pay_in_4', 'installment_plan', 'deferred_interest', 'credit_line_increase', 'digital_card', 'add_to_wallet'];
-    const selectedCapabilities = new Set(['prequalification', 'full_application', 'identity_verification', 'soft_credit_inquiry', 'hard_credit_inquiry']);
+    const capabilityTags = ['prequalification', 'full_application', 'soft_credit_inquiry', 'hard_credit_inquiry', 'identity_verification', 'income_navigator', 'cash_atlas', 'rtps', 'income_verification', 'bank_account_connection', 'one_time_passcode', 'fraud_review', 'waterfall_lending', 'account_assure', 'split_pay', 'pay_in_4', 'installment_plan', 'deferred_interest', 'credit_line_increase', 'digital_card', 'add_to_wallet'];
+    const defaultCapabilityTags = capabilityTags.slice(0, 5);
+    const selectedCapabilities = new Set();
     const capabilityList = document.getElementById('capability-list');
+    const capabilityShowMore = document.getElementById('capability-show-more');
+    let showAllCapabilities = false;
     const capabilitySearch = document.getElementById('capability-search-input');
     const capabilitySuggestions = document.getElementById('capability-suggestions');
     const capabilityCount = document.getElementById('capability-count');
@@ -768,7 +774,13 @@
       return pill;
     }
     function renderCapabilities() {
-      capabilityList.replaceChildren(...capabilityTags.map(createCapabilityPill));
+      const visibleTags = showAllCapabilities
+        ? capabilityTags
+        : capabilityTags.filter(tag => defaultCapabilityTags.includes(tag) || selectedCapabilities.has(tag));
+      capabilityList.replaceChildren(...visibleTags.map(createCapabilityPill));
+      capabilityShowMore.hidden = capabilityTags.length === defaultCapabilityTags.length;
+      capabilityShowMore.textContent = showAllCapabilities ? 'Show Less' : 'Show More';
+      capabilityShowMore.setAttribute('aria-expanded', String(showAllCapabilities));
       const query = capabilitySearch.value.trim().toLowerCase();
       const matches = query ? capabilityTags.filter(tag => formatCapabilityLabel(tag).toLowerCase().includes(query)) : [];
       capabilitySuggestions.replaceChildren(...matches.map(tag => {
@@ -795,6 +807,10 @@
       capabilitySearch.setAttribute('aria-expanded', String(matches.length > 0));
       capabilityCount.textContent = `${selectedCapabilities.size} selected`;
     }
+    capabilityShowMore.addEventListener('click', () => {
+      showAllCapabilities = !showAllCapabilities;
+      renderCapabilities();
+    });
     function setPreviewWidth(width) {
       previewWidth.value = width;
       previewViewport.style.width = `${width}px`;
