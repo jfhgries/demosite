@@ -35,6 +35,183 @@ coverage:
   channels: ["desktop_web", "mobile_web", "embedded_experience"]
   supported_devices: ["desktop", "mobile"]
 
+logos:
+  - brand: "Ann Taylor"
+    file: null
+    source: null
+    license: null
+    attribution: null
+  - brand: "The Home Depot"
+s/the-home-depot.svg"
+    source: "https://commons.wikimedia.org/wiki/File:The_Home_Depot_logo.svg"
+    license: "Public domain"
+    attribution: "Don Watt, via Wikimedia Commons"
+  - brand: "Academy Sports + Outdoors"
+    file: "./logos/academy-sports-outdoors.svg"
+    source: "https://commons.wikimedia.org/wiki/File:Academy_Sports_%2B_Outdoors_Logo.svg"
+    license: "Public domain"
+    attribution: "Academy Sports and Outdoors, via Wikimedia Commons"
+  - brand: "Dell Pay"
+    file: "./logos/dell.svg"
+    source: "https://github.com/simple-icons/simple-icons/blob/develop/icons/dell.svg"
+    license: "CC0 1.0 Universal"
+    attribution: null
+  - brand: "Ross"
+    file: "./logos/ross.png"
+    source: "https://commons.wikimedia.org/wiki/File:Ross_Logo_LIVING_LIVE_PMS485_%26_BLK.png"
+    license: "CC BY-SA 4.0"
+    attribution: "Brian Laperle, via Wikimedia Commons"
+  - brand: "Caesars"
+    file: null
+    source: null
+    license: null
+    attribution: null
+  - brand: "Good Sam"
+    file: null
+    source: null
+    license: null
+    attribution: null
+  - brand: "Loft"
+    file: "./logos/loft.png"
+    source: "https://commons.wikimedia.org/wiki/File:Loft_logo.png"
+    license: "CC0"
+    attribution: null
+  - brand: "Burlington"
+    file: "./logos/burlington.png"
+    source: "https://commons.wikimedia.org/wiki/File:Burlington_Stores_logo.png"
+    license: "Public domain"
+    attribution: "Burlington Stores, via Wikimedia Commons"
+  - brand: "AAA"
+    file: "./logos/aaa.svg"
+    source: "https://commons.wikimedia.org/wiki/File:AAA_LOGO_2.svg"
+    license: "Public domain"
+    attribution: null
+  - brand: "All Pet"
+    file: null
+    source: null
+    license: null
+    attribution: null
+  - brand: "Alphaeon"
+    file: null
+    source: null
+    license: null
+    attribution: null
+  - brand: "Boscovs"
+    file: null
+    source: null
+    license: null
+    attribution: null
+  - brand: "Ashley Stewart"
+    file: null
+    source: null
+    license: null
+    attribution: null
+  - brand: "B&H Photo"
+    file: null
+    source: null
+    license: null
+    attribution: null
+  - brand: "Ballard Designs"
+    file: null
+    source: null
+    license: null
+    attribution: null
+  - brand: "Avenue"
+    file: null
+    source: null
+    license: null
+    attribution: null
+  - brand: "Bealls"
+    file: null
+    source: null
+    license: null
+    attribution: null
+  - brand: "Beyond Inc."
+    file: null
+    source: null
+    license: null
+    attribution: null
+  - brand: "Blue Nile"
+    file: null
+    source: null
+    license: null
+    attribution: null
+  - brand: "Bread Cashback"
+    file: null
+    source: null
+    license: null
+    attribution: null
+  - brand: "Bread Rewards"
+    file: null
+    source: null
+    license: null
+    attribution: null
+  - brand: "Brylane Home"
+    file: null
+    source: null
+    license: null
+    attribution: null
+  - brand: "Buckle"
+    file: null
+    source: null
+    license: null
+    attribution: null
+  - brand: "Carters"
+    file: null
+    source: null
+    license: null
+    attribution: null
+  - brand: "DentalFirst Financing"
+    file: null
+    source: null
+    license: null
+    attribution: null
+  - brand: "Ethan Allen"
+    file: null
+    source: null
+    license: null
+    attribution: null
+  - brand: "Fanatics"
+    file: null
+    source: null
+    license: null
+    attribution: null
+  - brand: "Torrid"
+    file: null
+    source: null
+    license: null
+    attribution: null
+  - brand: "Famous Footwear"
+    file: null
+    source: null
+    license: null
+    attribution: null
+  - brand: "Ford"
+    file: "./logos/ford.svg"
+    source: "https://github.com/simple-icons/simple-icons/blob/develop/icons/ford.svg"
+    license: "CC0 1.0 Universal"
+    attribution: null
+  - brand: "Gamestop"
+    file: null
+    source: null
+    license: null
+    attribution: null
+  - brand: "Full Beauty"
+    file: null
+    source: null
+    license: null
+    attribution: null
+  - brand: "Hard Rock"
+    file: null
+    source: null
+    license: null
+    attribution: null
+  - brand: "HP"
+    file: "./logos/hp.svg"
+    source: "https://github.com/simple-icons/simple-icons/blob/develop/icons/hp.svg"
+    license: "CC0 1.0 Universal"
+    attribution: null
+
 demo_readiness:
   available: "in_progress"
   demo_type: "coded_demo"
