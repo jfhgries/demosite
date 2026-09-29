@@ -39,6 +39,16 @@
     h1 { position: relative; z-index: 1; max-width: 720px; margin: 0; font-size: clamp(38px, 6vw, 64px); line-height: 1.02; letter-spacing: -3px; font-weight: 600; }
     .hero p { position: relative; z-index: 1; max-width: 570px; margin: 24px 0 0; color: var(--body); font-size: 18px; line-height: 28px; }
     .content { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 24px; padding-top: 40px; align-items: start; }
+    .preview-column { min-width: 0; }
+    .preview-controls { display: grid; grid-template-columns: minmax(0, 1fr) minmax(180px, 1fr) auto; gap: 16px; align-items: end; margin-bottom: 12px; }
+    .preview-controls label { gap: 6px; color: var(--body); font-size: 12px; }
+    .preview-controls select { width: 100%; min-height: 38px; border: 1px solid #a1a1a1; border-radius: 6px; padding: 8px 10px; color: var(--ink); background: var(--canvas); font: inherit; }
+    .preview-width-heading { display: flex; justify-content: space-between; gap: 8px; }
+    .preview-width-control input[type="range"] { width: 100%; height: 22px; margin: 0; padding: 0; border: 0; accent-color: var(--ink); }
+    .restart-demo { min-height: 38px; border: 1px solid #a1a1a1; border-radius: 6px; padding: 0 14px; color: var(--ink); background: var(--canvas); font-size: 13px; }
+    .restart-demo:hover { background: var(--soft); }
+    .preview-stage { width: 100%; overflow-x: auto; padding: 12px; border: 1px solid #dedede; border-radius: 8px; background: #f0f1f2; }
+    .preview-viewport { width: 1280px; max-width: none; margin: 0 auto; container: preview / inline-size; }
     .panel { background: var(--canvas); border: 1px solid var(--hairline); border-radius: 12px; box-shadow: var(--shadow); }
     .flow { padding: 32px; }
     .flow-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; padding-bottom: 28px; border-bottom: 1px solid var(--hairline); }
@@ -96,6 +106,14 @@
     .instant-fields { display: grid; gap: 24px; }
     .instant-field { display: grid; gap: 5px; color: #52606d; font-size: 14px; }
     .instant-field input { border: 0; border-bottom: 1px solid #9aa5b1; border-radius: 0; padding: 7px 0 9px; color: #1f2933; }
+    .password-field { position: relative; }
+    .password-field input { padding-right: 40px; line-height: 20px; }
+    .password-field:not(.is-visible) input { color: transparent; -webkit-text-fill-color: transparent; caret-color: #1f2933; }
+    .password-mask { position: absolute; top: 7px; left: 0; right: 40px; overflow: hidden; color: #1f2933; font-size: 14px; line-height: 20px; pointer-events: none; white-space: pre; }
+    .password-field.is-visible .password-mask { display: none; }
+    .password-toggle { position: absolute; right: 0; bottom: 5px; display: grid; place-items: center; width: 32px; height: 32px; padding: 0; border: 0; border-radius: 4px; color: #52606d; background: transparent; }
+    .password-toggle:hover { background: #f0f1f2; }
+    .password-toggle svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
     .instant-field input:focus { border-color: #1f2933; box-shadow: none; }
     .security-message { display: flex; align-items: center; gap: 10px; margin-top: 28px; color: #52606d; font-size: 13px; }
     .lock { width: 18px; height: 18px; border: 2px solid #52606d; border-radius: 4px; position: relative; }
@@ -146,7 +164,35 @@
     .approval-card strong { display: block; margin-top: 5px; color: #1f2933; font-size: 17px; }
     .approval-detail { color: #697586; font-size: 12px; }
     .approval-footer { margin-top: 26px; padding-top: 20px; border-top: 1px solid #d9dee3; color: #52606d; font-size: 13px; }
+    .capability-tags { margin-top: 18px; padding: 24px; background: var(--canvas); border: 1px solid var(--hairline); border-radius: 8px; }
+    .capability-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+    .capability-heading h2 { margin: 0; font-size: 16px; line-height: 24px; }
+    .capability-count { color: var(--mute); font-size: 12px; }
+    .capability-search { position: relative; display: grid; gap: 6px; max-width: 480px; color: var(--body); font-size: 12px; }
+    .capability-search input { min-height: 40px; padding: 8px 12px; font-size: 14px; }
+    .capability-suggestions { position: absolute; z-index: 2; top: calc(100% + 4px); right: 0; left: 0; display: grid; gap: 4px; max-height: 240px; overflow-y: auto; padding: 6px; background: var(--canvas); border: 1px solid #dedede; border-radius: 6px; box-shadow: var(--shadow); }
+    .capability-suggestion { display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 100%; padding: 8px 10px; border: 0; border-radius: 4px; color: var(--ink); background: transparent; text-align: left; font-size: 13px; cursor: pointer; }
+    .capability-suggestion:hover, .capability-suggestion:focus-visible { background: #f0f1f2; outline: none; }
+    .capability-suggestion span:last-child { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: #e7e8e9; font-size: 17px; line-height: 1; }
+    .capability-suggestions[hidden] { display: none; }
+    .capability-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .capability-pill { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 4px 6px 4px 14px; border: 1px solid transparent; border-radius: 40px; font-size: 13px; line-height: 18px; transition: color 120ms ease, background-color 120ms ease; }
+    .capability-pill.selected { color: #fff; background: #242424; }
+    .capability-pill.unselected { color: var(--body); background: #f1f2f2; border-color: #dedede; }
+    .capability-pill-action { display: grid; place-items: center; width: 28px; height: 28px; padding: 0; border: 0; border-radius: 50%; color: inherit; background: #ffffff24; font-size: 18px; line-height: 1; }
+    .capability-pill.unselected .capability-pill-action { background: #fff; }
+    .capability-pill-action:hover { background: #ffffff40; }
+    .capability-pill.unselected .capability-pill-action:hover { background: #e2e4e5; }
     .hidden { display: none; }
+    @container preview (max-width: 760px) {
+      .flow { padding: 24px; }
+      .flow-header { display: block; }
+      .status { display: block; margin-top: 12px; }
+      .field-grid { grid-template-columns: 1fr; }
+      .instant-credit { margin: -24px; }
+      .instant-header { padding: 18px 20px 0; }
+      .instant-modal { padding: 0 20px 24px; }
+    }
     @media (max-width: 760px) {
       .topbar { padding: 0 20px; }
       .nav a:first-child { display: none; }
@@ -154,13 +200,9 @@
       .hero { margin: 0 -20px; padding: 56px 20px 48px; }
       h1 { letter-spacing: -2px; }
       .content { grid-template-columns: 1fr; padding-top: 24px; }
-      .flow { padding: 24px; }
-      .instant-credit { margin: -24px; }
-      .instant-header { padding: 18px 20px 0; }
-      .instant-modal { padding: 0 20px 24px; }
-      .field-grid { grid-template-columns: 1fr; }
-      .flow-header { display: block; }
-      .status { display: block; margin-top: 12px; }
+      .preview-controls { grid-template-columns: 1fr; gap: 10px; }
+      .restart-demo { justify-self: start; }
+      .capability-tags { padding: 18px; }
     }
   </style>
 </head>
@@ -176,7 +218,37 @@
       <p>Explore demos, find screenshots, analyze user flows, and more</p>
     </section>
     <div class="content">
-      <section class="panel flow" aria-labelledby="flow-title">
+      <div class="preview-column">
+        <div class="preview-controls">
+          <label for="screen-preset">Screen size
+            <select id="screen-preset">
+              <optgroup label="Mobile">
+                <option value="mobile-small">Small: 320-375px</option>
+                <option value="mobile-medium">Medium: 376-414px</option>
+                <option value="mobile-large">Large: 416-480px</option>
+              </optgroup>
+              <optgroup label="Tablet">
+                <option value="tablet-small">Small: 600-767px</option>
+                <option value="tablet-large">Large: 768-1024px</option>
+                <option value="tablet-landscape">Landscape: 1025-1366px</option>
+              </optgroup>
+              <optgroup label="Desktop">
+                <option value="desktop">Desktop: 1280-1728px</option>
+                <option value="desktop-eds-700">EDS: 700px</option>
+                <option value="desktop-eds-800">EDS: 800px</option>
+              </optgroup>
+              <option value="custom">Custom width</option>
+            </select>
+          </label>
+          <label class="preview-width-control" for="preview-width">
+            <span class="preview-width-heading"><span>Preview width</span><output id="preview-width-output" for="preview-width">1280px</output></span>
+            <input id="preview-width" type="range" min="320" max="1728" step="1" value="1280">
+          </label>
+          <button class="restart-demo" id="restart-demo" type="button">Restart Demo</button>
+        </div>
+        <div class="preview-stage">
+          <div class="preview-viewport" id="preview-viewport">
+            <section class="panel flow" aria-labelledby="flow-title">
         <div class="flow-header"><div><h2 id="flow-title">Let's get started</h2><p id="step-copy">Tell us a little about yourself.</p></div><span class="status" id="status">SIMULATED DEMO</span></div>
         <div class="steps" aria-label="Progress"><span class="step active"></span><span class="step"></span><span class="step"></span><span class="step"></span></div>
         <div id="details-screen" class="screen">
@@ -203,7 +275,7 @@
               <p class="instant-subtitle">Providing this info helps us securely prefill some of your application, saving you time.</p>
               <div class="instant-fields">
                 <label class="instant-field">Mobile Number<input id="instant-mobile" type="tel" autocomplete="tel"></label>
-                <label class="instant-field">Last 4 of SSN<input id="instant-ssn" inputmode="numeric" maxlength="4"></label>
+                <div class="instant-field"><label for="instant-ssn">Last 4 of SSN</label><div class="password-field"><input id="instant-ssn" type="password" inputmode="numeric" autocomplete="off" maxlength="4"><span class="password-mask" id="instant-ssn-mask" aria-hidden="true"></span><button class="password-toggle" id="toggle-ssn-visibility" type="button" aria-label="Show last 4 of SSN" aria-pressed="false"><svg id="ssn-show-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg><svg id="ssn-hide-icon" class="hidden" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 3 18 18"></path><path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"></path><path d="M9.9 5.2A11.8 11.8 0 0 1 12 5c6.4 0 10 7 10 7a14.6 14.6 0 0 1-3 3.8"></path><path d="M6.2 6.2C3.5 8 2 12 2 12s3.6 7 10 7a10.8 10.8 0 0 0 4.1-.8"></path></svg></button></div></div>
                 <label class="instant-field">ZIP Code<input id="instant-zip" inputmode="numeric" maxlength="5" autocomplete="postal-code"></label>
               </div>
               <div class="security-message"><span class="lock" aria-hidden="true"></span><span>We’ll encrypt your data.</span></div>
@@ -292,7 +364,19 @@
           <div class="actions"><button class="button secondary" id="restart">Start over</button><button class="button primary" id="apply">Continue application</button></div>
           <p class="fineprint">This result is simulated and is not an offer of credit or a guarantee of approval.</p>
         </div>
-      </section>
+            </section>
+          </div>
+        </div>
+        <section class="capability-tags" aria-labelledby="capability-title">
+          <div class="capability-heading"><h2 id="capability-title">Capabilities</h2><span class="capability-count" id="capability-count" aria-live="polite"></span></div>
+          <div class="capability-search">
+            <label for="capability-search-input">Search capabilities</label>
+            <input id="capability-search-input" type="search" role="combobox" aria-autocomplete="list" aria-controls="capability-suggestions" aria-expanded="false" autocomplete="off" placeholder="Search tags…">
+            <div class="capability-suggestions" id="capability-suggestions" role="listbox" hidden></div>
+          </div>
+          <div class="capability-list" id="capability-list" aria-label="Capability tags"></div>
+        </section>
+      </div>
       <aside class="panel scenario" aria-labelledby="scenario-title">
         <h2 id="scenario-title">Demo scenario</h2>
         <h3>Brand</h3>
@@ -358,9 +442,113 @@
     const resultTitle = document.getElementById('result-title');
     const resultCopy = document.getElementById('result-copy');
     const stepCopy = document.getElementById('step-copy');
+    const deviceInputs = document.querySelectorAll('input[name="device"]');
+    const screenPreset = document.getElementById('screen-preset');
+    const previewWidth = document.getElementById('preview-width');
+    const previewWidthOutput = document.getElementById('preview-width-output');
+    const previewViewport = document.getElementById('preview-viewport');
+    const previewPresets = {
+      'mobile-small': { device: 'Mobile', width: 320 },
+      'mobile-medium': { device: 'Mobile', width: 376 },
+      'mobile-large': { device: 'Mobile', width: 416 },
+      'tablet-small': { device: 'Tablet', width: 600 },
+      'tablet-large': { device: 'Tablet', width: 768 },
+      'tablet-landscape': { device: 'Tablet', width: 1025 },
+      desktop: { device: 'Desktop', width: 1280 },
+      'desktop-eds-700': { device: 'Desktop', width: 700 },
+      'desktop-eds-800': { device: 'Desktop', width: 800 }
+    };
+    const deviceDefaults = {
+      Desktop: 'desktop',
+      Mobile: 'mobile-small',
+      Tablet: 'tablet-small'
+    };
     const capabilityTypeInputs = document.querySelectorAll('input[name="capability"]');
     const applyCapability = document.getElementById('apply-capability');
     const outcomeInputs = document.querySelectorAll('input[name="outcome"]');
+    const capabilityTags = ['prequalification', 'full_application', 'soft_credit_inquiry', 'hard_credit_inquiry', 'income_navigator', 'cash_atlas', 'rtps', 'identity_verification', 'income_verification', 'bank_account_connection', 'one_time_passcode', 'fraud_review', 'waterfall_lending', 'account_assure', 'split_pay', 'pay_in_4', 'installment_plan', 'deferred_interest', 'credit_line_increase', 'digital_card', 'add_to_wallet'];
+    const selectedCapabilities = new Set(['prequalification', 'full_application', 'identity_verification', 'soft_credit_inquiry', 'hard_credit_inquiry']);
+    const capabilityList = document.getElementById('capability-list');
+    const capabilitySearch = document.getElementById('capability-search-input');
+    const capabilitySuggestions = document.getElementById('capability-suggestions');
+    const capabilityCount = document.getElementById('capability-count');
+    const capabilityLabels = { rtps: 'RTPS' };
+    function formatCapabilityLabel(tag) {
+      return capabilityLabels[tag] || tag.replace(/_/g, ' ').replace(/\b\w/g, character => character.toUpperCase());
+    }
+    function createCapabilityPill(tag) {
+      const selected = selectedCapabilities.has(tag);
+      const pill = document.createElement('span');
+      pill.className = `capability-pill ${selected ? 'selected' : 'unselected'}`;
+      const label = document.createElement('span');
+      label.textContent = formatCapabilityLabel(tag);
+      const action = document.createElement('button');
+      action.className = 'capability-pill-action';
+      action.type = 'button';
+      action.textContent = selected ? '×' : '+';
+      action.setAttribute('aria-label', `${selected ? 'Remove' : 'Add'} ${formatCapabilityLabel(tag)}`);
+      action.setAttribute('aria-pressed', String(selected));
+      action.addEventListener('click', () => {
+        if (selectedCapabilities.has(tag)) selectedCapabilities.delete(tag);
+        else selectedCapabilities.add(tag);
+        renderCapabilities();
+      });
+      pill.append(label, action);
+      return pill;
+    }
+    function renderCapabilities() {
+      capabilityList.replaceChildren(...capabilityTags.map(createCapabilityPill));
+      const query = capabilitySearch.value.trim().toLowerCase();
+      const matches = query ? capabilityTags.filter(tag => formatCapabilityLabel(tag).toLowerCase().includes(query)) : [];
+      capabilitySuggestions.replaceChildren(...matches.map(tag => {
+        const selected = selectedCapabilities.has(tag);
+        const option = document.createElement('button');
+        option.className = 'capability-suggestion';
+        option.type = 'button';
+        option.setAttribute('role', 'option');
+        option.setAttribute('aria-selected', String(selected));
+        const label = document.createElement('span');
+        label.textContent = formatCapabilityLabel(tag);
+        const action = document.createElement('span');
+        action.textContent = selected ? '×' : '+';
+        option.append(label, action);
+        option.addEventListener('click', () => {
+          if (selectedCapabilities.has(tag)) selectedCapabilities.delete(tag);
+          else selectedCapabilities.add(tag);
+          renderCapabilities();
+          capabilitySearch.focus();
+        });
+        return option;
+      }));
+      capabilitySuggestions.hidden = matches.length === 0;
+      capabilitySearch.setAttribute('aria-expanded', String(matches.length > 0));
+      capabilityCount.textContent = `${selectedCapabilities.size} selected`;
+    }
+    function setPreviewWidth(width) {
+      previewWidth.value = width;
+      previewViewport.style.width = `${width}px`;
+      previewWidthOutput.value = `${width}px`;
+      previewWidthOutput.textContent = `${width}px`;
+    }
+    function selectPreset(presetId) {
+      const preset = previewPresets[presetId];
+      if (!preset) return;
+      document.querySelector(`input[name="device"][value="${preset.device}"]`).checked = true;
+      setPreviewWidth(preset.width);
+    }
+    deviceInputs.forEach(input => input.addEventListener('change', () => {
+      const presetId = deviceDefaults[input.value];
+      screenPreset.value = presetId;
+      selectPreset(presetId);
+    }));
+    screenPreset.addEventListener('change', () => {
+      if (screenPreset.value === 'custom') return;
+      selectPreset(screenPreset.value);
+    });
+    previewWidth.addEventListener('input', () => {
+      setPreviewWidth(Number(previewWidth.value));
+      screenPreset.value = 'custom';
+    });
     function showScenarioDetails() {
       const edsSelected = document.querySelector('input[name="capability"]:checked')?.value === 'EDS';
       const approvedSelected = document.querySelector('input[name="outcome"]:checked')?.value === 'approved';
@@ -396,6 +584,16 @@
       showScreen(verify);
     });
     document.getElementById('instant-continue').addEventListener('click', () => showScreen(secureCode));
+    document.getElementById('toggle-ssn-visibility').addEventListener('click', event => {
+      const input = document.getElementById('instant-ssn');
+      const visible = input.type === 'password';
+      input.closest('.password-field').classList.toggle('is-visible', visible);
+      input.type = visible ? 'text' : 'password';
+      event.currentTarget.setAttribute('aria-label', `${visible ? 'Hide' : 'Show'} last 4 of SSN`);
+      event.currentTarget.setAttribute('aria-pressed', String(visible));
+      document.getElementById('ssn-show-icon').classList.toggle('hidden', visible);
+      document.getElementById('ssn-hide-icon').classList.toggle('hidden', !visible);
+    });
     document.getElementById('review-next').addEventListener('click', () => showScreen(authorizedUser));
     document.getElementById('review-back').addEventListener('click', () => showScreen(secureCode));
     document.getElementById('secure-back').addEventListener('click', () => showScreen(details));
@@ -422,7 +620,30 @@
       document.getElementById('apply').textContent = state.outcome === 'approved' ? 'Continue application' : 'Explore products';
       showScreen(result);
     });
-    document.getElementById('restart').addEventListener('click', () => { document.getElementById('code').value = ''; showScreen(details); });
+    function resetDemo() {
+      document.querySelectorAll('#preview-viewport input').forEach(input => {
+        input.value = input.defaultValue;
+        input.checked = input.defaultChecked;
+      });
+      const ssnInput = document.getElementById('instant-ssn');
+      ssnInput.type = 'password';
+      ssnInput.closest('.password-field').classList.remove('is-visible');
+      document.getElementById('instant-ssn-mask').textContent = '*'.repeat(ssnInput.value.length);
+      const visibilityToggle = document.getElementById('toggle-ssn-visibility');
+      visibilityToggle.setAttribute('aria-label', 'Show last 4 of SSN');
+      visibilityToggle.setAttribute('aria-pressed', 'false');
+      document.getElementById('ssn-show-icon').classList.remove('hidden');
+      document.getElementById('ssn-hide-icon').classList.add('hidden');
+      resultBox.className = 'result offer';
+      resultTitle.textContent = 'You may be a fit';
+      resultCopy.textContent = 'You can continue to a full application to see your final options. A full application may require additional information.';
+      document.getElementById('apply').textContent = 'Continue application';
+      document.getElementById('submit-application').disabled = true;
+      showScenarioDetails();
+      showScreen(details);
+    }
+    document.getElementById('restart-demo').addEventListener('click', resetDemo);
+    document.getElementById('restart').addEventListener('click', resetDemo);
     capabilityTypeInputs.forEach(input => input.addEventListener('change', () => {
       const isEds = input.value === 'EDS' && input.checked;
       document.getElementById('eds-options').classList.toggle('hidden', !isEds);
@@ -431,8 +652,14 @@
     }));
     outcomeInputs.forEach(input => input.addEventListener('change', () => { state.outcome = input.value; showScenarioDetails(); }));
     applyCapability.addEventListener('change', showScenarioDetails);
-    ['instant-mobile', 'instant-ssn', 'instant-zip'].forEach(id => document.getElementById(id).addEventListener('input', updateInstantContinue));
+    capabilitySearch.addEventListener('input', renderCapabilities);
+    ['instant-mobile', 'instant-ssn', 'instant-zip'].forEach(id => document.getElementById(id).addEventListener('input', event => {
+      if (id === 'instant-ssn') document.getElementById('instant-ssn-mask').textContent = '*'.repeat(event.currentTarget.value.length);
+      updateInstantContinue();
+    }));
+    selectPreset(screenPreset.value);
     showScenarioDetails();
+    renderCapabilities();
   </script>
 </body>
 </html>
