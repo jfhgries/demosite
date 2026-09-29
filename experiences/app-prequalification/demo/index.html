@@ -164,6 +164,90 @@
     .approval-card strong { display: block; margin-top: 5px; color: #1f2933; font-size: 17px; }
     .approval-detail { color: #697586; font-size: 12px; }
     .approval-footer { margin-top: 26px; padding-top: 20px; border-top: 1px solid #d9dee3; color: #52606d; font-size: 13px; }
+    .flow.breadpay-mode { padding: 0; overflow: hidden; border: 0; border-radius: 0; box-shadow: none; }
+    .flow.breadpay-mode > .flow-header, .flow.breadpay-mode > .steps { display: none; }
+    .breadpay-screen { min-height: 640px; color: #0f2233; background: #fff; font-family: Poppins, Geist, Inter, ui-sans-serif, system-ui, sans-serif; }
+    .bp-header { height: 90px; display: flex; align-items: center; justify-content: space-between; padding: 0 4.7%; border-bottom: 1px solid #cfd8dc; }
+    .bp-logo { display: block; width: 140px; height: 42px; object-fit: contain; }
+    .bp-header button { width: 40px; height: 40px; padding: 0; color: #080707; background: transparent; border: 0; font-size: 30px; line-height: 1; }
+    .bp-content { width: min(920px, calc(100% - 48px)); margin: 42px auto 64px; }
+    .bp-narrow { width: min(540px, 100%); margin-right: auto; margin-left: auto; }
+    .bp-intro { width: min(720px, calc(100% - 48px)); margin: 48px auto 54px; text-align: center; }
+    .bp-intro .bp-logo { width: 180px; height: 54px; margin: 0 auto 26px; }
+    .bp-intro h2, .bp-title { margin: 0; color: #0f2233; font-size: 28px; font-weight: 700; line-height: 1.5; }
+    .bp-powered { margin: 4px 0 26px; color: #0f2233; font-size: 12px; }
+    .bp-powered strong { color: #15505b; }
+    .bp-product-list { display: grid; gap: 16px; text-align: left; }
+    .bp-product { overflow: hidden; border: 1px solid #e5e7e8; border-radius: 20px; background: #fff; box-shadow: 0 1px 3px #00000012; }
+    .bp-product-toggle { display: block; width: 100%; padding: 16px; color: inherit; background: transparent; border: 0; text-align: left; }
+    .bp-product-heading { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; }
+    .bp-card-thumbnail { width: 32px; height: 22px; border-radius: 3px; object-fit: cover; }
+    .bp-brand-wordmark { color: #15505b; font-size: 10px; font-weight: 700; letter-spacing: -.5px; }
+    .bp-product-summary { display: flex; justify-content: space-between; gap: 12px; margin-top: 8px; color: #0f2233; font-size: 13px; line-height: 20px; }
+    .bp-chevron { flex: 0 0 auto; width: 8px; height: 8px; margin: 3px 4px 0 0; border-right: 1.5px solid #53616d; border-bottom: 1.5px solid #53616d; transform: rotate(45deg); }
+    .bp-product[aria-expanded="true"] .bp-chevron { transform: rotate(225deg); }
+    .bp-product-panel { padding: 0 16px 18px; color: #0f2233; font-size: 12px; line-height: 18px; }
+    .bp-product[aria-expanded="true"] { background: #f3f4f5; box-shadow: 0 3px 12px #00000018; }
+    .bp-product-panel[hidden] { display: none; }
+    .bp-product-panel p { margin: 8px 0; }
+    .bp-product-panel strong { font-weight: 700; }
+    .bp-payment-schedule { display: grid; grid-template-columns: 1fr auto; gap: 7px 12px; margin-top: 10px; }
+    .bp-or { display: flex; align-items: center; gap: 8px; margin: 8px 0; color: #4e5c6f; font-size: 12px; }
+    .bp-or::before, .bp-or::after { height: 1px; flex: 1; content: ""; background: #cfd8dc; }
+    .bp-disclaimer { margin: 20px auto; color: #333; font-size: 12px; line-height: 18px; }
+    .bp-cta { display: block; width: min(100%, 540px); min-height: 48px; margin: 24px auto 0; padding: 12px 20px; border: 0; border-radius: 40px; color: #fff; background: #134854; font-size: 16px; font-weight: 700; }
+    .bp-cta:disabled { opacity: .5; cursor: not-allowed; }
+    .bp-text-button { display: block; margin: 14px auto 0; padding: 4px 0; border: 0; border-bottom: 1px solid #4e5c6f; color: #3a5060; background: transparent; font-size: 16px; font-weight: 700; }
+    .bp-text-button + .bp-text-button { margin-top: 12px; }
+    .bp-step-content { width: min(540px, calc(100% - 48px)); margin: 46px auto 54px; }
+    .bp-step-content .bp-title { margin-bottom: 2px; }
+    .bp-lead { margin: 8px 0 18px; color: #0f2233; font-size: 16px; line-height: 27px; }
+    .bp-directions { margin: 20px 0 36px; color: #202020; font-size: 16px; font-weight: 700; line-height: 24px; }
+    .bp-field { display: grid; min-height: 56px; align-content: end; gap: 2px; padding: 8px; border-bottom: 1px solid #0f2233; color: #0f2233; }
+    .bp-field label { display: block; color: inherit; font-size: 14px; line-height: 20px; }
+    .bp-field input, .bp-field select { width: 100%; padding: 0; border: 0; border-radius: 0; outline: 0; color: #0f2233; background: transparent; box-shadow: none; font-size: 16px; line-height: 24px; }
+    .bp-field input:focus, .bp-field select:focus { box-shadow: none; }
+    .bp-field.bp-ssn-field { position: relative; }
+    .bp-ssn-field input { padding-right: 38px; }
+    .bp-ssn-toggle { position: absolute; right: 6px; bottom: 5px; width: 30px; height: 30px; padding: 5px; border: 0; color: #4e5c6f; background: transparent; }
+    .bp-ssn-toggle svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+    .bp-field-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 56px; }
+    .bp-field-grid.address-three { grid-template-columns: minmax(0, 2fr) minmax(72px, .8fr) minmax(130px, 2fr); gap: 24px 44px; }
+    .bp-field-offset { margin-top: 24px; }
+    .bp-lock { display: flex; align-items: center; gap: 8px; margin: 20px 0; color: #333f48; font-size: 12px; line-height: 18px; }
+    .bp-lock-mark { position: relative; width: 14px; height: 13px; margin: 7px 2px 0; border: 2px solid #333f48; border-radius: 3px; }
+    .bp-lock-mark::before { position: absolute; top: -8px; left: 2px; width: 6px; height: 7px; content: ""; border: 2px solid #333f48; border-bottom: 0; border-radius: 6px 6px 0 0; }
+    .bp-disclosure { margin: 18px 0; color: #333; font-size: 12px; line-height: 18px; }
+    .bp-disclosure a { color: inherit; font-weight: 700; text-decoration: underline; }
+    .bp-checkbox { display: flex; grid-template-columns: none; align-items: flex-start; gap: 8px; margin: 16px 0; color: #4e5c6f; font-size: 12px; line-height: 18px; }
+    .bp-checkbox input { flex: 0 0 16px; width: 16px; height: 16px; margin: 1px 0 0; padding: 0; accent-color: #134854; }
+    .bp-step-actions { width: min(305px, 100%); margin: 28px auto 0; }
+    .bp-step-actions .bp-cta { margin-top: 0; }
+    .bp-footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; width: min(540px, calc(100% - 48px)); margin: 40px auto 0; padding-bottom: 24px; color: #4e5c6f; font-size: 12px; }
+    .bp-footer-lock { display: flex; align-items: center; gap: 6px; }
+    .bp-footer-brand { width: 70px; height: 10px; object-fit: contain; }
+    .bp-terms-title { padding: 48px 24px 36px; text-align: center; }
+    .bp-terms-title p { margin: 10px 0 0; color: #333; font-size: 18px; font-weight: 700; }
+    .bp-offer { overflow: hidden; border: 1px solid #e4e5e6; border-radius: 24px; background: #f3f4f5; box-shadow: 0 4px 12px #00000020; }
+    .bp-offer-banner { padding: 8px 12px; color: #fff; background: #134854; text-align: center; font-size: 14px; font-weight: 700; }
+    .bp-offer-body { padding: 18px 20px; }
+    .bp-offer-heading { display: flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 700; }
+    .bp-offer-body p { color: #0f2233; font-size: 14px; line-height: 21px; }
+    .bp-offer-body .bp-offer-note { color: #4e5c6f; font-size: 13px; }
+    .bp-perks { padding: 16px 0 0; border-top: 1px solid #cfd8dc; }
+    .bp-perks ul { margin: 8px 0; padding-left: 22px; font-size: 14px; line-height: 24px; }
+    .bp-offer-actions { padding: 16px 20px 20px; background: #fff; }
+    .bp-offer-actions p { margin: 0 0 16px; color: #0f2233; font-size: 14px; line-height: 21px; }
+    .bp-confirmation { margin: 18px 0 0; color: #134854; font-size: 14px; font-weight: 700; text-align: center; }
+    .bp-application-footer { max-width: 920px; }
+    @container preview (max-width: 760px) {
+      .bp-content { width: min(540px, calc(100% - 40px)); margin-top: 32px; }
+      .bp-intro { width: min(540px, calc(100% - 40px)); margin-top: 42px; }
+      .bp-step-content { width: min(540px, calc(100% - 40px)); margin-top: 36px; }
+      .bp-field-grid, .bp-field-grid.address-three { grid-template-columns: 1fr; gap: 12px; }
+      .bp-terms-title { padding-top: 32px; }
+      .bp-application-footer { width: min(540px, calc(100% - 40px)); }
+    }
     .capability-tags { margin-top: 18px; padding: 24px; background: var(--canvas); border: 1px solid var(--hairline); border-radius: 8px; }
     .capability-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
     .capability-heading h2 { margin: 0; font-size: 16px; line-height: 24px; }
@@ -364,6 +448,183 @@
           <div class="actions"><button class="button secondary" id="restart">Start over</button><button class="button primary" id="apply">Continue application</button></div>
           <p class="fineprint">This result is simulated and is not an offer of credit or a guarantee of approval.</p>
         </div>
+        <div id="breadpay-intro-screen" class="screen breadpay-screen hidden">
+          <header class="bp-header"><img class="bp-logo" src="./urbrand-logo.png" alt="URBrand"><button type="button" data-bp-close aria-label="Close prequalification">&times;</button></header>
+          <div class="bp-intro">
+            <img class="bp-logo" src="./urbrand-logo.png" alt="" aria-hidden="true">
+            <h2>Let’s Get Started</h2>
+            <p class="bp-powered">Powered by <strong>Bread Financial</strong></p>
+            <div class="bp-product-list" aria-label="Payment options">
+              <section class="bp-product" data-bp-product aria-expanded="true">
+                <button class="bp-product-toggle" type="button" aria-expanded="true">
+                  <span class="bp-product-heading"><img class="bp-card-thumbnail" src="./urbrand-credit-card.png" alt=""> URBrand Credit Card</span>
+                  <span class="bp-product-summary">Low pricing for 12 months with the URBrand Credit Card <span class="bp-chevron" aria-hidden="true"></span></span>
+                </button>
+                <div class="bp-product-panel">
+                  <p><strong>Plus more perks like:</strong></p>
+                  <ul><li>Get 10% off your first purchase when you open and use the URBrand card at URBrand.com.</li><li>$50 store credit for any URBrand purchases for orders over $200.</li></ul>
+                </div>
+              </section>
+              <div class="bp-or" aria-hidden="true">Or</div>
+              <section class="bp-product" data-bp-product aria-expanded="false">
+                <button class="bp-product-toggle" type="button" aria-expanded="false">
+                  <span class="bp-product-heading"><span class="bp-brand-wordmark" aria-hidden="true">URBRAND</span> Installments</span>
+                  <span class="bp-product-summary">Flexible monthly payment plans starting at 0.00% APR<sup>§</sup><span class="bp-chevron" aria-hidden="true"></span></span>
+                </button>
+                <div class="bp-product-panel" hidden>
+                  <p>Here are two examples of Bread Pay™ installment plans. Amounts may not include tax and shipping.</p>
+                  <strong>Sample payment plans for a $1,000.00 purchase:</strong>
+                  <div class="bp-payment-schedule"><strong>$171.56/month for 6 months</strong><span>9.99% APR</span><span>Interest: $29.34</span><span>Total: $1,029.36</span><strong>$111.56/month for 12 months</strong><span>19.99% APR</span><span>Interest: $62.93</span><span>Total: $1,116.56</span></div>
+                  <p>6 and 12 month plans are available.</p>
+                </div>
+              </section>
+              <section class="bp-product" data-bp-product aria-expanded="false">
+                <button class="bp-product-toggle" type="button" aria-expanded="false">
+                  <span class="bp-product-heading"><span class="bp-brand-wordmark" aria-hidden="true">URBRAND</span> SplitPay</span>
+                  <span class="bp-product-summary">4 interest-free payments every 2 weeks<span class="bp-chevron" aria-hidden="true"></span></span>
+                </button>
+                <div class="bp-product-panel" hidden>
+                  <p>This is an example of a Bread Pay™ SplitPay plan. Payments are automatically applied to your debit or credit card every 2 weeks.</p>
+                  <strong>Sample payments for a $1,000.00 purchase:</strong>
+                  <div class="bp-payment-schedule"><span>Today</span><strong>$250.00</strong><span>In 2 weeks</span><strong>$250.00</strong><span>In 4 weeks</span><strong>$250.00</strong><span>In 6 weeks</span><strong>$250.00</strong></div>
+                </div>
+              </section>
+            </div>
+            <p class="bp-disclaimer">Checking your eligibility is quick and easy. <strong>And it won’t affect your credit score.</strong></p>
+            <button class="bp-cta" type="button" data-bp-next="breadpay-email-screen">Continue</button>
+            <div class="bp-disclaimer">
+              <p>Minimum purchase of $[specific to merchant minimum purchase] is required. Availability of terms may vary based on purchase price and/or product. Subject to approval of credit application.</p>
+              <p>Available for purchases between $X and $X. A temporary authorization hold will be placed on your debit or credit card to ensure your card will cover the first two payments.</p>
+              <p>Subject to approval of credit application.</p>
+              <p>Bread Pay™ loans are made by Comenity Capital Bank, a Bread Financial™ company.</p>
+            </div>
+          </div>
+        </div>
+        <div id="breadpay-email-screen" class="screen breadpay-screen hidden">
+          <header class="bp-header"><img class="bp-logo" src="./urbrand-logo.png" alt="URBrand"><button type="button" data-bp-close aria-label="Close prequalification">&times;</button></header>
+          <div class="bp-step-content">
+            <div class="bp-narrow">
+              <h2 class="bp-title">Check If You Prequalify</h2>
+              <p class="bp-lead">Checking your eligibility is quick and easy. And it won’t affect your credit score.</p>
+              <p class="bp-directions">Enter your email to get started:</p>
+              <div class="bp-field"><label for="bp-email">Email</label><input id="bp-email" type="email" autocomplete="email" placeholder="name@example.com" required></div>
+              <div class="bp-step-actions">
+                <button class="bp-cta" type="button" data-bp-next="breadpay-phone-screen" id="bp-email-continue" disabled>Continue</button>
+                <button class="bp-text-button" type="button" data-bp-back="breadpay-intro-screen">Back to Previous</button>
+              </div>
+            </div>
+          </div>
+          <footer class="bp-footer"><span class="bp-footer-lock"><span class="bp-lock-mark" aria-hidden="true"></span>Encrypted</span><img class="bp-footer-brand" src="./BFH%20logo.svg" alt="Bread Financial"></footer>
+        </div>
+        <div id="breadpay-phone-screen" class="screen breadpay-screen hidden">
+          <header class="bp-header"><img class="bp-logo" src="./urbrand-logo.png" alt="URBrand"><button type="button" data-bp-close aria-label="Close prequalification">&times;</button></header>
+          <div class="bp-step-content">
+            <div class="bp-narrow">
+              <h2 class="bp-title">Mobile Verification</h2>
+              <p class="bp-lead">To protect your identity, we’ll text you a verification code.</p>
+              <div class="bp-field"><label for="bp-mobile">Mobile Number</label><input id="bp-mobile" type="tel" inputmode="tel" autocomplete="tel" placeholder="(555) 555-5555" required></div>
+              <p class="bp-disclosure">By selecting “Agree &amp; Continue,” I agree to be contacted regarding any of my Bread Financial®, Comenity Bank, or Comenity Capital Bank credit accounts, including calls and texts by their affiliates and service providers. Message frequency varies. Message and data rates may apply. I also agree to the <a href="https://www.breadfinancial.com/en/privacy.html" target="_blank" rel="noopener">Privacy Policies/Choices</a> and <a href="https://www.breadfinancial.com/en/legal/bread-pay-and-loans-terms.html" target="_blank" rel="noopener">Bread Pay Terms of Use</a> (including <a href="https://www.breadpayments.com/terms-of-use/#esign-consent" target="_blank" rel="noopener">E-SIGN consent</a> and <a href="https://www.breadpayments.com/terms-of-use/#arbitration" target="_blank" rel="noopener">Arbitration</a>). By proceeding, you will receive a one-time security link to your mobile number. Your wireless carrier may provide account and device information to help identify you and prevent fraud.</p>
+              <div class="bp-step-actions">
+                <button class="bp-cta" type="button" data-bp-next="breadpay-address-screen" id="bp-phone-continue" disabled>Agree &amp; Continue</button>
+                <button class="bp-text-button" type="button" data-bp-back="breadpay-email-screen">Back to Previous</button>
+              </div>
+            </div>
+          </div>
+          <footer class="bp-footer"><span class="bp-footer-lock"><span class="bp-lock-mark" aria-hidden="true"></span>Encrypted</span><img class="bp-footer-brand" src="./BFH%20logo.svg" alt="Bread Financial"></footer>
+        </div>
+        <div id="breadpay-address-screen" class="screen breadpay-screen hidden">
+          <header class="bp-header"><img class="bp-logo" src="./urbrand-logo.png" alt="URBrand"><button type="button" data-bp-close aria-label="Close prequalification">&times;</button></header>
+          <div class="bp-content">
+            <h2 class="bp-title">Billing Address</h2>
+            <p class="bp-lead">(Physical street address)</p>
+            <div class="bp-field-grid">
+              <div class="bp-field"><label for="bp-first-name">Legal First Name</label><input id="bp-first-name" autocomplete="given-name" value="Carol" required></div>
+              <div class="bp-field"><label for="bp-last-name">Legal Last Name</label><input id="bp-last-name" autocomplete="family-name" value="Smith" required></div>
+              <div class="bp-field"><label for="bp-street">Street Address</label><input id="bp-street" autocomplete="address-line1" value="15 Main Street" required></div>
+              <div class="bp-field"><label for="bp-apartment">Apt./Suite (Optional)</label><input id="bp-apartment" autocomplete="address-line2"></div>
+            </div>
+            <div class="bp-field-grid address-three bp-field-offset">
+              <div class="bp-field"><label for="bp-city">City</label><input id="bp-city" autocomplete="address-level2" value="Sea Girt" required></div>
+              <div class="bp-field"><label for="bp-state">State</label><input id="bp-state" autocomplete="address-level1" value="NJ" maxlength="2" required></div>
+              <div class="bp-field"><label for="bp-zip">ZIP Code</label><input id="bp-zip" inputmode="numeric" autocomplete="postal-code" value="08750" maxlength="5" required></div>
+            </div>
+            <div class="bp-lock"><span class="bp-lock-mark" aria-hidden="true"></span>We’ll encrypt your data.</div>
+            <label class="bp-checkbox"><input id="bp-opt-out" type="checkbox"><span>I would like to opt out of sharing my personal information with [merchant name] for Bread Pay™ marketing purposes.</span></label>
+            <div class="bp-step-actions">
+              <button class="bp-cta" type="button" data-bp-next="breadpay-eligibility-screen" id="bp-address-continue">Continue</button>
+              <button class="bp-text-button" type="button" data-bp-back="breadpay-phone-screen">Back to Previous</button>
+            </div>
+          </div>
+        </div>
+        <div id="breadpay-eligibility-screen" class="screen breadpay-screen hidden">
+          <header class="bp-header"><img class="bp-logo" src="./urbrand-logo.png" alt="URBrand"><button type="button" data-bp-close aria-label="Close prequalification">&times;</button></header>
+          <div class="bp-step-content">
+            <div class="bp-narrow">
+              <h2 class="bp-title">Eligibility</h2>
+              <p class="bp-lead">We use this information to verify you and check your eligibility.</p>
+              <p class="bp-directions">Checking your eligibility will not affect your credit score. Your information is encrypted for added protection.</p>
+              <div class="bp-field"><label for="bp-dob">Date of Birth</label><input id="bp-dob" type="text" inputmode="numeric" autocomplete="bday" placeholder="MM/DD/YYYY" required></div>
+              <div class="bp-field bp-ssn-field bp-field-offset"><label for="bp-ssn">Full SSN</label><input id="bp-ssn" type="password" inputmode="numeric" autocomplete="off" maxlength="9" required><button class="bp-ssn-toggle" id="bp-ssn-toggle" type="button" aria-label="Show full SSN" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg></button></div>
+              <div class="bp-lock"><span class="bp-lock-mark" aria-hidden="true"></span>We’ll encrypt your data.</div>
+              <p class="bp-disclosure">By selecting “View Your Offers,” you agree that you are authorizing Comenity Capital Bank to obtain your personal credit information solely to conduct a prequalification for credit offers.</p>
+              <div class="bp-step-actions">
+                <button class="bp-cta" type="button" id="bp-view-offers" disabled>View Your Offers</button>
+                <button class="bp-text-button" type="button" data-bp-back="breadpay-address-screen">Back to Previous</button>
+                <button class="bp-text-button" type="button" data-bp-restart>Restart Application</button>
+              </div>
+            </div>
+          </div>
+          <footer class="bp-footer"><span class="bp-footer-lock"><span class="bp-lock-mark" aria-hidden="true"></span>Encrypted</span><img class="bp-footer-brand" src="./BFH%20logo.svg" alt="Bread Financial"></footer>
+        </div>
+        <div id="breadpay-terms-screen" class="screen breadpay-screen hidden">
+          <header class="bp-header"><img class="bp-logo" src="./urbrand-logo.png" alt="URBrand"><button type="button" data-bp-close aria-label="Close prequalification">&times;</button></header>
+          <div class="bp-terms-title"><h2 class="bp-title">You’re Eligible!</h2><p>Choose the way you’d like to pay.</p></div>
+          <div class="bp-content bp-narrow">
+            <section class="bp-offer">
+              <div class="bp-offer-banner">PREQUALIFIED FOR UP TO <strong>$1,200.00</strong><sup>‡</sup></div>
+              <div class="bp-offer-body">
+                <div class="bp-offer-heading"><img class="bp-card-thumbnail" src="./urbrand-credit-card.png" alt=""> URBrand Credit Card</div>
+                <p>As low as <strong>$100.00/month</strong><sup>1</sup> for 12 months with the URBrand Credit Card for a total payment of <strong>$1,200.00</strong></p>
+                <p class="bp-offer-note">‡This credit limit is based on your prequalification and may increase or decrease based on information provided with your credit application. <strong>Back to content</strong></p>
+                <div class="bp-perks"><p>Plus more perks like:</p><ul><li><strong>10% off your first purchase when you use your URBrand Credit Card.</strong><sup>1</sup></li><li><strong>$50 store credit for any URBrand purchases for orders over $200.</strong><sup>2</sup></li></ul><p><a href="#bp-offer-disclosure">Learn more ›</a></p></div>
+              </div>
+              <div class="bp-offer-actions">
+                <p>Accepting the credit card offer may result in a hard inquiry, which may impact your credit score.</p>
+                <button class="bp-cta" type="button" id="bp-accept-offer" data-bp-accept data-bp-accept-label="Accept Offer">Accept Offer</button>
+              </div>
+            </section>
+            <div class="bp-or" aria-hidden="true">Or</div>
+            <div class="bp-terms-options" aria-label="More payment options">
+              <section class="bp-product" data-bp-product aria-expanded="false">
+                <button class="bp-product-toggle" type="button" aria-expanded="false">
+                  <span class="bp-product-heading"><span class="bp-brand-wordmark" aria-hidden="true">URBRAND</span> Installments</span>
+                  <span class="bp-product-summary">Flexible monthly payment plans starting at 0.00% APR<sup>§</sup><span class="bp-chevron" aria-hidden="true"></span></span>
+                </button>
+                <div class="bp-product-panel" hidden>
+                  <p>Choose from flexible monthly payment plans. Sample payment plans for a $1,000.00 purchase:</p>
+                  <div class="bp-payment-schedule"><strong>$171.56/month for 6 months</strong><span>9.99% APR</span><span>Interest: $29.34</span><span>Total: $1,029.36</span><strong>$111.56/month for 12 months</strong><span>19.99% APR</span><span>Interest: $62.93</span><span>Total: $1,116.56</span></div>
+                  <button class="bp-cta" type="button" data-bp-accept data-bp-accept-label="Continue with Installments">Continue with Installments</button>
+                </div>
+              </section>
+              <section class="bp-product" data-bp-product aria-expanded="false">
+                <button class="bp-product-toggle" type="button" aria-expanded="false">
+                  <span class="bp-product-heading"><span class="bp-brand-wordmark" aria-hidden="true">URBRAND</span> SplitPay</span>
+                  <span class="bp-product-summary">4 interest-free payments every 2 weeks<span class="bp-chevron" aria-hidden="true"></span></span>
+                </button>
+                <div class="bp-product-panel" hidden>
+                  <p>Payments are automatically applied to your debit or credit card every 2 weeks.</p>
+                  <strong>Sample payments for a $1,000.00 purchase:</strong>
+                  <div class="bp-payment-schedule"><span>Today</span><strong>$250.00</strong><span>In 2 weeks</span><strong>$250.00</strong><span>In 4 weeks</span><strong>$250.00</strong><span>In 6 weeks</span><strong>$250.00</strong></div>
+                  <button class="bp-cta" type="button" data-bp-accept data-bp-accept-label="Continue with SplitPay">Continue with SplitPay</button>
+                </div>
+              </section>
+            </div>
+            <p id="bp-offer-confirmation" class="bp-confirmation" hidden>Offer accepted. Your prequalification demo is complete.</p>
+            <button class="bp-text-button" type="button" data-bp-restart>Restart Application</button>
+            <div id="bp-offer-disclosure" class="bp-disclaimer"><p>Offer terms and availability are subject to credit approval. This prequalification result is for demonstration only and is not a final credit decision.</p></div>
+          </div>
+          <footer class="bp-footer bp-application-footer"><span class="bp-footer-lock"><span class="bp-lock-mark" aria-hidden="true"></span>Encrypted</span><img class="bp-footer-brand" src="./BFH%20logo.svg" alt="Bread Financial"></footer>
+        </div>
             </section>
           </div>
         </div>
@@ -426,8 +687,9 @@
     </div>
   </main>
   <script>
-    const state = { outcome: 'approved' };
+    const state = { outcome: 'approved', applicationEntryRequested: false, breadPayFlow: false };
     const details = document.getElementById('details-screen');
+    const flowPanel = document.querySelector('.flow');
     const standardDetails = document.getElementById('standard-details');
     const instantDetails = document.getElementById('instant-credit-details');
     const reviewDetails = document.getElementById('review-details-screen');
@@ -437,6 +699,14 @@
     const approval = document.getElementById('approval-screen');
     const verify = document.getElementById('verify-screen');
     const result = document.getElementById('result-screen');
+    const breadPayScreens = {
+      intro: document.getElementById('breadpay-intro-screen'),
+      email: document.getElementById('breadpay-email-screen'),
+      phone: document.getElementById('breadpay-phone-screen'),
+      address: document.getElementById('breadpay-address-screen'),
+      eligibility: document.getElementById('breadpay-eligibility-screen'),
+      terms: document.getElementById('breadpay-terms-screen')
+    };
     const steps = [...document.querySelectorAll('.step')];
     const resultBox = document.getElementById('result');
     const resultTitle = document.getElementById('result-title');
@@ -465,6 +735,7 @@
     };
     const capabilityTypeInputs = document.querySelectorAll('input[name="capability"]');
     const applyCapability = document.getElementById('apply-capability');
+    const capabilityOptionInputs = document.querySelectorAll('input[name="capability-option"]');
     const outcomeInputs = document.querySelectorAll('input[name="outcome"]');
     const capabilityTags = ['prequalification', 'full_application', 'soft_credit_inquiry', 'hard_credit_inquiry', 'income_navigator', 'cash_atlas', 'rtps', 'identity_verification', 'income_verification', 'bank_account_connection', 'one_time_passcode', 'fraud_review', 'waterfall_lending', 'account_assure', 'split_pay', 'pay_in_4', 'installment_plan', 'deferred_interest', 'credit_line_increase', 'digital_card', 'add_to_wallet'];
     const selectedCapabilities = new Set(['prequalification', 'full_application', 'identity_verification', 'soft_credit_inquiry', 'hard_credit_inquiry']);
@@ -552,7 +823,7 @@
     function showScenarioDetails() {
       const edsSelected = document.querySelector('input[name="capability"]:checked')?.value === 'EDS';
       const approvedSelected = document.querySelector('input[name="outcome"]:checked')?.value === 'approved';
-      const instantFlow = edsSelected && applyCapability.checked && approvedSelected;
+      const instantFlow = state.applicationEntryRequested || (edsSelected && applyCapability.checked && approvedSelected);
       standardDetails.classList.toggle('hidden', instantFlow);
       instantDetails.classList.toggle('hidden', !instantFlow);
       updateInstantContinue();
@@ -563,7 +834,7 @@
       document.getElementById('instant-continue').classList.toggle('ready', valid);
     }
     function showScreen(screen) {
-      const screens = [details, secureCode, reviewDetails, authorizedUser, reviewSubmit, approval, verify, result];
+      const screens = [details, secureCode, reviewDetails, authorizedUser, reviewSubmit, approval, verify, result, ...Object.values(breadPayScreens)];
       const screenCopy = {
         'details-screen': 'Tell us a little about yourself.',
         'review-details-screen': 'Review and complete your application.',
@@ -572,12 +843,34 @@
         'review-submit-screen': 'Review the final disclosures.',
         'approval-screen': 'Your application is complete.',
         'verify-screen': 'One quick security check.',
-        'result-screen': 'Review your simulated next step.'
+        'result-screen': 'Review your simulated next step.',
+        'breadpay-intro-screen': 'Choose a payment option.',
+        'breadpay-email-screen': 'Enter your email to get started.',
+        'breadpay-phone-screen': 'Verify your mobile number.',
+        'breadpay-address-screen': 'Enter your billing address.',
+        'breadpay-eligibility-screen': 'Check your eligibility.',
+        'breadpay-terms-screen': 'Review your eligible offer.'
       };
       screens.forEach(item => item.classList.toggle('hidden', item !== screen));
-      const screenIndex = screens.indexOf(screen);
+      flowPanel.classList.toggle('breadpay-mode', screen.classList.contains('breadpay-screen'));
+      const standardScreens = [details, secureCode, reviewDetails, authorizedUser, reviewSubmit, approval, verify, result];
+      const screenIndex = standardScreens.indexOf(screen);
       steps.forEach((item, index) => { item.classList.toggle('active', index === Math.min(screenIndex, steps.length - 1)); item.classList.toggle('done', index < Math.min(screenIndex, steps.length - 1)); });
-      stepCopy.textContent = screenCopy[screen.id];
+      stepCopy.textContent = screenCopy[screen.id] || 'Bread Pay prequalification.';
+    }
+    function openBreadPayFlow(screen) {
+      state.breadPayFlow = true;
+      showScreen(screen);
+    }
+    function closeBreadPayFlow() {
+      state.breadPayFlow = false;
+      showScenarioDetails();
+      showScreen(details);
+    }
+    function isBreadPayScenarioSelected() {
+      return document.querySelector('input[name="capability"]:checked')?.value === 'EDS'
+        && document.querySelector('input[name="capability-option"]:checked')?.value === 'Prequalification with Bread Pay'
+        && document.querySelector('input[name="outcome"]:checked')?.value === 'approved';
     }
     document.getElementById('continue').addEventListener('click', () => {
       if (!document.getElementById('consent').checked) { document.getElementById('consent').focus(); return; }
@@ -608,7 +901,7 @@
     document.getElementById('submit-application').addEventListener('click', () => showScreen(approval));
     document.getElementById('back').addEventListener('click', () => showScreen(details));
     document.getElementById('verify').addEventListener('click', () => {
-      if (!/^\\d{6}$/.test(document.getElementById('code').value)) { document.getElementById('code').focus(); return; }
+      if (!/^\d{6}$/.test(document.getElementById('code').value.trim())) { document.getElementById('code').focus(); return; }
       const copy = {
         approved: ['Approved', 'You can continue to a full application to see your final options. A full application may require additional information.', 'offer'],
         declined: ['Declined', 'You can explore other products or return later. This simulated result does not affect your credit.', 'decline'],
@@ -639,19 +932,143 @@
       resultCopy.textContent = 'You can continue to a full application to see your final options. A full application may require additional information.';
       document.getElementById('apply').textContent = 'Continue application';
       document.getElementById('submit-application').disabled = true;
+      state.outcome = document.querySelector('input[name="outcome"]:checked')?.value || 'approved';
+      state.applicationEntryRequested = false;
+      state.breadPayFlow = false;
+      document.querySelectorAll('.bp-product-list, .bp-terms-options').forEach(list => {
+        list.querySelectorAll('[data-bp-product]').forEach((item, index) => {
+          const expanded = list.classList.contains('bp-product-list') && index === 0;
+          item.setAttribute('aria-expanded', String(expanded));
+          item.querySelector('.bp-product-toggle').setAttribute('aria-expanded', String(expanded));
+          item.querySelector('.bp-product-panel').hidden = !expanded;
+        });
+      });
+      document.querySelectorAll('[data-bp-accept]').forEach(button => {
+        button.disabled = false;
+        button.textContent = button.dataset.bpAcceptLabel;
+      });
+      document.getElementById('bp-offer-confirmation').hidden = true;
+      bpSsn.type = 'password';
+      document.getElementById('bp-ssn-toggle').setAttribute('aria-label', 'Show full SSN');
+      document.getElementById('bp-ssn-toggle').setAttribute('aria-pressed', 'false');
+      updateBreadPayActions();
       showScenarioDetails();
       showScreen(details);
     }
     document.getElementById('restart-demo').addEventListener('click', resetDemo);
     document.getElementById('restart').addEventListener('click', resetDemo);
+    document.getElementById('apply').addEventListener('click', () => {
+      if (state.outcome !== 'approved') {
+        resetDemo();
+        return;
+      }
+      state.applicationEntryRequested = true;
+      showScenarioDetails();
+      showScreen(details);
+    });
+    document.querySelectorAll('[data-bp-product]').forEach(product => {
+      const button = product.querySelector('.bp-product-toggle');
+      const panel = product.querySelector('.bp-product-panel');
+      button.addEventListener('click', () => {
+        const expanded = product.getAttribute('aria-expanded') === 'true';
+        product.parentElement.querySelectorAll('[data-bp-product]').forEach(item => {
+          const selected = item === product && !expanded;
+          item.setAttribute('aria-expanded', String(selected));
+          item.querySelector('.bp-product-toggle').setAttribute('aria-expanded', String(selected));
+          item.querySelector('.bp-product-panel').hidden = !selected;
+        });
+      });
+    });
+    document.querySelectorAll('[data-bp-next]').forEach(button => {
+      button.addEventListener('click', () => {
+        const nextScreen = document.getElementById(button.dataset.bpNext);
+        if (nextScreen) showScreen(nextScreen);
+      });
+    });
+    document.querySelectorAll('[data-bp-back]').forEach(button => {
+      button.addEventListener('click', () => {
+        const previousScreen = document.getElementById(button.dataset.bpBack);
+        if (previousScreen) showScreen(previousScreen);
+      });
+    });
+    document.querySelectorAll('[data-bp-close]').forEach(button => button.addEventListener('click', closeBreadPayFlow));
+    document.querySelectorAll('[data-bp-restart]').forEach(button => button.addEventListener('click', resetDemo));
+    const bpEmail = document.getElementById('bp-email');
+    const bpMobile = document.getElementById('bp-mobile');
+    const bpAddressInputs = ['bp-first-name', 'bp-last-name', 'bp-street', 'bp-city', 'bp-state', 'bp-zip'].map(id => document.getElementById(id));
+    const bpDob = document.getElementById('bp-dob');
+    const bpSsn = document.getElementById('bp-ssn');
+    const bpEmailContinue = document.getElementById('bp-email-continue');
+    const bpPhoneContinue = document.getElementById('bp-phone-continue');
+    const bpAddressContinue = document.getElementById('bp-address-continue');
+    const bpViewOffers = document.getElementById('bp-view-offers');
+    function updateBreadPayActions() {
+      bpEmailContinue.disabled = !bpEmail.validity.valid || !bpEmail.value.trim();
+      const phoneDigits = bpMobile.value.replace(/\D/g, '');
+      bpPhoneContinue.disabled = !(phoneDigits.length === 10 || (phoneDigits.length === 11 && phoneDigits[0] === '1'));
+      bpAddressContinue.disabled = bpAddressInputs.some(input => !input.value.trim()) || !/^\d{5}$/.test(document.getElementById('bp-zip').value);
+      const dateMatch = bpDob.value.trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+      const date = dateMatch && new Date(Number(dateMatch[3]), Number(dateMatch[1]) - 1, Number(dateMatch[2]));
+      const validDate = dateMatch && date.getFullYear() === Number(dateMatch[3])
+        && date.getMonth() === Number(dateMatch[1]) - 1
+        && date.getDate() === Number(dateMatch[2]);
+      bpViewOffers.disabled = !validDate || !/^\d{9}$/.test(bpSsn.value);
+    }
+    [bpEmail, bpMobile, ...bpAddressInputs, bpDob, bpSsn].forEach(input => input.addEventListener('input', updateBreadPayActions));
+    document.getElementById('bp-view-offers').addEventListener('click', () => {
+      updateBreadPayActions();
+      if (bpViewOffers.disabled) {
+        (!/^\d{9}$/.test(bpSsn.value) ? bpSsn : bpDob).focus();
+        return;
+      }
+      showScreen(breadPayScreens.terms);
+    });
+    document.getElementById('bp-ssn-toggle').addEventListener('click', event => {
+      const visible = bpSsn.type === 'password';
+      bpSsn.type = visible ? 'text' : 'password';
+      event.currentTarget.setAttribute('aria-label', `${visible ? 'Hide' : 'Show'} full SSN`);
+      event.currentTarget.setAttribute('aria-pressed', String(visible));
+    });
+    document.querySelectorAll('[data-bp-accept]').forEach(button => {
+      button.addEventListener('click', () => {
+        document.querySelectorAll('[data-bp-accept]').forEach(offerButton => { offerButton.disabled = true; });
+        button.textContent = 'Offer Accepted';
+        document.getElementById('bp-offer-confirmation').textContent = 'Offer accepted. Your prequalification demo is complete.';
+        document.getElementById('bp-offer-confirmation').hidden = false;
+      });
+    });
+    document.querySelectorAll('.instant-back, .instant-cancel, .instant-close').forEach(button => {
+      button.addEventListener('click', () => {
+        if (!state.applicationEntryRequested) return;
+        state.applicationEntryRequested = false;
+        showScenarioDetails();
+        showScreen(result);
+      });
+    });
     capabilityTypeInputs.forEach(input => input.addEventListener('change', () => {
       const isEds = input.value === 'EDS' && input.checked;
       document.getElementById('eds-options').classList.toggle('hidden', !isEds);
       document.getElementById('stand-alone-options').classList.toggle('hidden', isEds);
+      if (isBreadPayScenarioSelected()) openBreadPayFlow(breadPayScreens.intro);
+      else if (state.breadPayFlow) closeBreadPayFlow();
       showScenarioDetails();
     }));
-    outcomeInputs.forEach(input => input.addEventListener('change', () => { state.outcome = input.value; showScenarioDetails(); }));
-    applyCapability.addEventListener('change', showScenarioDetails);
+    outcomeInputs.forEach(input => input.addEventListener('change', () => {
+      state.outcome = input.value;
+      if (isBreadPayScenarioSelected()) openBreadPayFlow(breadPayScreens.intro);
+      else if (state.breadPayFlow) closeBreadPayFlow();
+      showScenarioDetails();
+    }));
+    capabilityOptionInputs.forEach(input => input.addEventListener('change', () => {
+      state.applicationEntryRequested = false;
+      showScenarioDetails();
+      if (isBreadPayScenarioSelected()) {
+        openBreadPayFlow(breadPayScreens.intro);
+        return;
+      }
+      state.breadPayFlow = false;
+      showScreen(details);
+    }));
     capabilitySearch.addEventListener('input', renderCapabilities);
     ['instant-mobile', 'instant-ssn', 'instant-zip'].forEach(id => document.getElementById(id).addEventListener('input', event => {
       if (id === 'instant-ssn') document.getElementById('instant-ssn-mask').textContent = '*'.repeat(event.currentTarget.value.length);
@@ -659,6 +1076,7 @@
     }));
     selectPreset(screenPreset.value);
     showScenarioDetails();
+    updateBreadPayActions();
     renderCapabilities();
   </script>
 </body>
