@@ -9,7 +9,7 @@ seo:
   metaDescription: "Vercel's design language as a DESIGN.md file. Ink #171717, Geist + Geist Mono, mesh gradient, 40+ components. For React, Next.js, and AI tools."
   highlights:
     - "Single ink primary — #171717 carries every CTA, never softened to a brand-blue or secondary accent"
-    - "One mesh gradient — cyan #50e3c2, blue #007cf0, pink #ff0080, amber #f9cb28 fused, used only at hero scale"
+    - "One mesh gradient — sea spray #B1E4E3, seafoam #6FC1D2, dark sea foam #2D9DC1, blue #007DBA, fused, used only at hero scale"
     - "Two pill scales coexist — 100px marketing CTAs and 6px nav buttons, never mixed inside one screen"
     - "Geist display caps at weight 600 — aggressive -2.4px tracking carries voice instead of heavier weights"
     - "Stacked shadows over single drops — 4-12% black opacity layered with an inset hairline ring on every card"
