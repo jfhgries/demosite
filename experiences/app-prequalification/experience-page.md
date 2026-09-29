@@ -48,7 +48,7 @@ A local coded prototype is available. It contains simulated data and outcomes on
 
 ## Screen gallery
 
-The prototype includes four responsive screens in journey order:
+The prototype includes the standard prequalification journey and an enhanced Bread Pay path. The Bread Pay path is available when the scenario is set to EDS, Prequalification with Bread Pay, and Approved.
 
 | Screen | Journey step | Viewport | Description | Disclosures |
 | --- | --- | --- | --- | --- |
@@ -56,6 +56,12 @@ The prototype includes four responsive screens in journey order:
 | Personal details | Prequalification | Desktop and mobile | Collects the minimum simulated inputs. | Placeholder, review needed |
 | Verification | Verification | Desktop and mobile | Demonstrates one-time passcode entry and recovery. | Placeholder, review needed |
 | Result | Decision | Desktop and mobile | Shows an offer, pending state, or decline path. | Placeholder, review needed |
+| Bread Pay product entry | Awareness | Desktop and mobile | Introduces the credit card, installment, and SplitPay options; each option expands to show details. | Placeholder, review needed |
+| Bread Pay email | Prequalification | Desktop and mobile | Collects an email address before mobile verification. | Placeholder, review needed |
+| Bread Pay mobile verification | Verification | Desktop and mobile | Collects a mobile number and presents the consent and contact disclosures. | Placeholder, review needed |
+| Bread Pay billing address | Prequalification | Desktop and mobile | Collects the applicant’s physical billing address and marketing opt-out preference. | Placeholder, review needed |
+| Bread Pay eligibility | Prequalification | Desktop and mobile | Collects date of birth and full SSN before a simulated eligibility check. | Placeholder, review needed |
+| Bread Pay eligible offer | Decision | Desktop and mobile | Presents a simulated credit-card offer and installment and SplitPay options. | Placeholder, review needed |
 
 ## Interactive demo
 
@@ -64,6 +70,7 @@ The prototype includes four responsive screens in journey order:
 - **Credentials required:** No
 - **External demonstration approved:** Review needed
 - **Supported scenarios:** Offer available, more verification needed, no offer
+- **Enhanced Bread Pay scenario:** Choose EDS → Prequalification with Bread Pay → Approved to open the responsive product-selection and offer flow.
 - **Known limitations:** No real services, no approved disclosures, no production analytics, and no completed accessibility review.
 - **Last validated:** Not available
 - **Demo owner:** TBD
