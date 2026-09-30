@@ -47,6 +47,19 @@
     .preview-width-control input[type="range"] { width: 100%; height: 22px; margin: 0; padding: 0; border: 0; accent-color: var(--ink); }
     .restart-demo { min-height: 38px; border: 1px solid #a1a1a1; border-radius: 6px; padding: 0 14px; color: var(--ink); background: var(--canvas); font-size: 13px; }
     .restart-demo:hover { background: var(--soft); }
+    .preview-actions { display: flex; align-items: center; gap: 8px; }
+    .copy-menu-wrap { position: relative; display: flex; }
+    .copy-link, .copy-menu-toggle { min-height: 38px; border: 1px solid #a1a1a1; color: var(--ink); background: var(--canvas); font-size: 13px; }
+    .copy-link { border-radius: 6px 0 0 6px; padding: 0 12px; }
+    .copy-menu-toggle { width: 34px; margin-left: -1px; border-radius: 0 6px 6px 0; }
+    .copy-link:hover, .copy-menu-toggle:hover { background: var(--soft); }
+    .copy-menu-toggle::after { display: inline-block; width: 7px; height: 7px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; content: ""; transform: translateY(-2px) rotate(45deg); }
+    .copy-menu { position: absolute; z-index: 5; top: calc(100% + 4px); right: 0; min-width: 150px; padding: 4px; border: 1px solid #dedede; border-radius: 6px; background: var(--canvas); box-shadow: var(--shadow); }
+    .copy-menu[hidden] { display: none; }
+    .copy-menu-item { width: 100%; padding: 9px 10px; border: 0; border-radius: 4px; color: var(--ink); background: transparent; text-align: left; font-size: 13px; }
+    .copy-menu-item:hover, .copy-menu-item:focus-visible { background: var(--soft); }
+    .copy-toast { position: fixed; z-index: 10; right: 24px; bottom: 24px; padding: 11px 16px; border-radius: 6px; color: #fff; background: #171717; box-shadow: var(--shadow); font-size: 13px; }
+    .copy-toast[hidden] { display: none; }
     .preview-stage { width: 100%; overflow-x: auto; padding: 12px; border: 1px solid #dedede; border-radius: 8px; background: #f0f1f2; }
     .preview-viewport { width: 1280px; max-width: none; margin: 0 auto; container: preview / inline-size; }
     .panel { background: var(--canvas); border: 1px solid var(--hairline); border-radius: 12px; box-shadow: var(--shadow); }
@@ -330,7 +343,16 @@
             <span class="preview-width-heading"><span>Preview width</span><output id="preview-width-output" for="preview-width">1280px</output></span>
             <input id="preview-width" type="range" min="320" max="1728" step="1" value="1280">
           </label>
-          <button class="restart-demo" id="restart-demo" type="button">Restart Demo</button>
+          <div class="preview-actions">
+            <div class="copy-menu-wrap">
+              <button class="copy-link" id="copy-link" type="button">Copy link</button>
+              <button class="copy-menu-toggle" id="copy-menu-toggle" type="button" aria-label="More copy options" aria-haspopup="true" aria-expanded="false" aria-controls="copy-menu"></button>
+              <div class="copy-menu" id="copy-menu" role="menu" hidden>
+                <button class="copy-menu-item" id="copy-image" type="button" role="menuitem">Copy image</button>
+              </div>
+            </div>
+            <button class="restart-demo" id="restart-demo" type="button">Restart Demo</button>
+          </div>
         </div>
         <div class="preview-stage">
           <div class="preview-viewport" id="preview-viewport">
@@ -689,7 +711,10 @@
       </aside>
     </div>
   </main>
+  <div class="copy-toast" id="copy-toast" role="status" aria-live="polite" hidden></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script>
+    const publicSiteUrl = 'https://orange-giggle-5vqw679qwgqcp7v6-8000.app.github.dev/';
     const state = { outcome: 'approved', applicationEntryRequested: false, breadPayFlow: false };
     const details = document.getElementById('details-screen');
     const flowPanel = document.querySelector('.flow');
@@ -720,6 +745,10 @@
     const previewWidth = document.getElementById('preview-width');
     const previewWidthOutput = document.getElementById('preview-width-output');
     const previewViewport = document.getElementById('preview-viewport');
+    const copyMenuToggle = document.getElementById('copy-menu-toggle');
+    const copyMenu = document.getElementById('copy-menu');
+    const copyToast = document.getElementById('copy-toast');
+    let copyToastTimeout;
     const previewPresets = {
       'mobile-small': { device: 'Mobile', width: 320 },
       'mobile-medium': { device: 'Mobile', width: 376 },
@@ -823,6 +852,49 @@
       document.querySelector(`input[name="device"][value="${preset.device}"]`).checked = true;
       setPreviewWidth(preset.width);
     }
+    function showCopyToast(message) {
+      copyToast.textContent = message;
+      copyToast.hidden = false;
+      clearTimeout(copyToastTimeout);
+      copyToastTimeout = setTimeout(() => { copyToast.hidden = true; }, 2400);
+    }
+    async function copyPreviewImage() {
+      if (!navigator.clipboard?.write || typeof ClipboardItem === 'undefined' || typeof html2canvas !== 'function') {
+        throw new Error('Image copying is not available in this browser.');
+      }
+      const canvas = await html2canvas(previewViewport, { backgroundColor: '#ffffff', scale: 1, logging: false });
+      const image = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+      if (!image) throw new Error('The preview image could not be created.');
+      await navigator.clipboard.write([new ClipboardItem({ 'image/png': image })]);
+    }
+    document.getElementById('copy-link').addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(publicSiteUrl);
+        showCopyToast('Link copied');
+      } catch {
+        showCopyToast('Could not copy link');
+      }
+    });
+    copyMenuToggle.addEventListener('click', () => {
+      copyMenu.hidden = !copyMenu.hidden;
+      copyMenuToggle.setAttribute('aria-expanded', String(!copyMenu.hidden));
+    });
+    document.getElementById('copy-image').addEventListener('click', async () => {
+      copyMenu.hidden = true;
+      copyMenuToggle.setAttribute('aria-expanded', 'false');
+      try {
+        await copyPreviewImage();
+        showCopyToast('Image copied');
+      } catch (error) {
+        showCopyToast(error.message || 'Could not copy image');
+      }
+    });
+    document.addEventListener('click', event => {
+      if (!event.target.closest('.copy-menu-wrap')) {
+        copyMenu.hidden = true;
+        copyMenuToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
     deviceInputs.forEach(input => input.addEventListener('change', () => {
       const presetId = deviceDefaults[input.value];
       screenPreset.value = presetId;
