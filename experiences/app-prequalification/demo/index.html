@@ -4,6 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Apply prequalification | Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" rel="stylesheet">
   <style>
     :root {
       --ink: #171717;
@@ -25,9 +28,12 @@
     body { margin: 0; min-width: 320px; }
     button, input { font: inherit; }
     button { cursor: pointer; }
-    .topbar { height: 64px; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; background: var(--canvas); border-bottom: 1px solid var(--hairline); }
+    .topbar { min-height: 64px; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px; background: var(--canvas); border-bottom: 1px solid var(--hairline); }
     .brand { display: flex; align-items: center; font-weight: 600; letter-spacing: -0.4px; }
     .brand-logo { display: block; width: 160px; height: 23px; }
+    .top-menu-actions { display: flex; align-items: center; gap: 12px; font-family: Poppins, sans-serif; }
+    .restart-button, .restart-demo-wrapper { display: flex; }
+    .restart-button .restart-demo { min-height: 40px; padding: 0 16px; border-color: #d1d5db; border-radius: 4px; font-family: inherit; font-size: 14px; font-weight: 400; }
     .nav { display: flex; align-items: center; gap: 8px; color: var(--body); font-size: 14px; }
     .nav a { color: inherit; text-decoration: none; padding: 6px 10px; border-radius: 6px; }
     .nav a:hover { background: var(--soft); color: var(--ink); }
@@ -40,13 +46,31 @@
     .hero p { position: relative; z-index: 1; max-width: 570px; margin: 24px 0 0; color: var(--body); font-size: 18px; line-height: 28px; }
     .content { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 24px; padding-top: 40px; align-items: start; }
     .preview-column { min-width: 0; }
-    .preview-controls { display: grid; grid-template-columns: minmax(0, 1fr) minmax(180px, 1fr) auto; gap: 16px; align-items: end; margin-bottom: 12px; }
+    .preview-controls { display: grid; grid-template-columns: minmax(0, 1fr) minmax(180px, 1fr); gap: 16px; align-items: end; margin-bottom: 12px; }
     .preview-controls label { gap: 6px; color: var(--body); font-size: 12px; }
     .preview-controls select { width: 100%; min-height: 38px; border: 1px solid #a1a1a1; border-radius: 6px; padding: 8px 10px; color: var(--ink); background: var(--canvas); font: inherit; }
     .preview-width-heading { display: flex; justify-content: space-between; gap: 8px; }
     .preview-width-control input[type="range"] { width: 100%; height: 22px; margin: 0; padding: 0; border: 0; accent-color: var(--ink); }
     .restart-demo { min-height: 38px; border: 1px solid #a1a1a1; border-radius: 6px; padding: 0 14px; color: var(--ink); background: var(--canvas); font-size: 13px; }
     .restart-demo:hover { background: var(--soft); }
+    .preview-actions { display: flex; align-items: center; gap: 8px; }
+    .copy-menu-wrap { position: relative; display: flex; flex-direction: row; }
+    .copy-link, .copy-menu-toggle { min-height: 38px; border: 1px solid #a1a1a1; color: var(--ink); background: var(--canvas); font-size: 13px; }
+    .copy-link { min-height: 40px; order: 2; border-color: #d1d5db; border-radius: 0 4px 4px 0; padding: 0 16px; font-family: inherit; font-size: 14px; }
+    .copy-menu-toggle { display: grid; place-items: center; width: 40px; min-height: 40px; order: 1; margin-right: -1px; border-color: #d1d5db; border-radius: 4px 0 0 4px; }
+    .copy-link:hover, .copy-menu-toggle:hover { background: var(--soft); }
+    .copy-menu-toggle::after { display: inline-block; width: 7px; height: 7px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; content: ""; transform: translateY(-2px) rotate(45deg); transition: transform 120ms ease; }
+    .copy-menu-toggle[aria-expanded="true"]::after { transform: translateY(2px) rotate(225deg); }
+    .copy-button-componentvariant4 { position: relative; display: flex; }
+    .iconchevron-down, .bounds { display: contents; }
+    .copy-menu { position: absolute; z-index: 5; top: calc(100% + 4px); right: 0; min-width: 150px; padding: 4px; border: 1px solid #dedede; border-radius: 6px; background: var(--canvas); box-shadow: var(--shadow); }
+    .copy-menu[hidden] { display: none; }
+    .copy-menu-item { width: 100%; padding: 9px 10px; border: 0; border-radius: 4px; color: var(--ink); background: transparent; text-align: left; font-size: 13px; }
+    .copy-menu-item:hover, .copy-menu-item:focus-visible { background: var(--soft); }
+    .copy-menu-item[aria-checked="true"] { background: #f0f1f2; }
+    .copy-menu-item[aria-checked="true"]::after { float: right; content: "✓"; }
+    .copy-toast { position: fixed; z-index: 10; right: 24px; bottom: 24px; padding: 11px 16px; border-radius: 6px; color: #fff; background: #171717; box-shadow: var(--shadow); font-size: 13px; }
+    .copy-toast[hidden] { display: none; }
     .preview-stage { width: 100%; overflow-x: auto; padding: 12px; border: 1px solid #dedede; border-radius: 8px; background: #f0f1f2; }
     .preview-viewport { width: 1280px; max-width: none; margin: 0 auto; container: preview / inline-size; }
     .panel { background: var(--canvas); border: 1px solid var(--hairline); border-radius: 12px; box-shadow: var(--shadow); }
@@ -280,14 +304,18 @@
       .instant-modal { padding: 0 20px 24px; }
     }
     @media (max-width: 760px) {
-      .topbar { padding: 0 20px; }
+      .topbar { flex-wrap: wrap; padding: 12px 20px; }
+      .brand-logo { width: 140px; }
+      .top-menu-actions { width: 100%; justify-content: flex-end; }
       .nav a:first-child { display: none; }
       .shell { padding: 0 20px 56px; }
       .hero { margin: 0 -20px; padding: 56px 20px 48px; }
       h1 { letter-spacing: -2px; }
       .content { grid-template-columns: 1fr; padding-top: 24px; }
       .preview-controls { grid-template-columns: 1fr; gap: 10px; }
-      .restart-demo { justify-self: start; }
+      .top-menu-actions { gap: 8px; }
+      .restart-button .restart-demo, .copy-link { padding-right: 10px; padding-left: 10px; font-size: 12px; }
+      .copy-menu-toggle { width: 34px; }
       .capability-tags { padding: 18px; }
     }
   </style>
@@ -295,7 +323,20 @@
 <body>
   <header class="topbar">
     <div class="brand"><img class="brand-logo" src="./BFH%20logo.svg" alt="Bread Financial"></div>
-    <nav class="nav" aria-label="Primary"><a href="#about">About</a><a href="#support">Support</a><a href="#" class="mono">Prototype</a></nav>
+    <div class="top-menu-actions">
+      <div class="restart-button">
+        <div class="restart-demo-wrapper">
+          <button class="restart-demo" id="restart-demo" type="button">Restart demo</button>
+        </div>
+      </div>
+      <div class="copy-button-componentvariant4 copy-menu-wrap">
+        <button class="copy-menu-toggle" id="copy-menu-toggle" type="button" aria-label="Open copy options" aria-haspopup="true" aria-expanded="false" aria-controls="copy-menu"><span class="iconchevron-down"><span class="bounds"></span></span></button>
+        <button class="copy-link" id="copy-link" type="button">Copy demo link</button>
+        <div class="copy-menu" id="copy-menu" role="menu" hidden>
+          <button class="copy-menu-item" id="copy-image" type="button" role="menuitemradio" aria-checked="false">Copy image</button>
+        </div>
+      </div>
+    </div>
   </header>
   <main class="shell">
     <section class="hero" id="about">
@@ -330,13 +371,10 @@
             <span class="preview-width-heading"><span>Preview width</span><output id="preview-width-output" for="preview-width">1280px</output></span>
             <input id="preview-width" type="range" min="320" max="1728" step="1" value="1280">
           </label>
-          <button class="restart-demo" id="restart-demo" type="button">Restart Demo</button>
         </div>
         <div class="preview-stage">
           <div class="preview-viewport" id="preview-viewport">
-            <section class="panel flow" aria-labelledby="flow-title">
-        <div class="flow-header"><div><h2 id="flow-title">Let's get started</h2><p id="step-copy">Tell us a little about yourself.</p></div><span class="status" id="status">SIMULATED DEMO</span></div>
-        <div class="steps" aria-label="Progress"><span class="step active"></span><span class="step"></span><span class="step"></span><span class="step"></span></div>
+            <section class="panel flow" aria-label="Prequalification demo preview">
         <div id="details-screen" class="screen">
           <div id="standard-details">
           <h3>Your details</h3>
@@ -689,7 +727,10 @@
       </aside>
     </div>
   </main>
+  <div class="copy-toast" id="copy-toast" role="status" aria-live="polite" hidden></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script>
+    const publicSiteUrl = 'https://orange-giggle-5vqw679qwgqcp7v6-8000.app.github.dev/experiences/app-prequalification/demo/index.html';
     const state = { outcome: 'approved', applicationEntryRequested: false, breadPayFlow: false };
     const details = document.getElementById('details-screen');
     const flowPanel = document.querySelector('.flow');
@@ -710,16 +751,32 @@
       eligibility: document.getElementById('breadpay-eligibility-screen'),
       terms: document.getElementById('breadpay-terms-screen')
     };
-    const steps = [...document.querySelectorAll('.step')];
     const resultBox = document.getElementById('result');
     const resultTitle = document.getElementById('result-title');
     const resultCopy = document.getElementById('result-copy');
-    const stepCopy = document.getElementById('step-copy');
+    const brandInput = document.getElementById('brand');
     const deviceInputs = document.querySelectorAll('input[name="device"]');
     const screenPreset = document.getElementById('screen-preset');
     const previewWidth = document.getElementById('preview-width');
     const previewWidthOutput = document.getElementById('preview-width-output');
     const previewViewport = document.getElementById('preview-viewport');
+    const copyMenuToggle = document.getElementById('copy-menu-toggle');
+    const copyMenu = document.getElementById('copy-menu');
+    const copyToast = document.getElementById('copy-toast');
+    let copyToastTimeout;
+    let originalBrandText = [];
+    let originalBrandAlt = [];
+    const brandLogoAssets = {
+      'The Home Depot': '../logos/the-home-depot.svg',
+      'Academy Sports + Outdoors': '../logos/academy-sports-outdoors.svg',
+      'Dell Pay': '../logos/dell.svg',
+      Ross: '../logos/ross.png',
+      Loft: '../logos/loft.png',
+      Burlington: '../logos/burlington.png',
+      AAA: '../logos/aaa.svg',
+      Ford: '../logos/ford.svg',
+      HP: '../logos/hp.svg'
+    };
     const previewPresets = {
       'mobile-small': { device: 'Mobile', width: 320 },
       'mobile-medium': { device: 'Mobile', width: 376 },
@@ -823,6 +880,83 @@
       document.querySelector(`input[name="device"][value="${preset.device}"]`).checked = true;
       setPreviewWidth(preset.width);
     }
+    function showCopyToast(message) {
+      copyToast.textContent = message;
+      copyToast.hidden = false;
+      clearTimeout(copyToastTimeout);
+      copyToastTimeout = setTimeout(() => { copyToast.hidden = true; }, 2400);
+    }
+    function applyBrand() {
+      const nextBrand = brandInput.value.trim() || 'URBrand';
+      if (originalBrandText.length === 0) {
+        const walker = document.createTreeWalker(previewViewport, NodeFilter.SHOW_TEXT);
+        let textNode;
+        while ((textNode = walker.nextNode())) originalBrandText.push([textNode, textNode.nodeValue]);
+        originalBrandAlt = [...previewViewport.querySelectorAll('[alt]')].map(image => [image, image.alt]);
+      }
+      const replaceBrand = text => text.replace(/URBrand|URBRAND|Demo brand/g, value => value === value.toUpperCase() ? nextBrand.toUpperCase() : nextBrand);
+      originalBrandText.forEach(([node, text]) => {
+        node.nodeValue = replaceBrand(text);
+      });
+      originalBrandAlt.forEach(([image, alt]) => {
+        image.alt = replaceBrand(alt);
+      });
+      const brandLogo = nextBrand === 'URBrand' ? './urbrand-logo.png' : brandLogoAssets[nextBrand];
+      previewViewport.querySelectorAll('.bp-logo').forEach(image => {
+        image.hidden = !brandLogo;
+        if (brandLogo) image.src = brandLogo;
+      });
+      previewViewport.querySelectorAll('.bp-card-thumbnail').forEach(image => {
+        image.hidden = nextBrand !== 'URBrand';
+      });
+    }
+    function createDemoLink() {
+      const url = new URL(publicSiteUrl);
+      url.searchParams.set('brand', brandInput.value.trim() || 'URBrand');
+      url.searchParams.set('device', document.querySelector('input[name="device"]:checked').value);
+      url.searchParams.set('capability', document.querySelector('input[name="capability"]:checked').value);
+      url.searchParams.set('capability-option', document.querySelector('input[name="capability-option"]:checked').value);
+      url.searchParams.set('outcome', document.querySelector('input[name="outcome"]:checked').value);
+      return url.toString();
+    }
+    async function copyPreviewImage() {
+      if (!navigator.clipboard?.write || typeof ClipboardItem === 'undefined' || typeof html2canvas !== 'function') {
+        throw new Error('Image copying is not available in this browser.');
+      }
+      const canvas = await html2canvas(previewViewport, { backgroundColor: '#ffffff', scale: 1, logging: false });
+      const image = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+      if (!image) throw new Error('The preview image could not be created.');
+      await navigator.clipboard.write([new ClipboardItem({ 'image/png': image })]);
+    }
+    document.getElementById('copy-link').addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(createDemoLink());
+        showCopyToast('Demo link copied');
+      } catch {
+        showCopyToast('Could not copy link');
+      }
+    });
+    copyMenuToggle.addEventListener('click', () => {
+      copyMenu.hidden = !copyMenu.hidden;
+      copyMenuToggle.setAttribute('aria-expanded', String(!copyMenu.hidden));
+    });
+    document.getElementById('copy-image').addEventListener('click', async () => {
+      copyMenu.hidden = true;
+      copyMenuToggle.setAttribute('aria-expanded', 'false');
+      try {
+        await copyPreviewImage();
+        document.getElementById('copy-image').setAttribute('aria-checked', 'true');
+        showCopyToast('Image copied');
+      } catch (error) {
+        showCopyToast(error.message || 'Could not copy image');
+      }
+    });
+    document.addEventListener('click', event => {
+      if (!event.target.closest('.copy-menu-wrap')) {
+        copyMenu.hidden = true;
+        copyMenuToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
     deviceInputs.forEach(input => input.addEventListener('change', () => {
       const presetId = deviceDefaults[input.value];
       screenPreset.value = presetId;
@@ -851,28 +985,8 @@
     }
     function showScreen(screen) {
       const screens = [details, secureCode, reviewDetails, authorizedUser, reviewSubmit, approval, verify, result, ...Object.values(breadPayScreens)];
-      const screenCopy = {
-        'details-screen': 'Tell us a little about yourself.',
-        'review-details-screen': 'Review and complete your application.',
-        'secure-code-screen': 'One quick security check.',
-        'authorized-user-screen': 'Customize your account.',
-        'review-submit-screen': 'Review the final disclosures.',
-        'approval-screen': 'Your application is complete.',
-        'verify-screen': 'One quick security check.',
-        'result-screen': 'Review your simulated next step.',
-        'breadpay-intro-screen': 'Choose a payment option.',
-        'breadpay-email-screen': 'Enter your email to get started.',
-        'breadpay-phone-screen': 'Verify your mobile number.',
-        'breadpay-address-screen': 'Enter your billing address.',
-        'breadpay-eligibility-screen': 'Check your eligibility.',
-        'breadpay-terms-screen': 'Review your eligible offer.'
-      };
       screens.forEach(item => item.classList.toggle('hidden', item !== screen));
       flowPanel.classList.toggle('breadpay-mode', screen.classList.contains('breadpay-screen'));
-      const standardScreens = [details, secureCode, reviewDetails, authorizedUser, reviewSubmit, approval, verify, result];
-      const screenIndex = standardScreens.indexOf(screen);
-      steps.forEach((item, index) => { item.classList.toggle('active', index === Math.min(screenIndex, steps.length - 1)); item.classList.toggle('done', index < Math.min(screenIndex, steps.length - 1)); });
-      stepCopy.textContent = screenCopy[screen.id] || 'Bread Pay prequalification.';
     }
     function openBreadPayFlow(screen) {
       state.breadPayFlow = true;
@@ -1086,12 +1200,27 @@
       showScreen(details);
     }));
     capabilitySearch.addEventListener('input', renderCapabilities);
+    brandInput.addEventListener('input', applyBrand);
     ['instant-mobile', 'instant-ssn', 'instant-zip'].forEach(id => document.getElementById(id).addEventListener('input', event => {
       if (id === 'instant-ssn') document.getElementById('instant-ssn-mask').textContent = '*'.repeat(event.currentTarget.value.length);
       updateInstantContinue();
     }));
+    const sharedDemoParams = new URLSearchParams(window.location.search);
+    if (sharedDemoParams.has('brand')) brandInput.value = sharedDemoParams.get('brand');
+    for (const [name, parameter] of [['device', 'device'], ['capability', 'capability'], ['capability-option', 'capability-option'], ['outcome', 'outcome']]) {
+      const value = sharedDemoParams.get(parameter);
+      const input = value && document.querySelector(`input[name="${name}"][value="${CSS.escape(value)}"]`);
+      if (input) input.checked = true;
+    }
+    const selectedDevice = document.querySelector('input[name="device"]:checked').value;
+    screenPreset.value = deviceDefaults[selectedDevice];
+    document.getElementById('eds-options').classList.toggle('hidden', document.querySelector('input[name="capability"]:checked').value !== 'EDS');
+    document.getElementById('stand-alone-options').classList.toggle('hidden', document.querySelector('input[name="capability"]:checked').value === 'EDS');
+    state.outcome = document.querySelector('input[name="outcome"]:checked').value;
+    applyBrand();
     selectPreset(screenPreset.value);
-    showScenarioDetails();
+    if (isBreadPayScenarioSelected()) openBreadPayFlow(breadPayScreens.intro);
+    else showScenarioDetails();
     updateBreadPayActions();
     renderCapabilities();
   </script>
