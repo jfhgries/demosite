@@ -10,7 +10,7 @@ experience:
   lifecycle_status: "pilot"
   current_version: "0.1.0"
   release_date: null
-  last_updated: "2026-09-16"
+  last_updated: "2026-10-13"
   last_reviewed: "2026-09-16"
   review_status: "review_needed"
 
@@ -215,14 +215,14 @@ logos:
 demo_readiness:
   available: "in_progress"
   demo_type: "coded_demo"
-  environment: "Local static prototype"
+  environment: "GitHub Pages static site"
   credentials_required: false
   demo_data_included: true
-  external_demonstration_approved: "review_needed"
+  external_demonstration_approved: "approved"
   known_limitations:
     - "No real credit bureau, identity, or income services are connected."
     - "Decision outcomes are simulated and must not be presented as eligibility or credit advice."
-    - "Disclosure copy is placeholder content pending legal and compliance review."
+    - "Approved disclosure IDs and version metadata are not recorded in this repository."
   last_validation_date: null
   demo_owner: "TBD"
 
@@ -328,7 +328,7 @@ measurement:
 compliance:
   compliance_review_status: "review_needed"
   legal_review_status: "review_needed"
-  external_demonstration_approval: "review_needed"
+  external_demonstration_approval: "approved"
   associated_disclosure_ids: []
   current_disclosure_version: "not_available"
   disclosure_effective_date: null
@@ -343,8 +343,8 @@ compliance:
 
 artifacts:
   - type: "demo"
-    label: "Coded local prototype"
-    url: "./demo/index.html"
+    label: "Coded prototype on GitHub Pages"
+    url: "https://jfhgries.github.io/demosite/"
     authoritative: true
   - type: "experience_page"
     label: "Apply prequalification experience page"
@@ -370,13 +370,21 @@ governance:
   content_approver: "TBD"
   date_created: "2026-09-16"
   created_by: "TBD"
-  last_modified: "2026-09-16"
+  last_modified: "2026-10-13"
   modified_by: "TBD"
   next_review_date: "2026-10-16"
   review_frequency: "monthly"
   archive_status: "not_archived"
   archive_reason: null
   change_history:
+    - date: "2026-10-13"
+      version: "0.1.0"
+      summary: "Configured GitHub Pages deployment for the approved simulated prototype."
+      reason: "Make the coded demo externally accessible."
+      affected_screens_or_steps: ["Public demo link"]
+      disclosure_impact: "Existing disclosure copy approved for external demonstration; disclosure IDs and version metadata are not recorded here."
+      owner: "TBD"
+      approval_status: "approved"
     - date: "2026-09-16"
       version: "0.1.0"
       summary: "Created the initial coded prototype record and simulated journey."
@@ -397,7 +405,7 @@ readiness_scorecard:
   accessibility_reviewed: "not_available"
   disclosures_current: "not_available"
   compliance_review_current: "not_available"
-  external_demonstration_approved: "review_needed"
+  external_demonstration_approved: "approved"
   page_reviewed_and_current: "complete"
 
 next_steps:
