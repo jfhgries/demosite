@@ -818,7 +818,6 @@
       </div>
     </section>
   </main>
-  <div class="copy-toast" id="copy-toast" role="status" aria-live="polite" hidden></div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script>
     const publicSiteUrl = 'https://jfhgries.github.io/demosite/';
@@ -834,6 +833,7 @@
     const approval = document.getElementById('approval-screen');
     const verify = document.getElementById('verify-screen');
     const result = document.getElementById('result-screen');
+    const steps = [...document.querySelectorAll('.step')];
     const breadPayScreens = {
       intro: document.getElementById('breadpay-intro-screen'),
       email: document.getElementById('breadpay-email-screen'),
