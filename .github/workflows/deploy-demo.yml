@@ -28,10 +28,15 @@ jobs:
         uses: actions/configure-pages@v5
         with:
           enablement: true
+      - name: Assemble demo site
+        run: |
+          mkdir -p _site/logos
+          cp -R experiences/app-prequalification/demo/. _site/
+          cp -R experiences/app-prequalification/logos/. _site/logos/
       - name: Upload demo site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: experiences/app-prequalification/demo
+          path: _site
       - name: Deploy demo site
         id: deployment
         uses: actions/deploy-pages@v4
