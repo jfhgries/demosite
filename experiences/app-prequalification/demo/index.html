@@ -111,7 +111,7 @@
     .brand-suggestions[hidden] { display: none; }
     .brand-suggestion { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 40px; padding: 5px 8px; border: 0; border-radius: 4px; color: var(--ink); background: transparent; text-align: left; font: inherit; cursor: pointer; }
     .brand-suggestion:hover, .brand-suggestion:focus-visible { background: #f0f1f2; outline: none; }
-    .brand-suggestion-logo, .brand-suggestion-mark { flex: 0 0 32px; width: 32px; height: 28px; object-fit: contain; }
+    .brand-suggestion-logo, .brand-suggestion-mark { flex: 0 0 44px; width: 44px; height: 32px; object-fit: contain; }
     .brand-suggestion-mark { display: grid; place-items: center; border-radius: 4px; color: var(--body); background: var(--soft); font-size: 11px; font-weight: 600; }
     .scenario p { color: var(--mute); font-size: 12px; line-height: 16px; margin: 20px 0 0; }
     .scenario p { color: var(--mute); font-size: 12px; line-height: 16px; margin: 20px 0 0; }
@@ -688,10 +688,11 @@
       <aside class="panel scenario" aria-labelledby="scenario-title">
         <h2 id="scenario-title">Demo scenario</h2>
         <h3>Brand</h3>
-        <label class="brand-search">Search brands
+        <div class="brand-search">
+          <label for="brand">Search brands</label>
           <input id="brand" role="combobox" aria-autocomplete="list" aria-controls="brand-suggestions" aria-expanded="false" placeholder="Start typing a brand" autocomplete="off">
           <div class="brand-suggestions" id="brand-suggestions" role="listbox" hidden></div>
-        </label>
+        </div>
         <h3>Device type</h3>
         <div class="chip-group" id="device-types">
           <label class="chip"><input type="radio" name="device" value="Desktop" checked>Desktop</label>
@@ -779,10 +780,17 @@
       Ross: './logos/ross.png',
       Loft: './logos/loft.png',
       Burlington: './logos/burlington.png',
-      AAA: './logos/aaa.svg',
+      AAA: './logos/aaa.png',
       Ford: './logos/ford.svg',
       HP: './logos/hp.svg'
     };
+    function createBrandMark(name) {
+      const mark = document.createElement('span');
+      mark.className = 'brand-suggestion-mark';
+      mark.textContent = name.slice(0, 2).toUpperCase();
+      mark.setAttribute('aria-hidden', 'true');
+      return mark;
+    }
     function renderBrandSuggestions() {
       const query = brandInput.value.trim().toLowerCase();
       const matches = brandNames.filter(name => name.toLowerCase().includes(query));
@@ -799,13 +807,10 @@
           logo.src = logoPath;
           logo.alt = '';
           logo.setAttribute('aria-hidden', 'true');
+          logo.addEventListener('error', () => logo.replaceWith(createBrandMark(name)), { once: true });
           option.append(logo);
         } else {
-          const mark = document.createElement('span');
-          mark.className = 'brand-suggestion-mark';
-          mark.textContent = name.slice(0, 2).toUpperCase();
-          mark.setAttribute('aria-hidden', 'true');
-          option.append(mark);
+          option.append(createBrandMark(name));
         }
         const label = document.createElement('span');
         label.textContent = name;
