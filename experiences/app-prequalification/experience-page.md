@@ -9,17 +9,17 @@
 - **Channels:** Desktop web, mobile web, embedded experience
 - **Product owner:** TBD
 - **Design owner:** TBD
-- **Last updated:** 2026-09-16
+- **Last updated:** 2026-10-13
 - **Last reviewed:** 2026-09-16
 - **Review status:** Review needed
 
 ### Quick actions
 
-- Demo: [Open coded prototype](./demo/index.html)
-- Prototype: [Open coded prototype](./demo/index.html)
+- Demo: [Open live coded prototype](https://jfhgries.github.io/demosite/)
+- Prototype: [Open live coded prototype](https://jfhgries.github.io/demosite/)
 - Complete user flow: [Journey snapshot](#journey-snapshot)
 - Research: Not available
-- Disclosures: Review needed
+- Disclosures: Approved for external demo; IDs not linked
 - Approved screens: Not available
 
 ## Overview
@@ -65,13 +65,13 @@ The prototype includes the standard prequalification journey and an enhanced Bre
 
 ## Interactive demo
 
-- **Demo type and link:** [Coded local prototype](./demo/index.html)
+- **Demo type and link:** [Coded prototype on GitHub Pages](https://jfhgries.github.io/demosite/)
 - **Live or simulated:** Simulated
 - **Credentials required:** No
-- **External demonstration approved:** Review needed
+- **External demonstration approved:** Yes
 - **Supported scenarios:** Offer available, more verification needed, no offer
 - **Enhanced Bread Pay scenario:** Choose EDS → Prequalification with Bread Pay → Approved to open the responsive product-selection and offer flow.
-- **Known limitations:** No real services, no approved disclosures, no production analytics, and no completed accessibility review.
+- **Known limitations:** No real services, no disclosure IDs or version metadata, no production analytics, and no completed accessibility review.
 - **Last validated:** Not available
 - **Demo owner:** TBD
 
@@ -127,7 +127,7 @@ No production measurement is available. Proposed future measures are prequalific
 
 ## Compliance and disclosure center
 
-No disclosure IDs are linked. This prototype must not be externally demonstrated until prequalification, soft-inquiry, result, and transition-to-application language is approved.
+No disclosure IDs are linked in this repository. The disclosure copy is approved for external demonstration; keep the simulated result clearly distinguished from a final credit decision.
 
 ## Accessibility
 

@@ -16,6 +16,10 @@ This repository is the searchable source of truth for credit application experie
 4. Keep customer data, credentials, secrets, and unapproved disclosure text out of the repository.
 5. Set `review_status` and `last_reviewed` honestly; do not infer current performance from missing metrics.
 
+## Public demo
+
+The Apply prequalification prototype is configured for publication at [jfhgries.github.io/demosite](https://jfhgries.github.io/demosite/). It will be available after the GitHub Actions workflow in `.github/workflows/deploy-demo.yml` runs on `main`.
+
 ## Design principles
 
 - Metadata is structured for search and comparison; narrative pages explain the experience.
