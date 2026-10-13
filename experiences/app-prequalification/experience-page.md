@@ -68,7 +68,7 @@ The EDS Bread Pay flow uses the URBrand logo in its header; desktop headers have
 ## Interactive demo
 
 - **Demo type and link:** [Coded local prototype](./demo/index.html)
-- **Sections:** Use the Admin tab to choose brand, capability type, capability, device, and viewport settings. The live preview sits between the viewport controls and capability tags, and its active-settings summary updates immediately; the Demo tab displays that same experience full screen.
+- **Sections:** Use the Admin tab to choose brand, capability type, capability, device, and viewport settings. Brand search opens a scrollable list of all brands and filters predictively as you type. The live preview sits between the viewport controls and capability tags, and its active-settings summary updates immediately; the Demo tab displays that same experience at the selected viewport width.
 - **Preview actions:** In Demo, copy a direct link (including the selected scenario and viewport settings) or copy the active demo image; confirmation toasts indicate successful copies.
 - **Presentation:** The demo flow omits the introductory title/status header, and the personal-details start screen has no soft-inquiry checkbox.
 - **Live or simulated:** Simulated
