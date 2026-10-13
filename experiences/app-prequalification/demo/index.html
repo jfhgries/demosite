@@ -99,7 +99,7 @@
     .demo-mode .shell { max-width: none; min-height: calc(100vh - 64px); padding: 0; }
     .demo-mode .demo-stage { min-height: calc(100vh - 122px); }
     .demo-mode .preview-stage { min-height: calc(100vh - 122px); padding: 0; }
-    .demo-mode .preview-viewport { width: 100% !important; min-height: calc(100vh - 122px); margin: 0; }
+    .demo-mode .preview-viewport { min-height: calc(100vh - 122px); margin: 0 auto; }
     .demo-mode .preview-viewport > .flow { min-height: calc(100vh - 122px); border: 0; border-radius: 0; box-shadow: none; }
     .demo-mode .preview-viewport > .flow.breadpay-mode { min-height: 0; }
     .panel { background: var(--canvas); border: 1px solid var(--hairline); border-radius: 12px; box-shadow: var(--shadow); }
@@ -237,9 +237,9 @@
     .flow.breadpay-mode { padding: 0; overflow: hidden; border: 0; border-radius: 0; box-shadow: none; }
     .flow.breadpay-mode > .steps { display: none; }
     .breadpay-screen { min-height: 640px; color: #0f2233; background: #fff; font-family: var(--font-product); }
-    .bp-header { height: 90px; display: flex; align-items: center; justify-content: space-between; padding: 0 4.7%; border-bottom: 1px solid #cfd8dc; }
+    .bp-header { height: 90px; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; border-bottom: 1px solid #cfd8dc; }
     .bp-logo { display: block; width: 140px; height: 42px; object-fit: contain; }
-    .bp-header button { width: 40px; height: 40px; padding: 0; color: #080707; background: transparent; border: 0; font-size: 30px; line-height: 1; }
+    .bp-header button { width: 40px; height: 40px; margin-left: auto; padding: 0; color: #080707; background: transparent; border: 0; font-size: 30px; line-height: 1; }
     .bp-content { width: min(920px, calc(100% - 48px)); margin: 42px auto 64px; }
     .bp-narrow { width: min(540px, 100%); margin-right: auto; margin-left: auto; }
     .bp-intro { width: min(720px, calc(100% - 48px)); margin: 48px auto 54px; text-align: center; }
@@ -320,7 +320,7 @@
       .instant-close { display: grid; place-items: center; width: 24px; height: 24px; padding: 0; font-size: 24px; }
       .instant-divider { margin-top: 23px; background: #cfd8dc; }
       .instant-back { margin-right: 24px; margin-left: 24px; }
-      .bp-header { height: 90px; min-height: 90px; align-items: flex-start; justify-content: flex-start; gap: min(480px, calc(100% - 164px)); padding: 24px 24px 0; }
+      .bp-header { height: 90px; min-height: 90px; align-items: flex-start; padding: 24px 24px 0; }
       .bp-header button { display: grid; place-items: center; align-self: center; width: 24px; height: 24px; font-size: 24px; }
     }
     @media screen and (max-width: 1110px) {
@@ -1141,8 +1141,7 @@
       sectionPanels.forEach(panel => { panel.hidden = panel.id !== `${name}-view`; });
       document.body.classList.toggle('demo-mode', name === 'demo');
       (name === 'demo' ? demoStage : adminPreviewHost).append(previewStage);
-      if (name === 'demo') previewViewport.style.removeProperty('width');
-      else previewViewport.style.width = `${previewWidth.value}px`;
+      previewViewport.style.width = `${previewWidth.value}px`;
       closeCopyMenu();
       if (updateHistory) {
         const url = new URL(window.location.href);
