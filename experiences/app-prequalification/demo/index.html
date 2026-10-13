@@ -127,6 +127,8 @@
     .instant-brand-row { display: flex; align-items: center; justify-content: space-between; min-height: 34px; }
     .instant-brand { display: flex; align-items: center; gap: 8px; color: #16212b; font-size: 15px; font-weight: 700; }
     .instant-brand-mark { width: 22px; height: 22px; background: #16212b; transform: rotate(45deg); border-radius: 3px; }
+    .instant-brand-logo { display: block; width: 100px; height: 28px; object-fit: contain; }
+    .bp-logo[hidden], .instant-brand-logo[hidden] { display: none; }
     .instant-close { color: #425466; font-size: 25px; line-height: 1; border: 0; background: transparent; padding: 0 4px; }
     .instant-divider { height: 1px; margin-top: 18px; background: #d9dee3; }
     .instant-back { display: inline-flex; gap: 6px; margin-top: 18px; color: #425466; background: transparent; border: 0; padding: 0; font-size: 14px; }
@@ -396,7 +398,7 @@
           </div>
           <div id="instant-credit-details" class="instant-credit hidden">
             <div class="instant-header">
-              <div class="instant-brand-row"><div class="instant-brand"><span class="instant-brand-mark" aria-hidden="true"></span><span>Demo brand</span></div><button class="instant-close" aria-label="Close application">&times;</button></div>
+              <div class="instant-brand-row"><div class="instant-brand"><span class="instant-brand-mark" aria-hidden="true"></span><img class="instant-brand-logo" alt="" aria-hidden="true" hidden><span>Demo brand</span></div><button class="instant-close" aria-label="Close application">&times;</button></div>
               <div class="instant-divider"></div>
               <button class="instant-back" type="button"><span aria-hidden="true">&lt;</span><span>Back</span></button>
             </div>
@@ -992,6 +994,17 @@
       previewViewport.querySelectorAll('.bp-logo').forEach(image => {
         image.hidden = !brandLogo;
         if (brandLogo) image.src = brandLogo;
+      });
+      previewViewport.querySelectorAll('.instant-brand-logo').forEach(image => {
+        image.hidden = !brandLogo;
+        if (brandLogo) {
+          image.src = brandLogo;
+          image.onerror = () => {
+            image.hidden = true;
+            image.previousElementSibling.hidden = false;
+          };
+        }
+        image.previousElementSibling.hidden = Boolean(brandLogo);
       });
       previewViewport.querySelectorAll('.bp-card-thumbnail').forEach(image => {
         image.hidden = nextBrand !== 'URBrand';
