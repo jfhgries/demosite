@@ -4,6 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Apply prequalification | Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --ink: #171717;
@@ -17,156 +20,223 @@
       --red: #c50000;
       --amber: #ab570a;
       --shadow: 0 0 0 1px #00000014 inset, 0 2px 5px #0000000a, 0 8px 20px #0000000a;
-      font-family: Geist, Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --font-product: 'Poppins', sans-serif;
+      --type-h1-xl: 48px;
+      --type-h1-xl-mobile: 40px;
+      --type-h2: 32px;
+      --type-h2-mobile: 28px;
+      --type-h3: 24px;
+      --type-h4: 22px;
+      --type-h4-mobile: 20px;
+      --type-h5: 20px;
+      --type-h6: 18px;
+      --type-h7: 14px;
+      --type-subhead1: 20px;
+      --type-subhead2: 18px;
+      --type-body: 16px;
+      --type-body-small: 14px;
+      --type-legal: 12px;
+      --leading-type: 1.4;
+      font-family: var(--font-product);
       color: var(--ink);
       background: var(--soft);
     }
     * { box-sizing: border-box; }
-    body { margin: 0; min-width: 320px; }
+    body { margin: 0; min-width: 320px; color: var(--ink); font-family: var(--font-product); font-style: normal; text-align: left; }
     button, input { font: inherit; }
+    input::placeholder { color: #777; font-size: 16px; font-weight: 400; }
     button { cursor: pointer; }
-    .topbar { height: 64px; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; background: var(--canvas); border-bottom: 1px solid var(--hairline); }
+    .topbar { position: sticky; top: 0; z-index: 5; height: 64px; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; background: var(--canvas); border-bottom: 1px solid var(--hairline); }
     .brand { display: flex; align-items: center; font-weight: 600; letter-spacing: -0.4px; }
     .brand-logo { display: block; width: 160px; height: 23px; }
-    .nav { display: flex; align-items: center; gap: 8px; color: var(--body); font-size: 14px; }
-    .nav a { color: inherit; text-decoration: none; padding: 6px 10px; border-radius: 6px; }
-    .nav a:hover { background: var(--soft); color: var(--ink); }
-    .shell { max-width: 1120px; margin: 0 auto; padding: 0 32px 80px; }
-    .hero { position: relative; overflow: hidden; margin: 0 -32px; padding: 76px 32px 64px; background: var(--canvas); border-bottom: 1px solid var(--hairline); }
-    .hero::after { content: ""; position: absolute; width: 700px; height: 350px; right: 2%; top: -140px; opacity: .19; filter: blur(34px); background: linear-gradient(115deg, #00dfd8 0 22%, #007cf0 34%, #ff0080 61%, #f9cb28 90%); transform: rotate(-10deg); pointer-events: none; }
-    .eyebrow, .mono { font: 12px/16px ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: 0; text-transform: uppercase; }
-    .eyebrow { position: relative; z-index: 1; color: var(--body); margin-bottom: 20px; }
-    h1 { position: relative; z-index: 1; max-width: 720px; margin: 0; font-size: clamp(38px, 6vw, 64px); line-height: 1.02; letter-spacing: -3px; font-weight: 600; }
-    .hero p { position: relative; z-index: 1; max-width: 570px; margin: 24px 0 0; color: var(--body); font-size: 18px; line-height: 28px; }
-    .content { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 24px; padding-top: 40px; align-items: start; }
-    .preview-column { min-width: 0; }
-    .preview-controls { display: grid; grid-template-columns: minmax(0, 1fr) minmax(180px, 1fr) auto; gap: 16px; align-items: end; margin-bottom: 12px; }
-    .preview-controls label { gap: 6px; color: var(--body); font-size: 12px; }
+    .nav { display: flex; align-items: center; gap: 8px; height: 100%; color: var(--body); font-size: var(--type-body); line-height: var(--leading-type); }
+    .section-tab { height: 100%; padding: 0 18px; border: 0; border-bottom: 3px solid transparent; color: var(--body); background: transparent; font-size: 16px; }
+    .section-tab[aria-selected="true"] { border-bottom-color: var(--ink); color: var(--ink); font-weight: 600; }
+    .section-tab:focus-visible { outline: 2px solid #134854; outline-offset: -3px; }
+    .shell { max-width: 1440px; margin: 0 auto; padding: 24px 32px 56px; }
+    .tab-panel[hidden] { display: none; }
+    .admin-heading { margin: 0 0 20px; font-size: var(--type-h3); line-height: var(--leading-type); }
+    .admin-layout { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 24px; align-items: start; }
+    .admin-settings { display: grid; gap: 20px; min-width: 0; }
+    .admin-preview { margin-top: 0; overflow: hidden; background: #f0f1f2; }
+    .admin-preview-heading { margin: 0; padding: 16px 20px; border-bottom: 1px solid var(--hairline); background: var(--canvas); font-size: var(--type-h6); }
+    .admin-preview-context { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; padding: 16px 20px; border-bottom: 1px solid var(--hairline); background: var(--canvas); }
+    .admin-preview-context div { min-width: 0; }
+    .admin-preview-context dt { color: var(--mute); font-size: var(--type-legal); line-height: var(--leading-type); }
+    .admin-preview-context dd { overflow: hidden; margin: 3px 0 0; color: var(--ink); font-size: var(--type-body-small); line-height: var(--leading-type); text-overflow: ellipsis; white-space: nowrap; }
+    .admin-preview-brand { display: flex; align-items: center; gap: 8px; }
+    .admin-preview-brand img { width: 44px; height: 24px; flex: none; object-fit: contain; }
+    .admin-preview-brand img[hidden] { display: none; }
+    .admin-preview .preview-stage { min-height: 240px; padding: 12px; }
+    .preview-controls { display: grid; gap: 16px; }
+    .preview-control-primary { display: grid; grid-template-columns: minmax(0, 1fr) minmax(180px, 1fr); gap: 24px; align-items: end; padding: 24px; background: var(--canvas); }
+    .preview-control-actions { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .admin-hint { margin: -4px 0 0; color: var(--mute); font-size: var(--type-body-small); }
+    .preview-controls label { gap: 6px; color: var(--body); font-size: var(--type-body-small); }
     .preview-controls select { width: 100%; min-height: 38px; border: 1px solid #a1a1a1; border-radius: 6px; padding: 8px 10px; color: var(--ink); background: var(--canvas); font: inherit; }
     .preview-width-heading { display: flex; justify-content: space-between; gap: 8px; }
     .preview-width-control input[type="range"] { width: 100%; height: 22px; margin: 0; padding: 0; border: 0; accent-color: var(--ink); }
-    .restart-demo { min-height: 38px; border: 1px solid #a1a1a1; border-radius: 6px; padding: 0 14px; color: var(--ink); background: var(--canvas); font-size: 13px; }
+    .restart-demo { min-height: 56px; border: 1px solid #a1a1a1; border-radius: 9px; padding: 0 16px; color: var(--ink); background: var(--canvas); font-size: 16px; font-weight: 400; }
     .restart-demo:hover { background: var(--soft); }
-    .preview-stage { width: 100%; overflow-x: auto; padding: 12px; border: 1px solid #dedede; border-radius: 8px; background: #f0f1f2; }
+    .copy-menu { position: relative; z-index: 4; width: 220px; }
+    .copy-menu-trigger { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; min-height: 56px; padding: 0 16px; border: 1px solid #a1a1a1; border-radius: 9px; color: var(--ink); background: var(--canvas); font-size: 16px; font-weight: 400; text-align: left; }
+    .copy-menu-trigger:hover, .copy-menu-trigger[aria-expanded="true"] { border-color: #8b8b8b; }
+    .copy-menu-trigger svg { width: 16px; height: 16px; flex: none; transition: transform 120ms ease; }
+    .copy-menu-trigger[aria-expanded="true"] svg { transform: rotate(180deg); }
+    .copy-menu-options { position: absolute; top: calc(100% + 2px); right: 0; left: 0; display: grid; overflow: hidden; padding: 0; border: 1px solid #dedede; border-radius: 9px; background: var(--canvas); box-shadow: var(--shadow); }
+    .copy-menu-options[hidden] { display: none; }
+    .copy-menu-options button { min-height: 56px; padding: 0 16px; border: 0; color: var(--ink); background: var(--canvas); font-size: 16px; text-align: left; }
+    .copy-menu-options button:hover, .copy-menu-options button:focus-visible { color: #fff; background: #606060; outline: none; }
+    .copy-toast { position: fixed; z-index: 10; right: 24px; bottom: 24px; display: flex; align-items: center; gap: 18px; width: min(460px, calc(100vw - 40px)); min-height: 78px; padding: 16px 28px; border: 2px solid #008c84; border-radius: 9px; color: #111; background: #e4eeee; box-shadow: 0 4px 14px #0000001a; font-size: 24px; line-height: 1.3; }
+    .copy-toast[hidden] { display: none; }
+    .copy-toast svg { width: 30px; height: 30px; flex: none; color: #008c84; }
+    .copy-toast.error { border-color: #b42318; background: #fff1f0; }
+    .copy-toast.error svg { color: #b42318; }
+    .demo-toolbar { display: flex; justify-content: flex-end; padding: 12px 24px; border-bottom: 1px solid var(--hairline); background: var(--canvas); }
+    .demo-toast-host { position: fixed; z-index: 10; right: 24px; bottom: 24px; }
+    .preview-stage { width: 100%; overflow: auto; background: var(--canvas); }
     .preview-viewport { width: 1280px; max-width: none; margin: 0 auto; container: preview / inline-size; }
+    .demo-mode .shell { max-width: none; min-height: calc(100vh - 64px); padding: 0; }
+    .demo-mode .demo-stage { min-height: calc(100vh - 122px); }
+    .demo-mode .preview-stage { min-height: calc(100vh - 122px); padding: 0; }
+    .demo-mode .preview-viewport { width: 100% !important; min-height: calc(100vh - 122px); margin: 0; }
+    .demo-mode .preview-viewport > .flow { min-height: calc(100vh - 122px); border: 0; border-radius: 0; box-shadow: none; }
+    .demo-mode .preview-viewport > .flow.breadpay-mode { min-height: 0; }
     .panel { background: var(--canvas); border: 1px solid var(--hairline); border-radius: 12px; box-shadow: var(--shadow); }
     .flow { padding: 32px; }
-    .flow-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; padding-bottom: 28px; border-bottom: 1px solid var(--hairline); }
-    .flow-header h2 { margin: 0 0 6px; font-size: 24px; line-height: 32px; letter-spacing: -.96px; }
-    .flow-header p { margin: 0; color: var(--body); font-size: 14px; line-height: 20px; }
-    .status { color: var(--green); font: 12px/16px ui-monospace, monospace; white-space: nowrap; }
     .steps { display: flex; gap: 8px; padding: 24px 0 32px; }
     .step { height: 4px; flex: 1; background: var(--hairline); border-radius: 4px; }
     .step.active { background: var(--ink); }
     .step.done { background: var(--blue); }
-    .screen h3 { margin: 0; font-size: 20px; line-height: 28px; letter-spacing: -.6px; }
-    .screen > p { color: var(--body); font-size: 14px; line-height: 20px; margin: 8px 0 24px; }
+    .screen h3 { margin: 0; font-size: var(--type-h3); line-height: var(--leading-type); letter-spacing: 0; font-weight: 700; }
+    .screen > p { color: var(--body); font-size: var(--type-body); line-height: var(--leading-type); margin: 8px 0 24px; }
+    .screen > .fineprint { color: var(--mute); font-size: var(--type-legal); line-height: var(--leading-type); letter-spacing: .5px; }
     .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    label { display: grid; gap: 7px; color: var(--body); font-size: 14px; line-height: 20px; }
-    input { width: 100%; border: 1px solid #a1a1a1; border-radius: 6px; padding: 11px 12px; color: var(--ink); background: var(--canvas); outline: none; }
+    label { display: grid; gap: 7px; color: var(--body); font-size: var(--type-body-small); line-height: var(--leading-type); letter-spacing: .2px; }
+    input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) { width: 100%; border: 1px solid #a1a1a1; border-radius: 6px; padding: 11px 12px; color: var(--ink); background: var(--canvas); outline: none; font-size: 16px; line-height: var(--leading-type); }
     input:focus { border-color: var(--ink); box-shadow: 0 0 0 3px #1717171a; }
-    .consent { display: flex; grid-template-columns: none; flex-direction: row; align-items: flex-start; gap: 9px; margin-top: 20px; color: var(--body); font-size: 12px; line-height: 16px; }
-    .consent input { width: 16px; margin-top: 1px; accent-color: var(--ink); }
+    .form-field { position: relative; display: block; min-height: 56px; padding: 0 8px; border-bottom: 1px solid #cfd8dc; color: #0f2233; }
+    .form-field-label { position: absolute; z-index: 1; top: 16px; left: 8px; display: block; color: #0f2233; font-size: 16px; font-weight: 400; line-height: 24px; letter-spacing: 0; pointer-events: none; transition: top 120ms ease, color 120ms ease, font-size 120ms ease; }
+    .form-field > input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), .form-field > select { position: absolute; inset: 0; width: 100%; height: 56px; padding: 20px 8px 0; border: 0; border-radius: 0; color: #0f2233; background: transparent; box-shadow: none; font-size: 16px; line-height: 24px; letter-spacing: 0; }
+    .form-field > input::placeholder { color: transparent; }
+    .form-field:focus-within { border-bottom-color: #134854; }
+    .form-field:focus-within .form-field-label, .form-field:has(input:not(:placeholder-shown)) .form-field-label { top: 0; color: #134854; font-size: 12px; }
+    .form-field input:focus, .form-field select:focus { border-color: #134854; box-shadow: none; }
     .actions { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 32px; }
-    .button { min-height: 44px; border: 0; border-radius: 100px; padding: 0 20px; font-size: 14px; font-weight: 500; }
+    .button { min-height: 44px; border: 0; border-radius: 100px; padding: 0 20px; font-size: 16px; line-height: var(--leading-type); font-weight: 700; }
     .button.primary { background: var(--ink); color: #fff; }
     .button.primary:hover { background: #383838; }
     .button.secondary { background: var(--canvas); color: var(--ink); border: 1px solid var(--hairline); }
     .button:disabled { opacity: .4; cursor: not-allowed; }
     .scenario { padding: 24px; }
-    .scenario h2 { margin: 0 0 20px; font-size: 16px; line-height: 24px; }
-    .scenario h3 { margin: 20px 0 8px; font-size: 12px; line-height: 16px; color: var(--body); text-transform: uppercase; letter-spacing: .04em; }
+    .scenario h2 { margin: 0 0 20px; font-size: var(--type-h6); line-height: var(--leading-type); font-weight: 700; }
+    .scenario h3 { margin: 20px 0 8px; font-size: var(--type-h7); line-height: var(--leading-type); color: var(--body); font-weight: 700; }
     .scenario h3:first-of-type { margin-top: 0; }
     .chip-group { display: grid; gap: 8px; }
-    .chip { position: relative; display: flex; align-items: center; gap: 8px; min-height: 38px; padding: 8px 10px; background: var(--canvas); color: var(--body); border: 1px solid var(--hairline); border-radius: 6px; font-size: 13px; cursor: pointer; }
+    .chip { position: relative; display: flex; align-items: center; gap: 8px; min-height: 38px; padding: 8px 10px; background: var(--canvas); color: var(--body); border: 1px solid var(--hairline); border-radius: 6px; font-size: var(--type-body-small); line-height: var(--leading-type); letter-spacing: .2px; cursor: pointer; }
     .chip:hover, .chip:has(input:checked) { border-color: var(--ink); color: var(--ink); }
     .chip input { width: 16px; height: 16px; margin: 0; accent-color: var(--ink); }
-    .brand-search { display: grid; gap: 7px; color: var(--body); font-size: 13px; }
-    .brand-search input { padding: 9px 10px; font-size: 13px; }
-    .scenario p { color: var(--mute); font-size: 12px; line-height: 16px; margin: 20px 0 0; }
-    .scenario p { color: var(--mute); font-size: 12px; line-height: 16px; margin: 20px 0 0; }
+    .brand-search { position: relative; display: grid; gap: 7px; color: var(--body); font-size: var(--type-body-small); }
+    .brand-search input { padding: 9px 10px; font-size: 16px; }
+    .brand-suggestions { position: absolute; z-index: 3; top: calc(100% - 1px); right: 0; left: 0; display: grid; gap: 2px; max-height: 240px; overflow-y: auto; padding: 6px; border: 1px solid #dedede; border-radius: 6px; background: var(--canvas); box-shadow: var(--shadow); }
+    .brand-suggestions[hidden] { display: none; }
+    .brand-suggestion { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 40px; padding: 6px 8px; border: 0; border-radius: 4px; color: var(--ink); background: transparent; text-align: left; font-size: var(--type-body-small); cursor: pointer; }
+    .brand-suggestion:hover, .brand-suggestion:focus-visible, .brand-suggestion[aria-selected="true"] { background: #f0f1f2; outline: none; }
+    .brand-suggestion img { width: 32px; height: 24px; object-fit: contain; }
+    .brand-suggestion img[hidden] { display: none; }
+    .brand-logo-preview { display: flex; align-items: center; justify-content: center; min-height: 64px; margin-top: 10px; padding: 10px; border: 1px solid var(--hairline); border-radius: 6px; background: var(--canvas); }
+    .brand-logo-preview img { display: block; width: min(100%, 180px); height: 40px; object-fit: contain; }
+    .scenario p { color: var(--mute); font-size: var(--type-legal); line-height: var(--leading-type); letter-spacing: .5px; margin: 20px 0 0; }
     .result { border-radius: 8px; padding: 20px; background: var(--soft); border: 1px solid var(--hairline); }
-    .result strong { display: block; font-size: 18px; margin-bottom: 8px; }
-    .result p { margin: 0; color: var(--body); font-size: 14px; line-height: 20px; }
+    .result strong { display: block; font-size: var(--type-subhead2); line-height: var(--leading-type); font-weight: 600; margin-bottom: 8px; }
+    .result p { margin: 0; color: var(--body); font-size: var(--type-body); line-height: var(--leading-type); }
     .result.offer { border-color: #a5e8d4; background: #f2fcf8; }
     .result.pending { border-color: #f1d49d; background: #fffaf0; }
     .result.decline { border-color: #edb8bb; background: #fff7f7; }
-    .fineprint { color: var(--mute); font-size: 12px; line-height: 16px; margin: 24px 0 0; }
-    .instant-credit { margin: -32px; background: #fff; min-height: 560px; color: #1f2933; }
+    .fineprint { color: var(--mute); font-size: var(--type-legal); line-height: var(--leading-type); letter-spacing: .5px; margin: 24px 0 0; }
+    .instant-credit { margin: -32px; background: #fff; min-height: 560px; color: #1f2933; font-family: var(--font-product); }
     .instant-header { padding: 20px 28px 0; }
     .instant-brand-row { display: flex; align-items: center; justify-content: space-between; min-height: 34px; }
-    .instant-brand { display: flex; align-items: center; gap: 8px; color: #16212b; font-size: 15px; font-weight: 700; }
-    .instant-brand-mark { width: 22px; height: 22px; background: #16212b; transform: rotate(45deg); border-radius: 3px; }
+    .instant-brand { display: flex; align-items: center; gap: 8px; color: #16212b; font-size: var(--type-h7); font-weight: 700; font-family: var(--font-product); }
+    .instant-brand-logo { display: block; width: 112px; height: 30px; object-fit: contain; }
     .instant-close { color: #425466; font-size: 25px; line-height: 1; border: 0; background: transparent; padding: 0 4px; }
     .instant-divider { height: 1px; margin-top: 18px; background: #d9dee3; }
-    .instant-back { display: inline-flex; gap: 6px; margin-top: 18px; color: #425466; background: transparent; border: 0; padding: 0; font-size: 14px; }
+    .instant-back { display: inline-flex; gap: 6px; margin-top: 18px; color: #425466; background: transparent; border: 0; padding: 0; font-size: var(--type-body-small); line-height: var(--leading-type); letter-spacing: .2px; }
     .instant-modal { max-width: 520px; margin: 30px auto 0; padding: 0 28px 28px; }
-    .instant-modal h3 { margin: 0; color: #1f2933; font-size: 26px; line-height: 34px; letter-spacing: -.5px; }
-    .instant-subtitle { margin: 10px 0 28px; color: #52606d; font-size: 14px; line-height: 21px; }
+    .instant-modal h3 { margin: 0; color: #1f2933; font-size: var(--type-h3); line-height: var(--leading-type); letter-spacing: 0; font-weight: 700; }
+    .instant-subtitle { margin: 10px 0 28px; color: #52606d; font-size: var(--type-body-small); line-height: var(--leading-type); letter-spacing: .2px; }
     .instant-fields { display: grid; gap: 24px; }
-    .instant-field { display: grid; gap: 5px; color: #52606d; font-size: 14px; }
-    .instant-field input { border: 0; border-bottom: 1px solid #9aa5b1; border-radius: 0; padding: 7px 0 9px; color: #1f2933; }
-    .password-field { position: relative; }
-    .password-field input { padding-right: 40px; line-height: 20px; }
+    .instant-field { position: relative; display: block; min-height: 56px; padding: 0 8px; border-bottom: 1px solid #cfd8dc; color: #0f2233; }
+    .instant-field > .form-field-label, .instant-field > label { position: absolute; z-index: 1; top: 16px; left: 8px; display: block; color: #0f2233; font-size: 16px; font-weight: 400; line-height: 24px; letter-spacing: 0; pointer-events: none; transition: top 120ms ease, color 120ms ease, font-size 120ms ease; }
+    .instant-field > input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), .instant-field .password-field > input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) { position: absolute; inset: 0; width: 100%; height: 56px; padding: 20px 8px 0; border: 0; border-radius: 0; color: #0f2233; background: transparent; box-shadow: none; font-size: 16px; line-height: 24px; }
+    .instant-field input::placeholder { color: transparent; }
+    .instant-field:focus-within { border-bottom-color: #134854; }
+    .instant-field:focus-within > .form-field-label, .instant-field:focus-within > label, .instant-field:has(input:not(:placeholder-shown)) > .form-field-label, .instant-field:has(input:not(:placeholder-shown)) > label { top: 0; color: #134854; font-size: 12px; }
+    .password-field { position: absolute; inset: 0; }
+    .password-field input { padding-right: 40px; }
     .password-field:not(.is-visible) input { color: transparent; -webkit-text-fill-color: transparent; caret-color: #1f2933; }
-    .password-mask { position: absolute; top: 7px; left: 0; right: 40px; overflow: hidden; color: #1f2933; font-size: 14px; line-height: 20px; pointer-events: none; white-space: pre; }
+    .password-mask { position: absolute; top: 20px; left: 8px; right: 40px; overflow: hidden; color: #0f2233; font-size: 16px; line-height: 24px; pointer-events: none; white-space: pre; }
     .password-field.is-visible .password-mask { display: none; }
     .password-toggle { position: absolute; right: 0; bottom: 5px; display: grid; place-items: center; width: 32px; height: 32px; padding: 0; border: 0; border-radius: 4px; color: #52606d; background: transparent; }
     .password-toggle:hover { background: #f0f1f2; }
     .password-toggle svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
-    .instant-field input:focus { border-color: #1f2933; box-shadow: none; }
-    .security-message { display: flex; align-items: center; gap: 10px; margin-top: 28px; color: #52606d; font-size: 13px; }
+    .instant-field input:focus { border-color: #134854; box-shadow: none; }
+    .security-message { display: flex; align-items: center; gap: 10px; margin-top: 28px; color: #52606d; font-size: var(--type-body-small); line-height: var(--leading-type); letter-spacing: .2px; }
     .lock { width: 18px; height: 18px; border: 2px solid #52606d; border-radius: 4px; position: relative; }
     .lock::before { content: ""; position: absolute; width: 8px; height: 7px; left: 3px; top: -7px; border: 2px solid #52606d; border-bottom: 0; border-radius: 8px 8px 0 0; }
-    .instant-privacy { margin-top: 24px; color: #697586; font-size: 10px; line-height: 15px; }
+    .instant-privacy { margin-top: 24px; color: #697586; font: 12px/1.4 var(--font-product); letter-spacing: .5px; }
     .instant-privacy strong { color: #52606d; }
     .instant-actions { display: grid; gap: 15px; margin-top: 28px; }
-    .instant-continue { width: 100%; min-height: 46px; border: 0; border-radius: 4px; background: #d4d9de; color: #fff; font-size: 15px; font-weight: 600; }
+    .instant-continue { width: 100%; min-height: 46px; border: 0; border-radius: 4px; background: #d4d9de; color: #fff; font-size: 16px; line-height: var(--leading-type); font-weight: 700; }
     .instant-continue.ready { background: #1f2933; cursor: pointer; }
-    .instant-cancel { justify-self: center; color: #52606d; background: transparent; border: 0; border-bottom: 1px solid #52606d; padding: 0 0 2px; font-size: 13px; }
-    .instant-footer { display: flex; align-items: center; justify-content: center; gap: 7px; padding: 22px 28px; color: #52606d; font-size: 11px; }
+    .instant-cancel { justify-self: center; color: #52606d; background: transparent; border: 0; border-bottom: 1px solid #52606d; padding: 0 0 2px; font-size: var(--type-body-small); line-height: var(--leading-type); font-weight: 700; letter-spacing: .2px; }
+    .instant-footer { display: flex; align-items: center; justify-content: center; gap: 7px; padding: 22px 28px; color: #52606d; font: 12px/18px var(--font-product); }
     .instant-footer-mark { width: 18px; height: 18px; border: 1px solid #52606d; border-radius: 50%; }
-    .application-page { max-width: 650px; margin: 0 auto; padding: 8px 4px; }
-    .application-page h3 { margin: 0; font-size: 26px; line-height: 34px; letter-spacing: -.5px; }
-    .application-page h4 { margin: 0; font-size: 15px; line-height: 22px; }
-    .application-page p { color: #52606d; font-size: 14px; line-height: 21px; }
+    .application-page { max-width: 650px; margin: 0 auto; padding: 8px 4px; font-family: var(--font-product); }
+    .application-page h3 { margin: 0; font-size: var(--type-h3); line-height: var(--leading-type); letter-spacing: 0; font-weight: 700; }
+    .application-page h4 { margin: 0; font-size: var(--type-h4); line-height: var(--leading-type); letter-spacing: .5px; font-weight: 700; }
+    .application-page p { color: #52606d; font-size: var(--type-body); line-height: var(--leading-type); }
     .application-page .subtitle { margin: 8px 0 28px; }
     .application-header { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 26px; }
-    .application-back { color: #52606d; background: transparent; border: 0; padding: 3px 0; font-size: 14px; }
+    .application-back { color: #52606d; background: transparent; border: 0; padding: 3px 0; font-size: 16px; line-height: var(--leading-type); }
     .application-fields { display: grid; gap: 20px; }
     .application-fields .field-grid { gap: 18px 16px; }
-    .application-field { display: grid; gap: 5px; color: #52606d; font-size: 13px; }
-    .application-field input, .application-field select { border: 0; border-bottom: 1px solid #9aa5b1; border-radius: 0; padding: 8px 0; color: #1f2933; background: transparent; }
-    .application-field input:focus, .application-field select:focus { border-color: #1f2933; box-shadow: none; }
-    .verified-mobile { display: flex; align-items: center; gap: 8px; color: #52606d; font-size: 13px; }
+    .application-field { position: relative; display: block; min-height: 56px; padding: 0 8px; border-bottom: 1px solid #cfd8dc; color: #0f2233; }
+    .application-field .form-field-label { position: absolute; z-index: 1; top: 16px; left: 8px; display: block; color: #0f2233; font-size: 16px; font-weight: 400; line-height: 24px; letter-spacing: 0; pointer-events: none; transition: top 120ms ease, color 120ms ease, font-size 120ms ease; }
+    .application-field input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), .application-field select { position: absolute; inset: 0; width: 100%; height: 56px; padding: 20px 8px 0; border: 0; border-radius: 0; color: #0f2233; background: transparent; box-shadow: none; font-size: 16px; line-height: 24px; }
+    .application-field input::placeholder { color: transparent; }
+    .application-field:focus-within { border-bottom-color: #134854; }
+    .application-field:focus-within .form-field-label, .application-field:has(input:not(:placeholder-shown)) .form-field-label { top: 0; color: #134854; font-size: 12px; }
+    .application-field input:focus, .application-field select:focus { border-color: #134854; box-shadow: none; }
+    .verified-mobile { display: flex; align-items: center; gap: 8px; color: #52606d; font-size: var(--type-body-small); line-height: var(--leading-type); letter-spacing: .2px; }
     .verified-mobile strong { color: #1f2933; }
     .verified-badge { color: #00a878; font-size: 12px; }
     .application-actions { display: flex; flex-direction: column; align-items: center; gap: 16px; margin-top: 30px; }
     .application-actions .button { min-width: 180px; }
-    .text-action { color: #52606d; background: transparent; border: 0; border-bottom: 1px solid #52606d; padding: 0 0 2px; font-size: 13px; }
+    .text-action { color: #52606d; background: transparent; border: 0; border-bottom: 1px solid #52606d; padding: 0 0 2px; font-size: 16px; line-height: var(--leading-type); font-weight: 700; }
     .secure-code { max-width: 500px; margin: 0 auto; }
     .secure-code input { font-size: 20px; letter-spacing: 7px; }
     .secure-code .button { width: 100%; }
-    .secure-note { margin-top: 24px; font-size: 12px; }
+    .secure-note { margin-top: 24px; font-size: var(--type-legal); line-height: var(--leading-type); letter-spacing: .5px; }
     .choice-row { display: flex; gap: 24px; margin-top: 12px; }
     .choice { display: flex; align-items: center; gap: 8px; color: #1f2933; font-size: 14px; }
     .choice input { width: 16px; height: 16px; accent-color: #1f2933; }
     .assure { margin-top: 34px; padding-top: 24px; border-top: 1px solid #d9dee3; }
-    .assure ul { padding-left: 20px; color: #52606d; font-size: 13px; line-height: 22px; }
-    .consent-card { padding: 18px; background: #f7f8f9; border: 1px solid #d9dee3; color: #52606d; font-size: 13px; line-height: 20px; }
+    .assure ul { padding-left: 20px; color: #52606d; font-size: var(--type-body-small); line-height: var(--leading-type); letter-spacing: .2px; }
+    .consent-card { padding: 18px; background: #f7f8f9; border: 1px solid #d9dee3; color: #52606d; font-size: var(--type-legal); line-height: var(--leading-type); letter-spacing: .5px; }
     .consent-card strong { color: #1f2933; }
     .approval-page { text-align: center; max-width: 680px; margin: 0 auto; }
-    .approval-page h3 { font-size: 28px; line-height: 36px; }
+    .approval-page h3 { font-size: var(--type-h3); line-height: var(--leading-type); }
     .approval-amount { margin-top: 26px; color: #1f2933; font-size: 42px; line-height: 48px; font-weight: 700; }
-    .approval-label { color: #52606d; font-size: 14px; }
+    .approval-label { color: #52606d; font-size: var(--type-body-small); line-height: var(--leading-type); letter-spacing: .2px; }
     .approval-message { max-width: 500px; margin: 24px auto; }
     .approval-card { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; text-align: left; margin-top: 30px; padding: 22px; border: 1px solid #d9dee3; border-radius: 8px; }
     .approval-card strong { display: block; margin-top: 5px; color: #1f2933; font-size: 17px; }
     .approval-detail { color: #697586; font-size: 12px; }
-    .approval-footer { margin-top: 26px; padding-top: 20px; border-top: 1px solid #d9dee3; color: #52606d; font-size: 13px; }
+    .approval-footer { margin-top: 26px; padding-top: 20px; border-top: 1px solid #d9dee3; color: #52606d; font-size: var(--type-legal); line-height: var(--leading-type); letter-spacing: .5px; }
     .flow.breadpay-mode { padding: 0; overflow: hidden; border: 0; border-radius: 0; box-shadow: none; }
-    .flow.breadpay-mode > .flow-header, .flow.breadpay-mode > .steps { display: none; }
-    .breadpay-screen { min-height: 640px; color: #0f2233; background: #fff; font-family: Poppins, Geist, Inter, ui-sans-serif, system-ui, sans-serif; }
+    .flow.breadpay-mode > .steps { display: none; }
+    .breadpay-screen { min-height: 640px; color: #0f2233; background: #fff; font-family: var(--font-product); }
     .bp-header { height: 90px; display: flex; align-items: center; justify-content: space-between; padding: 0 4.7%; border-bottom: 1px solid #cfd8dc; }
     .bp-logo { display: block; width: 140px; height: 42px; object-fit: contain; }
     .bp-header button { width: 40px; height: 40px; padding: 0; color: #080707; background: transparent; border: 0; font-size: 30px; line-height: 1; }
@@ -174,39 +244,42 @@
     .bp-narrow { width: min(540px, 100%); margin-right: auto; margin-left: auto; }
     .bp-intro { width: min(720px, calc(100% - 48px)); margin: 48px auto 54px; text-align: center; }
     .bp-intro .bp-logo { width: 180px; height: 54px; margin: 0 auto 26px; }
-    .bp-intro h2, .bp-title { margin: 0; color: #0f2233; font-size: 28px; font-weight: 700; line-height: 1.5; }
-    .bp-powered { margin: 4px 0 26px; color: #0f2233; font-size: 12px; }
+    .bp-intro h2, .bp-title { margin: 0; color: #0f2233; font-size: var(--type-h2); font-weight: 700; line-height: var(--leading-type); }
+    .bp-powered { margin: 4px 0 26px; color: #0f2233; font-size: var(--type-body-small); line-height: var(--leading-type); letter-spacing: .2px; }
     .bp-powered strong { color: #15505b; }
     .bp-product-list { display: grid; gap: 16px; text-align: left; }
     .bp-product { overflow: hidden; border: 1px solid #e5e7e8; border-radius: 20px; background: #fff; box-shadow: 0 1px 3px #00000012; }
     .bp-product-toggle { display: block; width: 100%; padding: 16px; color: inherit; background: transparent; border: 0; text-align: left; }
-    .bp-product-heading { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; }
+    .bp-product-heading { display: flex; align-items: center; gap: 8px; font-size: var(--type-h7); line-height: var(--leading-type); font-weight: 700; letter-spacing: .5px; }
     .bp-card-thumbnail { width: 32px; height: 22px; border-radius: 3px; object-fit: cover; }
     .bp-brand-wordmark { color: #15505b; font-size: 10px; font-weight: 700; letter-spacing: -.5px; }
-    .bp-product-summary { display: flex; justify-content: space-between; gap: 12px; margin-top: 8px; color: #0f2233; font-size: 13px; line-height: 20px; }
+    .bp-product-summary { display: flex; justify-content: space-between; gap: 12px; margin-top: 8px; color: #0f2233; font-size: var(--type-body-small); line-height: var(--leading-type); letter-spacing: .2px; }
     .bp-chevron { flex: 0 0 auto; width: 8px; height: 8px; margin: 3px 4px 0 0; border-right: 1.5px solid #53616d; border-bottom: 1.5px solid #53616d; transform: rotate(45deg); }
     .bp-product[aria-expanded="true"] .bp-chevron { transform: rotate(225deg); }
-    .bp-product-panel { padding: 0 16px 18px; color: #0f2233; font-size: 12px; line-height: 18px; }
+    .bp-product-panel { padding: 0 16px 18px; color: #0f2233; font-size: var(--type-body-small); line-height: var(--leading-type); letter-spacing: .2px; }
     .bp-product[aria-expanded="true"] { background: #f3f4f5; box-shadow: 0 3px 12px #00000018; }
     .bp-product-panel[hidden] { display: none; }
     .bp-product-panel p { margin: 8px 0; }
     .bp-product-panel strong { font-weight: 700; }
     .bp-payment-schedule { display: grid; grid-template-columns: 1fr auto; gap: 7px 12px; margin-top: 10px; }
-    .bp-or { display: flex; align-items: center; gap: 8px; margin: 8px 0; color: #4e5c6f; font-size: 12px; }
+    .bp-or { display: flex; align-items: center; gap: 8px; margin: 8px 0; color: #4e5c6f; font-size: var(--type-legal); line-height: var(--leading-type); letter-spacing: .5px; }
     .bp-or::before, .bp-or::after { height: 1px; flex: 1; content: ""; background: #cfd8dc; }
-    .bp-disclaimer { margin: 20px auto; color: #333; font-size: 12px; line-height: 18px; }
-    .bp-cta { display: block; width: min(100%, 540px); min-height: 48px; margin: 24px auto 0; padding: 12px 20px; border: 0; border-radius: 40px; color: #fff; background: #134854; font-size: 16px; font-weight: 700; }
+    .bp-disclaimer { margin: 20px auto; color: #333; font-size: var(--type-legal); line-height: var(--leading-type); letter-spacing: .5px; }
+    .bp-cta { display: block; width: min(100%, 540px); min-height: 48px; margin: 24px auto 0; padding: 12px 20px; border: 0; border-radius: 40px; color: #fff; background: #134854; font-size: 16px; line-height: var(--leading-type); font-weight: 700; }
     .bp-cta:disabled { opacity: .5; cursor: not-allowed; }
-    .bp-text-button { display: block; margin: 14px auto 0; padding: 4px 0; border: 0; border-bottom: 1px solid #4e5c6f; color: #3a5060; background: transparent; font-size: 16px; font-weight: 700; }
+    .bp-text-button { display: block; margin: 14px auto 0; padding: 4px 0; border: 0; border-bottom: 1px solid #4e5c6f; color: #3a5060; background: transparent; font-size: 16px; line-height: var(--leading-type); font-weight: 700; }
     .bp-text-button + .bp-text-button { margin-top: 12px; }
     .bp-step-content { width: min(540px, calc(100% - 48px)); margin: 46px auto 54px; }
     .bp-step-content .bp-title { margin-bottom: 2px; }
-    .bp-lead { margin: 8px 0 18px; color: #0f2233; font-size: 16px; line-height: 27px; }
-    .bp-directions { margin: 20px 0 36px; color: #202020; font-size: 16px; font-weight: 700; line-height: 24px; }
-    .bp-field { display: grid; min-height: 56px; align-content: end; gap: 2px; padding: 8px; border-bottom: 1px solid #0f2233; color: #0f2233; }
-    .bp-field label { display: block; color: inherit; font-size: 14px; line-height: 20px; }
-    .bp-field input, .bp-field select { width: 100%; padding: 0; border: 0; border-radius: 0; outline: 0; color: #0f2233; background: transparent; box-shadow: none; font-size: 16px; line-height: 24px; }
+    .bp-lead { margin: 8px 0 18px; color: #0f2233; font-size: var(--type-body); line-height: var(--leading-type); }
+    .bp-directions { margin: 20px 0 36px; color: #202020; font-size: var(--type-body); font-weight: 700; line-height: var(--leading-type); }
+    .bp-field { position: relative; display: block; height: 56px; min-height: 56px; padding: 0 8px; border-bottom: 1px solid #cfd8dc; color: #0f2233; }
+    .bp-field label { position: absolute; z-index: 1; top: 16px; left: 8px; display: block; color: #0f2233; font-size: 16px; font-weight: 400; line-height: 24px; letter-spacing: 0; pointer-events: none; transition: top 120ms ease, color 120ms ease, font-size 120ms ease; }
+    .bp-field input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), .bp-field select { position: absolute; inset: 0; width: 100%; height: 56px; padding: 20px 8px 0; border: 0; border-radius: 0; outline: 0; color: #0f2233; background: transparent; box-shadow: none; font-size: 16px; line-height: 24px; letter-spacing: 0; }
+    .bp-field input::placeholder { color: transparent; }
     .bp-field input:focus, .bp-field select:focus { box-shadow: none; }
+    .bp-field:focus-within { border-bottom-color: #134854; }
+    .bp-field:focus-within label, .bp-field:has(input:not(:placeholder-shown)) label { top: 0; color: #134854; font-size: 12px; }
     .bp-field.bp-ssn-field { position: relative; }
     .bp-ssn-field input { padding-right: 38px; }
     .bp-ssn-toggle { position: absolute; right: 6px; bottom: 5px; width: 30px; height: 30px; padding: 5px; border: 0; color: #4e5c6f; background: transparent; }
@@ -214,55 +287,73 @@
     .bp-field-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 56px; }
     .bp-field-grid.address-three { grid-template-columns: minmax(0, 2fr) minmax(72px, .8fr) minmax(130px, 2fr); gap: 24px 44px; }
     .bp-field-offset { margin-top: 24px; }
-    .bp-lock { display: flex; align-items: center; gap: 8px; margin: 20px 0; color: #333f48; font-size: 12px; line-height: 18px; }
+    .bp-lock { display: flex; align-items: center; gap: 8px; margin: 20px 0; color: #333f48; font-size: var(--type-legal); line-height: var(--leading-type); letter-spacing: .5px; }
     .bp-lock-mark { position: relative; width: 14px; height: 13px; margin: 7px 2px 0; border: 2px solid #333f48; border-radius: 3px; }
     .bp-lock-mark::before { position: absolute; top: -8px; left: 2px; width: 6px; height: 7px; content: ""; border: 2px solid #333f48; border-bottom: 0; border-radius: 6px 6px 0 0; }
-    .bp-disclosure { margin: 18px 0; color: #333; font-size: 12px; line-height: 18px; }
+    .bp-disclosure { margin: 18px 0; color: #333; font-size: var(--type-legal); line-height: var(--leading-type); letter-spacing: .5px; }
     .bp-disclosure a { color: inherit; font-weight: 700; text-decoration: underline; }
-    .bp-checkbox { display: flex; grid-template-columns: none; align-items: flex-start; gap: 8px; margin: 16px 0; color: #4e5c6f; font-size: 12px; line-height: 18px; }
+    .bp-checkbox { display: flex; grid-template-columns: none; align-items: flex-start; gap: 8px; margin: 16px 0; color: #4e5c6f; font-size: var(--type-legal); line-height: var(--leading-type); letter-spacing: .5px; }
     .bp-checkbox input { flex: 0 0 16px; width: 16px; height: 16px; margin: 1px 0 0; padding: 0; accent-color: #134854; }
     .bp-step-actions { width: min(305px, 100%); margin: 28px auto 0; }
     .bp-step-actions .bp-cta { margin-top: 0; }
-    .bp-footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; width: min(540px, calc(100% - 48px)); margin: 40px auto 0; padding-bottom: 24px; color: #4e5c6f; font-size: 12px; }
+    .bp-footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; width: min(540px, calc(100% - 48px)); margin: 40px auto 0; padding-bottom: 24px; color: #4e5c6f; font-size: var(--type-legal); line-height: var(--leading-type); letter-spacing: .5px; }
     .bp-footer-lock { display: flex; align-items: center; gap: 6px; }
     .bp-footer-brand { width: 70px; height: 10px; object-fit: contain; }
     .bp-terms-title { padding: 48px 24px 36px; text-align: center; }
-    .bp-terms-title p { margin: 10px 0 0; color: #333; font-size: 18px; font-weight: 700; }
+    .bp-terms-title p { margin: 10px 0 0; color: #333; font-size: var(--type-subhead2); line-height: var(--leading-type); letter-spacing: 0; font-weight: 600; }
     .bp-offer { overflow: hidden; border: 1px solid #e4e5e6; border-radius: 24px; background: #f3f4f5; box-shadow: 0 4px 12px #00000020; }
-    .bp-offer-banner { padding: 8px 12px; color: #fff; background: #134854; text-align: center; font-size: 14px; font-weight: 700; }
+    .bp-offer-banner { padding: 8px 12px; color: #fff; background: #134854; text-align: center; font-size: var(--type-h7); line-height: var(--leading-type); font-weight: 700; letter-spacing: .5px; }
     .bp-offer-body { padding: 18px 20px; }
-    .bp-offer-heading { display: flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 700; }
-    .bp-offer-body p { color: #0f2233; font-size: 14px; line-height: 21px; }
-    .bp-offer-body .bp-offer-note { color: #4e5c6f; font-size: 13px; }
+    .bp-offer-heading { display: flex; align-items: center; gap: 10px; font-size: var(--type-subhead2); line-height: var(--leading-type); font-weight: 600; }
+    .bp-offer-body p { color: #0f2233; font-size: var(--type-body-small); line-height: var(--leading-type); letter-spacing: .2px; }
+    .bp-offer-body .bp-offer-note { color: #4e5c6f; font-size: var(--type-legal); line-height: var(--leading-type); letter-spacing: .5px; }
     .bp-perks { padding: 16px 0 0; border-top: 1px solid #cfd8dc; }
-    .bp-perks ul { margin: 8px 0; padding-left: 22px; font-size: 14px; line-height: 24px; }
+    .bp-perks ul { margin: 8px 0; padding-left: 22px; font-size: var(--type-body-small); line-height: var(--leading-type); letter-spacing: .2px; }
     .bp-offer-actions { padding: 16px 20px 20px; background: #fff; }
-    .bp-offer-actions p { margin: 0 0 16px; color: #0f2233; font-size: 14px; line-height: 21px; }
-    .bp-confirmation { margin: 18px 0 0; color: #134854; font-size: 14px; font-weight: 700; text-align: center; }
+    .bp-offer-actions p { margin: 0 0 16px; color: #0f2233; font-size: var(--type-body-small); line-height: var(--leading-type); letter-spacing: .2px; }
+    .bp-confirmation { margin: 18px 0 0; color: #134854; font-size: var(--type-h7); line-height: var(--leading-type); font-weight: 700; letter-spacing: .5px; text-align: center; }
     .bp-application-footer { max-width: 920px; }
+    @container preview (min-width: 761px) {
+      .instant-header { padding: 24px 24px 0; }
+      .instant-brand-row { min-height: 42px; justify-content: flex-start; gap: min(480px, calc(100% - 164px)); }
+      .instant-brand-logo { width: 140px; height: 42px; }
+      .instant-close { display: grid; place-items: center; width: 24px; height: 24px; padding: 0; font-size: 24px; }
+      .instant-divider { margin-top: 23px; background: #cfd8dc; }
+      .instant-back { margin-right: 24px; margin-left: 24px; }
+      .bp-header { height: 90px; min-height: 90px; align-items: flex-start; justify-content: flex-start; gap: min(480px, calc(100% - 164px)); padding: 24px 24px 0; }
+      .bp-header button { display: grid; place-items: center; align-self: center; width: 24px; height: 24px; font-size: 24px; }
+    }
+    @media screen and (max-width: 1110px) {
+      :root {
+        --type-h1-xl: var(--type-h1-xl-mobile);
+        --type-h2: var(--type-h2-mobile);
+        --type-h4: var(--type-h4-mobile);
+      }
+    }
     @container preview (max-width: 760px) {
       .bp-content { width: min(540px, calc(100% - 40px)); margin-top: 32px; }
       .bp-intro { width: min(540px, calc(100% - 40px)); margin-top: 42px; }
       .bp-step-content { width: min(540px, calc(100% - 40px)); margin-top: 36px; }
+      .instant-back { margin-right: 20px; margin-left: 20px; }
       .bp-field-grid, .bp-field-grid.address-three { grid-template-columns: 1fr; gap: 12px; }
       .bp-terms-title { padding-top: 32px; }
       .bp-application-footer { width: min(540px, calc(100% - 40px)); }
     }
     .capability-tags { margin-top: 18px; padding: 24px; background: var(--canvas); border: 1px solid var(--hairline); border-radius: 8px; }
     .capability-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
-    .capability-heading h2 { margin: 0; font-size: 16px; line-height: 24px; }
-    .capability-count { color: var(--mute); font-size: 12px; }
-    .capability-search { position: relative; display: grid; gap: 6px; max-width: 480px; color: var(--body); font-size: 12px; }
-    .capability-search input { min-height: 40px; padding: 8px 12px; font-size: 14px; }
+    .capability-heading h2 { margin: 0; font-size: var(--type-h6); line-height: var(--leading-type); font-weight: 700; }
+    .capability-count { color: var(--mute); font-size: var(--type-legal); line-height: var(--leading-type); letter-spacing: .5px; }
+    .capability-search { position: relative; display: grid; gap: 6px; max-width: 480px; color: var(--body); font-size: var(--type-body-small); }
+    .capability-search input { min-height: 40px; padding: 8px 12px; font-size: 16px; }
     .capability-suggestions { position: absolute; z-index: 2; top: calc(100% + 4px); right: 0; left: 0; display: grid; gap: 4px; max-height: 240px; overflow-y: auto; padding: 6px; background: var(--canvas); border: 1px solid #dedede; border-radius: 6px; box-shadow: var(--shadow); }
-    .capability-suggestion { display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 100%; padding: 8px 10px; border: 0; border-radius: 4px; color: var(--ink); background: transparent; text-align: left; font-size: 13px; cursor: pointer; }
+    .capability-suggestion { display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 100%; padding: 8px 10px; border: 0; border-radius: 4px; color: var(--ink); background: transparent; text-align: left; font-size: var(--type-h7); line-height: var(--leading-type); font-weight: 700; cursor: pointer; }
     .capability-suggestion:hover, .capability-suggestion:focus-visible { background: #f0f1f2; outline: none; }
     .capability-suggestion span:last-child { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: #e7e8e9; font-size: 17px; line-height: 1; }
     .capability-suggestions[hidden] { display: none; }
     .capability-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
-    .capability-show-more { margin-top: 12px; padding: 5px 0; border: 0; border-bottom: 1px solid currentColor; color: var(--body); background: transparent; font-size: 13px; font-weight: 600; }
+    .capability-show-more { margin-top: 12px; padding: 5px 0; border: 0; border-bottom: 1px solid currentColor; color: var(--body); background: transparent; font-size: var(--type-h7); line-height: var(--leading-type); font-weight: 700; }
     .capability-show-more:hover { color: var(--ink); }
-    .capability-pill { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 4px 6px 4px 14px; border: 1px solid transparent; border-radius: 40px; font-size: 13px; line-height: 18px; transition: color 120ms ease, background-color 120ms ease; }
+    .capability-pill { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 4px 6px 4px 14px; border: 1px solid transparent; border-radius: 40px; font-size: var(--type-body-small); line-height: var(--leading-type); letter-spacing: .2px; transition: color 120ms ease, background-color 120ms ease; }
     .capability-pill.selected { color: #fff; background: #242424; }
     .capability-pill.unselected { color: var(--body); background: #f1f2f2; border-color: #dedede; }
     .capability-pill-action { display: grid; place-items: center; width: 28px; height: 28px; padding: 0; border: 0; border-radius: 50%; color: inherit; background: #ffffff24; font-size: 18px; line-height: 1; }
@@ -270,10 +361,10 @@
     .capability-pill-action:hover { background: #ffffff40; }
     .capability-pill.unselected .capability-pill-action:hover { background: #e2e4e5; }
     .hidden { display: none; }
+    .preview-viewport { --type-h2: 32px; --type-h4: 22px; }
     @container preview (max-width: 760px) {
+      .preview-viewport .flow { --type-h2: var(--type-h2-mobile); --type-h4: var(--type-h4-mobile); }
       .flow { padding: 24px; }
-      .flow-header { display: block; }
-      .status { display: block; margin-top: 12px; }
       .field-grid { grid-template-columns: 1fr; }
       .instant-credit { margin: -24px; }
       .instant-header { padding: 18px 20px 0; }
@@ -281,94 +372,187 @@
     }
     @media (max-width: 760px) {
       .topbar { padding: 0 20px; }
-      .nav a:first-child { display: none; }
-      .shell { padding: 0 20px 56px; }
-      .hero { margin: 0 -20px; padding: 56px 20px 48px; }
-      h1 { letter-spacing: -2px; }
-      .content { grid-template-columns: 1fr; padding-top: 24px; }
-      .preview-controls { grid-template-columns: 1fr; gap: 10px; }
-      .restart-demo { justify-self: start; }
+      .shell { padding: 20px 20px 40px; }
+      .admin-layout { grid-template-columns: 1fr; }
+      .preview-control-primary { grid-template-columns: 1fr; gap: 16px; padding: 18px; }
+      .preview-control-actions { align-items: stretch; gap: 12px; }
+      .copy-menu { width: min(220px, calc(100% - 140px)); }
       .capability-tags { padding: 18px; }
+      .demo-toolbar { padding: 8px 12px; }
+      .demo-mode .demo-stage, .demo-mode .preview-stage, .demo-mode .preview-viewport, .demo-mode .preview-viewport > .flow { min-height: calc(100vh - 112px); }
+      .demo-mode .preview-viewport > .flow { padding: 24px; }
+      .copy-toast { right: 12px; bottom: 12px; min-height: 64px; padding: 12px 18px; font-size: 20px; }
+      .admin-preview-context { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
   </style>
 </head>
 <body>
   <header class="topbar">
     <div class="brand"><img class="brand-logo" src="./BFH%20logo.svg" alt="Bread Financial"></div>
-    <nav class="nav" aria-label="Primary"><a href="#about">About</a><a href="#support">Support</a><a href="#" class="mono">Prototype</a></nav>
+    <nav class="nav" role="tablist" aria-label="Demo sections">
+      <button class="section-tab" id="admin-tab" type="button" role="tab" aria-selected="true" aria-controls="admin-view">Admin</button>
+      <button class="section-tab" id="demo-tab" type="button" role="tab" aria-selected="false" aria-controls="demo-view" tabindex="-1">Demo</button>
+    </nav>
   </header>
   <main class="shell">
-    <section class="hero" id="about">
-      <div class="eyebrow">Credit products / Prequalification</div>
-      <h1>Bread Financial Demo Hub</h1>
-      <p>Explore demos, find screenshots, analyze user flows, and more</p>
-    </section>
-    <div class="content">
-      <div class="preview-column">
-        <div class="preview-controls">
-          <label for="screen-preset">Screen size
-            <select id="screen-preset">
-              <optgroup label="Mobile">
-                <option value="mobile-small">Small: 320-375px</option>
-                <option value="mobile-medium">Medium: 376-414px</option>
-                <option value="mobile-large">Large: 416-480px</option>
-              </optgroup>
-              <optgroup label="Tablet">
-                <option value="tablet-small">Small: 600-767px</option>
-                <option value="tablet-large">Large: 768-1024px</option>
-                <option value="tablet-landscape">Landscape: 1025-1366px</option>
-              </optgroup>
-              <optgroup label="Desktop">
-                <option value="desktop">Desktop: 1280-1728px</option>
-                <option value="desktop-eds-700">EDS: 700px</option>
-                <option value="desktop-eds-800">EDS: 800px</option>
-              </optgroup>
-              <option value="custom">Custom width</option>
-            </select>
-          </label>
-          <label class="preview-width-control" for="preview-width">
-            <span class="preview-width-heading"><span>Preview width</span><output id="preview-width-output" for="preview-width">1280px</output></span>
-            <input id="preview-width" type="range" min="320" max="1728" step="1" value="1280">
-          </label>
-          <button class="restart-demo" id="restart-demo" type="button">Restart Demo</button>
+    <section class="tab-panel" id="admin-view" role="tabpanel" aria-labelledby="admin-tab">
+      <h1 class="admin-heading">Demo settings</h1>
+      <div class="admin-layout">
+        <div class="admin-settings">
+          <section class="preview-controls" aria-label="Preview settings">
+            <div class="preview-control-primary panel">
+            <label for="screen-preset">Screen size
+              <select id="screen-preset">
+                <optgroup label="Mobile">
+                  <option value="mobile-small">Small: 320-375px</option>
+                  <option value="mobile-medium">Medium: 376-414px</option>
+                  <option value="mobile-large">Large: 416-480px</option>
+                </optgroup>
+                <optgroup label="Tablet">
+                  <option value="tablet-small">Small: 600-767px</option>
+                  <option value="tablet-large">Large: 768-1024px</option>
+                  <option value="tablet-landscape">Landscape: 1025-1366px</option>
+                </optgroup>
+                <optgroup label="Desktop">
+                  <option value="desktop">Desktop: 1280-1728px</option>
+                  <option value="desktop-eds-700">EDS: 700px</option>
+                  <option value="desktop-eds-800">EDS: 800px</option>
+                </optgroup>
+                <option value="custom">Custom width</option>
+              </select>
+            </label>
+            <label class="preview-width-control" for="preview-width">
+              <span class="preview-width-heading"><span>Preview width</span><output id="preview-width-output" for="preview-width">1280px</output></span>
+              <input id="preview-width" type="range" min="320" max="1728" step="1" value="1280">
+            </label>
+            </div>
+            <p class="admin-hint">Choose the scenario and viewport, then switch to Demo to view it full screen.</p>
+          </section>
+          <section class="admin-preview panel" aria-labelledby="admin-preview-title">
+            <h2 class="admin-preview-heading" id="admin-preview-title">Live demo preview</h2>
+            <dl class="admin-preview-context" aria-label="Active preview settings">
+              <div><dt>Brand</dt><dd class="admin-preview-brand"><img id="preview-brand-logo" alt="" hidden><span id="preview-brand">Not selected</span></dd></div>
+              <div><dt>Capability type</dt><dd id="preview-capability-type">EDS</dd></div>
+              <div><dt>Capability</dt><dd id="preview-capability">Not selected</dd></div>
+              <div><dt>Device and width</dt><dd id="preview-device">Desktop · 1280px</dd></div>
+            </dl>
+            <div id="admin-preview-host"></div>
+          </section>
+          <section class="capability-tags" aria-labelledby="capability-title">
+            <div class="capability-heading"><h2 id="capability-title">Capabilities</h2><span class="capability-count" id="capability-count" aria-live="polite"></span></div>
+            <div class="capability-search">
+              <label for="capability-search-input">Search capabilities</label>
+              <input id="capability-search-input" type="search" role="combobox" aria-autocomplete="list" aria-controls="capability-suggestions" aria-expanded="false" autocomplete="off" placeholder="Search tags…">
+              <div class="capability-suggestions" id="capability-suggestions" role="listbox" hidden></div>
+            </div>
+            <div class="capability-list" id="capability-list" aria-label="Capability tags"></div>
+            <button class="capability-show-more" id="capability-show-more" type="button" aria-expanded="false">Show More</button>
+          </section>
         </div>
-        <div class="preview-stage">
+        <aside class="panel scenario" aria-labelledby="scenario-title">
+          <h2 id="scenario-title">Demo scenario</h2>
+          <h3>Brand</h3>
+          <label class="brand-search">Search brands
+            <input id="brand" role="combobox" aria-autocomplete="list" aria-controls="brand-suggestions" aria-expanded="false" placeholder="Start typing a brand" autocomplete="off">
+            <div class="brand-suggestions" id="brand-suggestions" role="listbox" hidden></div>
+            <datalist id="brand-list">
+              <option value="Ann Taylor"><option value="The Home Depot"><option value="Academy Sports"><option value="Academy Sports + Outdoors"><option value="Dell"><option value="Dell Pay"><option value="Ross"><option value="Caesars"><option value="Good Sam"><option value="Loft"><option value="Burlington"><option value="AAA"><option value="All Pet"><option value="Alphaeon"><option value="Boscovs"><option value="Ashley Stewart"><option value="B&amp;H Photo"><option value="Ballard Designs"><option value="Avenue"><option value="Bealls"><option value="Beyond Inc."><option value="Blue Nile"><option value="Bread Cashback"><option value="Bread Rewards"><option value="Brylane Home"><option value="Buckle"><option value="Carters"><option value="DentalFirst Financing"><option value="Ethan Allen"><option value="Fanatics"><option value="Torrid"><option value="Famous Footwear"><option value="Ford"><option value="Gamestop"><option value="Full Beauty"><option value="Hard Rock"><option value="HP">
+            </datalist>
+            <span class="brand-logo-preview hidden" id="brand-logo-preview" role="status" aria-live="polite"><img id="brand-logo-image" alt=""></span>
+          </label>
+          <h3>Device type</h3>
+          <div class="chip-group" id="device-types">
+            <label class="chip"><input type="radio" name="device" value="Desktop" checked>Desktop</label>
+            <label class="chip"><input type="radio" name="device" value="Mobile">Mobile</label>
+            <label class="chip"><input type="radio" name="device" value="Tablet">Tablet</label>
+          </div>
+          <h3>Capability type</h3>
+          <div class="chip-group" id="capability-types">
+            <label class="chip"><input type="radio" name="capability" value="EDS" checked>EDS</label>
+            <label class="chip"><input type="radio" name="capability" value="Stand Alone">Stand Alone</label>
+            <label class="chip"><input type="radio" name="capability" value="FlexLoan">FlexLoan</label>
+          </div>
+          <div id="capability-options">
+            <h3>Capability</h3>
+            <div class="chip-group" id="eds-options">
+              <label class="chip"><input id="apply-capability" type="radio" name="capability-option" value="Apply">Apply</label>
+              <label class="chip"><input type="radio" name="capability-option" value="Batch Prescreen">Batch Prescreen</label>
+              <label class="chip"><input type="radio" name="capability-option" value="Real Time Prescreen">Real Time Prescreen</label>
+              <label class="chip"><input type="radio" name="capability-option" value="Prequalification">Prequalification</label>
+              <label class="chip"><input type="radio" name="capability-option" value="Prequalification with Bread Pay">Prequalification with Bread Pay</label>
+            </div>
+            <div class="chip-group hidden" id="stand-alone-options">
+              <label class="chip"><input type="radio" name="capability-option" value="Instant Credit">Instant Credit</label>
+              <label class="chip"><input type="radio" name="capability-option" value="Frictionless Mobile Credit (QR Code)">Frictionless Mobile Credit (QR Code)</label>
+              <label class="chip"><input type="radio" name="capability-option" value="Prequal (Credit Card only)">Prequal (Credit Card only)</label>
+            </div>
+          </div>
+          <h3>Decisioning outcome</h3>
+          <div class="chip-group" id="outcomes">
+            <label class="chip"><input type="radio" name="outcome" value="approved" checked>Approved</label>
+            <label class="chip"><input type="radio" name="outcome" value="declined">Declined</label>
+            <label class="chip"><input type="radio" name="outcome" value="pended">Pended</label>
+            <label class="chip"><input type="radio" name="outcome" value="fraud-pended">Fraud Pended</label>
+            <label class="chip"><input type="radio" name="outcome" value="technical-glitch">Technical Glitch</label>
+          </div>
+          <p>Scenario controls are available for demonstration and testing only.</p>
+        </aside>
+      </div>
+    </section>
+    <section class="tab-panel" id="demo-view" role="tabpanel" aria-labelledby="demo-tab" hidden>
+      <div class="demo-toolbar">
+        <div class="copy-menu">
+          <button class="copy-menu-trigger" id="copy-menu-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="copy-menu-options">
+            <span>Copy Demo Link</span>
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3 6 5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </button>
+          <div class="copy-menu-options" id="copy-menu-options" role="menu" hidden>
+            <button type="button" role="menuitem" data-copy-action="link">Copy Demo Link</button>
+            <button type="button" role="menuitem" data-copy-action="image">Copy image</button>
+          </div>
+        </div>
+        <button class="restart-demo" id="restart-demo" type="button">Restart demo</button>
+      </div>
+      <div class="copy-toast demo-toast-host" id="copy-toast" role="status" aria-live="polite" hidden>
+        <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><circle cx="16" cy="16" r="13" stroke="currentColor" stroke-width="2"></circle><path d="m10 16 4 4 8-9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        <span id="copy-toast-message"></span>
+      </div>
+      <div class="demo-stage" id="demo-stage">
+        <div class="preview-stage" id="preview-stage">
           <div class="preview-viewport" id="preview-viewport">
-            <section class="panel flow" aria-labelledby="flow-title">
-        <div class="flow-header"><div><h2 id="flow-title">Let's get started</h2><p id="step-copy">Tell us a little about yourself.</p></div><span class="status" id="status">SIMULATED DEMO</span></div>
+            <section class="panel flow" aria-label="Prequalification demo">
         <div class="steps" aria-label="Progress"><span class="step active"></span><span class="step"></span><span class="step"></span><span class="step"></span></div>
         <div id="details-screen" class="screen">
           <div id="standard-details">
           <h3>Your details</h3>
           <p>We use this information to find a starting point for your options.</p>
           <div class="field-grid">
-            <label>First name<input id="first-name" autocomplete="given-name" value="Alex"></label>
-            <label>Last name<input id="last-name" autocomplete="family-name" value="Morgan"></label>
-            <label>Email address<input id="email" type="email" autocomplete="email" value="alex@example.com"></label>
-            <label>ZIP code<input id="zip" inputmode="numeric" autocomplete="postal-code" value="94107"></label>
+            <label class="form-field"><span class="form-field-label">First name</span><input id="first-name" autocomplete="given-name" value="Alex" placeholder=" "></label>
+            <label class="form-field"><span class="form-field-label">Last name</span><input id="last-name" autocomplete="family-name" value="Morgan" placeholder=" "></label>
+            <label class="form-field"><span class="form-field-label">Email address</span><input id="email" type="email" autocomplete="email" value="alex@example.com" placeholder=" "></label>
+            <label class="form-field"><span class="form-field-label">ZIP code</span><input id="zip" inputmode="numeric" autocomplete="postal-code" value="94107" placeholder=" "></label>
           </div>
-          <label class="consent"><input id="consent" type="checkbox" checked><span>I agree to the soft credit inquiry and understand that this is not a final credit decision.</span></label>
           <div class="actions"><span class="fineprint">Your information is simulated for this demo.</span><button class="button primary" id="continue">Continue</button></div>
           </div>
           <div id="instant-credit-details" class="instant-credit hidden">
             <div class="instant-header">
-              <div class="instant-brand-row"><div class="instant-brand"><span class="instant-brand-mark" aria-hidden="true"></span><span>Demo brand</span></div><button class="instant-close" aria-label="Close application">&times;</button></div>
+              <div class="instant-brand-row"><div class="instant-brand"><img class="instant-brand-logo hidden" id="instant-brand-logo" alt=""></div><button class="instant-close" aria-label="Close application">&times;</button></div>
               <div class="instant-divider"></div>
-              <button class="instant-back" type="button"><span aria-hidden="true">&lt;</span><span>Back</span></button>
             </div>
+            <button class="instant-back" type="button"><span aria-hidden="true">&lt;</span><span>Back</span></button>
             <div class="instant-modal">
               <h3>Let’s Get Started</h3>
               <p class="instant-subtitle">Providing this info helps us securely prefill some of your application, saving you time.</p>
               <div class="instant-fields">
-                <label class="instant-field">Mobile Number<input id="instant-mobile" type="tel" autocomplete="tel"></label>
-                <div class="instant-field"><label for="instant-ssn">Last 4 of SSN</label><div class="password-field"><input id="instant-ssn" type="password" inputmode="numeric" autocomplete="off" maxlength="4"><span class="password-mask" id="instant-ssn-mask" aria-hidden="true"></span><button class="password-toggle" id="toggle-ssn-visibility" type="button" aria-label="Show last 4 of SSN" aria-pressed="false"><svg id="ssn-show-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg><svg id="ssn-hide-icon" class="hidden" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 3 18 18"></path><path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"></path><path d="M9.9 5.2A11.8 11.8 0 0 1 12 5c6.4 0 10 7 10 7a14.6 14.6 0 0 1-3 3.8"></path><path d="M6.2 6.2C3.5 8 2 12 2 12s3.6 7 10 7a10.8 10.8 0 0 0 4.1-.8"></path></svg></button></div></div>
-                <label class="instant-field">ZIP Code<input id="instant-zip" inputmode="numeric" maxlength="5" autocomplete="postal-code"></label>
+                <label class="instant-field"><span class="form-field-label">Mobile Number</span><input id="instant-mobile" type="tel" autocomplete="tel" placeholder=" "></label>
+                <div class="instant-field"><label class="form-field-label" for="instant-ssn">Last 4 of SSN</label><div class="password-field"><input id="instant-ssn" type="password" inputmode="numeric" autocomplete="off" maxlength="4" placeholder=" "><span class="password-mask" id="instant-ssn-mask" aria-hidden="true"></span><button class="password-toggle" id="toggle-ssn-visibility" type="button" aria-label="Show last 4 of SSN" aria-pressed="false"><svg id="ssn-show-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg><svg id="ssn-hide-icon" class="hidden" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 3 18 18"></path><path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"></path><path d="M9.9 5.2A11.8 11.8 0 0 1 12 5c6.4 0 10 7 10 7a14.6 14.6 0 0 1-3 3.8"></path><path d="M6.2 6.2C3.5 8 2 12 2 12s3.6 7 10 7a10.8 10.8 0 0 0 4.1-.8"></path></svg></button></div></div>
+                <label class="instant-field"><span class="form-field-label">ZIP Code</span><input id="instant-zip" inputmode="numeric" maxlength="5" autocomplete="postal-code" placeholder=" "></label>
               </div>
               <div class="security-message"><span class="lock" aria-hidden="true"></span><span>We’ll encrypt your data.</span></div>
               <p class="instant-privacy">Note: Credit card offers are subject to credit approval. The credit card account is issued by Comenity Bank. Please read the <strong>Important Credit Card Information</strong> and review Comenity Bank’s <strong>Financial Privacy Policy</strong> and <strong>Online Privacy Policy</strong> for more information. California Residents: Submit a <strong>Data Request Form</strong> to make a Do Not or Share My Personal information request.</p>
               <div class="instant-actions"><button class="instant-continue" id="instant-continue" disabled>Continue</button><button class="instant-cancel" type="button">Cancel Application</button></div>
             </div>
-            <div class="instant-footer"><span class="instant-footer-mark" aria-hidden="true"></span><span>Encrypted</span><span>Demo brand</span></div>
+            <div class="instant-footer"><span class="instant-footer-mark" aria-hidden="true"></span><span>Encrypted</span><span id="instant-footer-brand">Choose a brand</span></div>
           </div>
         </div>
         <div id="review-details-screen" class="screen hidden">
@@ -376,25 +560,25 @@
             <div class="application-header"><button class="application-back" id="review-back" type="button">&lt; Back</button><div><h3>Review Your Details</h3><p class="subtitle">Please review and add to your information.</p></div></div>
             <div class="application-fields">
               <div class="field-grid">
-                <label class="application-field">Legal First Name<input value="Carol"></label>
-                <label class="application-field">Legal Last Name<input value="Jones"></label>
+                <label class="application-field"><span class="form-field-label">Legal First Name</span><input value="Carol" placeholder=" "></label>
+                <label class="application-field"><span class="form-field-label">Legal Last Name</span><input value="Jones" placeholder=" "></label>
               </div>
               <div class="field-grid">
-                <label class="application-field">Street<input value="123 Main Street"></label>
-                <label class="application-field">Apt./Suite (Optional)<input></label>
+                <label class="application-field"><span class="form-field-label">Street</span><input value="123 Main Street" placeholder=" "></label>
+                <label class="application-field"><span class="form-field-label">Apt./Suite (Optional)</span><input placeholder=" "></label>
               </div>
               <div class="field-grid">
-                <label class="application-field">City<input value="Columbus"></label>
-                <label class="application-field">State<input value="OH"></label>
-                <label class="application-field">ZIP Code<input value="41219"></label>
+                <label class="application-field"><span class="form-field-label">City</span><input value="Columbus" placeholder=" "></label>
+                <label class="application-field"><span class="form-field-label">State</span><input value="OH" placeholder=" "></label>
+                <label class="application-field"><span class="form-field-label">ZIP Code</span><input value="41219" placeholder=" "></label>
               </div>
               <div class="field-grid">
-                <label class="application-field">Email<input type="email"></label>
-                <label class="application-field">Date of Birth (mm/dd/yyyy)<input placeholder="mm/dd/yyyy"></label>
+                <label class="application-field"><span class="form-field-label">Email</span><input type="email" placeholder=" "></label>
+                <label class="application-field"><span class="form-field-label">Date of Birth (mm/dd/yyyy)</span><input placeholder=" "></label>
               </div>
               <div class="field-grid">
-                <label class="application-field">Annual Income<input inputmode="decimal"></label>
-                <label class="application-field">Last 4 SSN<input value="****" inputmode="numeric" maxlength="4"></label>
+                <label class="application-field"><span class="form-field-label">Annual Income</span><input inputmode="decimal" placeholder=" "></label>
+                <label class="application-field"><span class="form-field-label">Last 4 SSN</span><input value="****" inputmode="numeric" maxlength="4" placeholder=" "></label>
               </div>
               <div class="verified-mobile"><span>Mobile Number</span><strong>(908) 555-5555</strong><span class="verified-badge">Verified</span></div>
             </div>
@@ -405,7 +589,7 @@
         <div id="secure-code-screen" class="screen hidden">
           <div class="application-page secure-code">
             <div class="application-header"><button class="application-back" id="secure-back" type="button">&lt; Back</button><div><h3>Secure Code</h3><p class="subtitle">Enter the secure code we sent to your phone number ending in 5555.</p></div></div>
-            <label class="application-field">Secure Code<input id="secure-code-input" value="68134" inputmode="numeric" maxlength="6"></label>
+            <label class="application-field"><span class="form-field-label">Secure Code</span><input id="secure-code-input" value="68134" inputmode="numeric" maxlength="6" placeholder=" "></label>
             <p class="secure-note">Your code expires in 90 seconds.</p>
             <div class="application-actions"><button class="button primary" id="secure-continue">Continue</button><button class="text-action" type="button">Send a New Code</button><button class="text-action" type="button">Cancel Application</button></div>
           </div>
@@ -440,7 +624,7 @@
         </div>
         <div id="verify-screen" class="screen hidden">
           <h3>Confirm your email</h3><p>We sent a six-digit code to <strong>alex@example.com</strong>.</p>
-          <label>Verification code<input id="code" inputmode="numeric" maxlength="6" placeholder="123456"></label>
+          <label class="form-field"><span class="form-field-label">Verification code</span><input id="code" inputmode="numeric" maxlength="6" placeholder=" "></label>
           <p class="fineprint">For the demo, enter any six digits.</p>
           <div class="actions"><button class="button secondary" id="back">Back</button><button class="button primary" id="verify">View options</button></div>
         </div>
@@ -540,15 +724,15 @@
             <h2 class="bp-title">Billing Address</h2>
             <p class="bp-lead">(Physical street address)</p>
             <div class="bp-field-grid">
-              <div class="bp-field"><label for="bp-first-name">Legal First Name</label><input id="bp-first-name" autocomplete="given-name" value="Carol" required></div>
-              <div class="bp-field"><label for="bp-last-name">Legal Last Name</label><input id="bp-last-name" autocomplete="family-name" value="Smith" required></div>
-              <div class="bp-field"><label for="bp-street">Street Address</label><input id="bp-street" autocomplete="address-line1" value="15 Main Street" required></div>
-              <div class="bp-field"><label for="bp-apartment">Apt./Suite (Optional)</label><input id="bp-apartment" autocomplete="address-line2"></div>
+              <div class="bp-field"><label for="bp-first-name">Legal First Name</label><input id="bp-first-name" autocomplete="given-name" value="Carol" placeholder=" " required></div>
+              <div class="bp-field"><label for="bp-last-name">Legal Last Name</label><input id="bp-last-name" autocomplete="family-name" value="Smith" placeholder=" " required></div>
+              <div class="bp-field"><label for="bp-street">Street Address</label><input id="bp-street" autocomplete="address-line1" value="15 Main Street" placeholder=" " required></div>
+              <div class="bp-field"><label for="bp-apartment">Apt./Suite (Optional)</label><input id="bp-apartment" autocomplete="address-line2" placeholder=" "></div>
             </div>
             <div class="bp-field-grid address-three bp-field-offset">
-              <div class="bp-field"><label for="bp-city">City</label><input id="bp-city" autocomplete="address-level2" value="Sea Girt" required></div>
-              <div class="bp-field"><label for="bp-state">State</label><input id="bp-state" autocomplete="address-level1" value="NJ" maxlength="2" required></div>
-              <div class="bp-field"><label for="bp-zip">ZIP Code</label><input id="bp-zip" inputmode="numeric" autocomplete="postal-code" value="08750" maxlength="5" required></div>
+              <div class="bp-field"><label for="bp-city">City</label><input id="bp-city" autocomplete="address-level2" value="Sea Girt" placeholder=" " required></div>
+              <div class="bp-field"><label for="bp-state">State</label><input id="bp-state" autocomplete="address-level1" value="NJ" maxlength="2" placeholder=" " required></div>
+              <div class="bp-field"><label for="bp-zip">ZIP Code</label><input id="bp-zip" inputmode="numeric" autocomplete="postal-code" value="08750" maxlength="5" placeholder=" " required></div>
             </div>
             <div class="bp-lock"><span class="bp-lock-mark" aria-hidden="true"></span>We’ll encrypt your data.</div>
             <label class="bp-checkbox"><input id="bp-opt-out" type="checkbox"><span>I would like to opt out of sharing my personal information with [merchant name] for Bread Pay™ marketing purposes.</span></label>
@@ -566,7 +750,7 @@
               <p class="bp-lead">We use this information to verify you and check your eligibility.</p>
               <p class="bp-directions">Checking your eligibility will not affect your credit score. Your information is encrypted for added protection.</p>
               <div class="bp-field"><label for="bp-dob">Date of Birth</label><input id="bp-dob" type="text" inputmode="numeric" autocomplete="bday" placeholder="MM/DD/YYYY" required></div>
-              <div class="bp-field bp-ssn-field bp-field-offset"><label for="bp-ssn">Full SSN</label><input id="bp-ssn" type="password" inputmode="numeric" autocomplete="off" maxlength="9" required><button class="bp-ssn-toggle" id="bp-ssn-toggle" type="button" aria-label="Show full SSN" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg></button></div>
+              <div class="bp-field bp-ssn-field bp-field-offset"><label for="bp-ssn">Full SSN</label><input id="bp-ssn" type="password" inputmode="numeric" autocomplete="off" maxlength="9" placeholder=" " required><button class="bp-ssn-toggle" id="bp-ssn-toggle" type="button" aria-label="Show full SSN" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg></button></div>
               <div class="bp-lock"><span class="bp-lock-mark" aria-hidden="true"></span>We’ll encrypt your data.</div>
               <p class="bp-disclosure">By selecting “View Your Offers,” you agree that you are authorizing Comenity Capital Bank to obtain your personal credit information solely to conduct a prequalification for credit offers.</p>
               <div class="bp-step-actions">
@@ -630,64 +814,9 @@
             </section>
           </div>
         </div>
-        <section class="capability-tags" aria-labelledby="capability-title">
-          <div class="capability-heading"><h2 id="capability-title">Capabilities</h2><span class="capability-count" id="capability-count" aria-live="polite"></span></div>
-          <div class="capability-search">
-            <label for="capability-search-input">Search capabilities</label>
-            <input id="capability-search-input" type="search" role="combobox" aria-autocomplete="list" aria-controls="capability-suggestions" aria-expanded="false" autocomplete="off" placeholder="Search tags…">
-            <div class="capability-suggestions" id="capability-suggestions" role="listbox" hidden></div>
-          </div>
-          <div class="capability-list" id="capability-list" aria-label="Capability tags"></div>
-          <button class="capability-show-more" id="capability-show-more" type="button" aria-expanded="false">Show More</button>
-        </section>
+        </div>
       </div>
-      <aside class="panel scenario" aria-labelledby="scenario-title">
-        <h2 id="scenario-title">Demo scenario</h2>
-        <h3>Brand</h3>
-        <label class="brand-search">Search brands
-          <input id="brand" list="brand-list" placeholder="Start typing a brand" autocomplete="off">
-          <datalist id="brand-list">
-            <option value="Ann Taylor"><option value="The Home Depot"><option value="Academy Sports + Outdoors"><option value="Dell Pay"><option value="Ross"><option value="Caesars"><option value="Good Sam"><option value="Loft"><option value="Burlington"><option value="AAA"><option value="All Pet"><option value="Alphaeon"><option value="Boscovs"><option value="Ashley Stewart"><option value="B&amp;H Photo"><option value="Ballard Designs"><option value="Avenue"><option value="Bealls"><option value="Beyond Inc."><option value="Blue Nile"><option value="Bread Cashback"><option value="Bread Rewards"><option value="Brylane Home"><option value="Buckle"><option value="Carters"><option value="DentalFirst Financing"><option value="Ethan Allen"><option value="Fanatics"><option value="Torrid"><option value="Famous Footwear"><option value="Ford"><option value="Gamestop"><option value="Full Beauty"><option value="Hard Rock"><option value="HP">
-          </datalist>
-        </label>
-        <h3>Device type</h3>
-        <div class="chip-group" id="device-types">
-          <label class="chip"><input type="radio" name="device" value="Desktop" checked>Desktop</label>
-          <label class="chip"><input type="radio" name="device" value="Mobile">Mobile</label>
-          <label class="chip"><input type="radio" name="device" value="Tablet">Tablet</label>
-        </div>
-        <h3>Capability type</h3>
-        <div class="chip-group" id="capability-types">
-          <label class="chip"><input type="radio" name="capability" value="EDS" checked>EDS</label>
-          <label class="chip"><input type="radio" name="capability" value="Stand Alone">Stand Alone</label>
-          <label class="chip"><input type="radio" name="capability" value="FlexLoan">FlexLoan</label>
-        </div>
-        <div id="capability-options">
-          <h3>Capability</h3>
-          <div class="chip-group" id="eds-options">
-            <label class="chip"><input id="apply-capability" type="radio" name="capability-option" value="Apply">Apply</label>
-            <label class="chip"><input type="radio" name="capability-option" value="Batch Prescreen">Batch Prescreen</label>
-            <label class="chip"><input type="radio" name="capability-option" value="Real Time Prescreen">Real Time Prescreen</label>
-            <label class="chip"><input type="radio" name="capability-option" value="Prequalification">Prequalification</label>
-            <label class="chip"><input type="radio" name="capability-option" value="Prequalification with Bread Pay">Prequalification with Bread Pay</label>
-          </div>
-          <div class="chip-group hidden" id="stand-alone-options">
-            <label class="chip"><input type="radio" name="capability-option" value="Instant Credit">Instant Credit</label>
-            <label class="chip"><input type="radio" name="capability-option" value="Frictionless Mobile Credit (QR Code)">Frictionless Mobile Credit (QR Code)</label>
-            <label class="chip"><input type="radio" name="capability-option" value="Prequal (Credit Card only)">Prequal (Credit Card only)</label>
-          </div>
-        </div>
-        <h3>Decisioning outcome</h3>
-        <div class="chip-group" id="outcomes">
-          <label class="chip"><input type="radio" name="outcome" value="approved" checked>Approved</label>
-          <label class="chip"><input type="radio" name="outcome" value="declined">Declined</label>
-          <label class="chip"><input type="radio" name="outcome" value="pended">Pended</label>
-          <label class="chip"><input type="radio" name="outcome" value="fraud-pended">Fraud Pended</label>
-          <label class="chip"><input type="radio" name="outcome" value="technical-glitch">Technical Glitch</label>
-        </div>
-        <p>Scenario controls are available for demonstration and testing only.</p>
-      </aside>
-    </div>
+    </section>
   </main>
   <script>
     const state = { outcome: 'approved', applicationEntryRequested: false, breadPayFlow: false };
@@ -714,12 +843,26 @@
     const resultBox = document.getElementById('result');
     const resultTitle = document.getElementById('result-title');
     const resultCopy = document.getElementById('result-copy');
-    const stepCopy = document.getElementById('step-copy');
     const deviceInputs = document.querySelectorAll('input[name="device"]');
     const screenPreset = document.getElementById('screen-preset');
     const previewWidth = document.getElementById('preview-width');
     const previewWidthOutput = document.getElementById('preview-width-output');
     const previewViewport = document.getElementById('preview-viewport');
+    const previewStage = document.getElementById('preview-stage');
+    const adminPreviewHost = document.getElementById('admin-preview-host');
+    const demoStage = document.getElementById('demo-stage');
+    const previewBrand = document.getElementById('preview-brand');
+    const previewBrandLogo = document.getElementById('preview-brand-logo');
+    const previewCapabilityType = document.getElementById('preview-capability-type');
+    const previewCapability = document.getElementById('preview-capability');
+    const previewDevice = document.getElementById('preview-device');
+    const copyMenuTrigger = document.getElementById('copy-menu-trigger');
+    const copyMenuOptions = document.getElementById('copy-menu-options');
+    const copyToast = document.getElementById('copy-toast');
+    const copyToastMessage = document.getElementById('copy-toast-message');
+    const sectionTabs = [...document.querySelectorAll('[role="tab"]')];
+    const sectionPanels = [...document.querySelectorAll('[role="tabpanel"]')];
+    let copyToastTimeout;
     const previewPresets = {
       'mobile-small': { device: 'Mobile', width: 320 },
       'mobile-medium': { device: 'Mobile', width: 376 },
@@ -740,6 +883,120 @@
     const applyCapability = document.getElementById('apply-capability');
     const capabilityOptionInputs = document.querySelectorAll('input[name="capability-option"]');
     const outcomeInputs = document.querySelectorAll('input[name="outcome"]');
+    const brandInput = document.getElementById('brand');
+    const brandSuggestions = document.getElementById('brand-suggestions');
+    const brandLogoPreview = document.getElementById('brand-logo-preview');
+    const brandLogoImage = document.getElementById('brand-logo-image');
+    const instantBrandLogo = document.getElementById('instant-brand-logo');
+    const instantFooterBrand = document.getElementById('instant-footer-brand');
+    const brandLogos = new Map([
+      ['aaa', { name: 'AAA', file: 'aaa.png' }],
+      ['academy sports', { name: 'Academy Sports', file: 'academy-sports-outdoors.svg' }],
+      ['academy sports + outdoors', { name: 'Academy Sports + Outdoors', file: 'academy-sports-outdoors.svg' }],
+      ['burlington', { name: 'Burlington', file: 'burlington.png' }],
+      ['dell', { name: 'Dell', file: 'dell.svg' }],
+      ['dell pay', { name: 'Dell Pay', file: 'dell.svg' }],
+      ['ford', { name: 'Ford', file: 'ford.svg' }],
+      ['hp', { name: 'HP', file: 'hp.svg' }],
+      ['loft', { name: 'Loft', file: 'loft.png' }],
+      ['ross', { name: 'Ross', file: 'ross.png' }]
+    ]);
+    const availableBrands = [...document.querySelectorAll('#brand-list option')].map(option => option.value);
+    function updateSelectedBrand() {
+      const selected = brandInput.value.trim();
+      const logo = brandLogos.get(selected.toLowerCase());
+      brandLogoPreview.classList.toggle('hidden', !logo);
+      if (logo) {
+        const logoPath = `./../logos/${logo.file}`;
+        brandLogoImage.src = logoPath;
+        brandLogoImage.alt = `${logo.name} logo`;
+        instantBrandLogo.src = logoPath;
+        instantBrandLogo.alt = `${logo.name} logo`;
+        instantBrandLogo.classList.remove('hidden');
+      } else {
+        brandLogoImage.removeAttribute('src');
+        brandLogoImage.alt = '';
+        instantBrandLogo.removeAttribute('src');
+        instantBrandLogo.alt = '';
+        instantBrandLogo.classList.add('hidden');
+      }
+      const brandName = logo?.name || selected || 'Choose a brand';
+      instantFooterBrand.textContent = brandName;
+      updateAdminPreviewContext();
+    }
+    let activeBrandSuggestion = -1;
+    function closeBrandSuggestions() {
+      brandSuggestions.hidden = true;
+      brandInput.setAttribute('aria-expanded', 'false');
+      brandInput.removeAttribute('aria-activedescendant');
+      activeBrandSuggestion = -1;
+    }
+    function renderBrandSuggestions() {
+      const query = brandInput.value.trim().toLowerCase();
+      const matches = query
+        ? availableBrands.filter(name => name.toLowerCase().includes(query)).slice(0, 12)
+        : [];
+      brandSuggestions.replaceChildren(...matches.map((name, index) => {
+        const suggestion = document.createElement('button');
+        suggestion.className = 'brand-suggestion';
+        suggestion.type = 'button';
+        suggestion.id = `brand-suggestion-${index}`;
+        suggestion.setAttribute('role', 'option');
+        suggestion.setAttribute('aria-selected', 'false');
+        const brand = brandLogos.get(name.toLowerCase());
+        const image = document.createElement('img');
+        image.alt = '';
+        image.setAttribute('aria-hidden', 'true');
+        if (brand) image.src = `./../logos/${brand.file}`;
+        else image.hidden = true;
+        const label = document.createElement('span');
+        label.textContent = name;
+        suggestion.append(image, label);
+        suggestion.addEventListener('pointerdown', event => event.preventDefault());
+        suggestion.addEventListener('click', () => {
+          brandInput.value = name;
+          updateSelectedBrand();
+          closeBrandSuggestions();
+        });
+        return suggestion;
+      }));
+      brandSuggestions.hidden = matches.length === 0;
+      brandInput.setAttribute('aria-expanded', String(matches.length > 0));
+      brandInput.removeAttribute('aria-activedescendant');
+      activeBrandSuggestion = -1;
+    }
+    function setActiveBrandSuggestion(index) {
+      const suggestions = [...brandSuggestions.querySelectorAll('.brand-suggestion')];
+      if (!suggestions.length) return;
+      activeBrandSuggestion = (index + suggestions.length) % suggestions.length;
+      suggestions.forEach((suggestion, currentIndex) => {
+        const active = currentIndex === activeBrandSuggestion;
+        suggestion.setAttribute('aria-selected', String(active));
+        if (active) suggestion.scrollIntoView({ block: 'nearest' });
+      });
+      brandInput.setAttribute('aria-activedescendant', suggestions[activeBrandSuggestion].id);
+    }
+    brandInput.addEventListener('input', () => {
+      updateSelectedBrand();
+      renderBrandSuggestions();
+    });
+    brandInput.addEventListener('focus', renderBrandSuggestions);
+    brandInput.addEventListener('keydown', event => {
+      if (event.key === 'ArrowDown' && !brandSuggestions.hidden) {
+        event.preventDefault();
+        setActiveBrandSuggestion(activeBrandSuggestion + 1);
+      } else if (event.key === 'ArrowUp' && !brandSuggestions.hidden) {
+        event.preventDefault();
+        setActiveBrandSuggestion(activeBrandSuggestion <= 0 ? brandSuggestions.children.length - 1 : activeBrandSuggestion - 1);
+      } else if (event.key === 'Enter' && activeBrandSuggestion >= 0) {
+        event.preventDefault();
+        brandSuggestions.children[activeBrandSuggestion]?.click();
+      } else if (event.key === 'Escape') {
+        closeBrandSuggestions();
+      }
+    });
+    brandInput.addEventListener('blur', closeBrandSuggestions);
+    updateSelectedBrand();
     const capabilityTags = ['prequalification', 'full_application', 'soft_credit_inquiry', 'hard_credit_inquiry', 'identity_verification', 'income_navigator', 'cash_atlas', 'rtps', 'income_verification', 'bank_account_connection', 'one_time_passcode', 'fraud_review', 'waterfall_lending', 'account_assure', 'split_pay', 'pay_in_4', 'installment_plan', 'deferred_interest', 'credit_line_increase', 'digital_card', 'add_to_wallet'];
     const defaultCapabilityTags = capabilityTags.slice(0, 5);
     const selectedCapabilities = new Set();
@@ -816,6 +1073,22 @@
       previewViewport.style.width = `${width}px`;
       previewWidthOutput.value = `${width}px`;
       previewWidthOutput.textContent = `${width}px`;
+      updateAdminPreviewContext();
+    }
+    function updateAdminPreviewContext() {
+      const brandName = brandInput.value.trim();
+      const brandLogo = brandLogos.get(brandName.toLowerCase());
+      previewBrand.textContent = brandName || 'Not selected';
+      previewBrandLogo.hidden = !brandLogo;
+      if (brandLogo) {
+        previewBrandLogo.src = `./../logos/${brandLogo.file}`;
+      } else {
+        previewBrandLogo.removeAttribute('src');
+      }
+      const selectedCapability = document.querySelector('input[name="capability-option"]:checked')?.value;
+      previewCapabilityType.textContent = document.querySelector('input[name="capability"]:checked')?.value || 'Not selected';
+      previewCapability.textContent = selectedCapability || 'Not selected';
+      previewDevice.textContent = `${document.querySelector('input[name="device"]:checked')?.value || 'Not selected'} · ${previewWidth.value}px`;
     }
     function selectPreset(presetId) {
       const preset = previewPresets[presetId];
@@ -827,14 +1100,169 @@
       const presetId = deviceDefaults[input.value];
       screenPreset.value = presetId;
       selectPreset(presetId);
+      updateAdminPreviewContext();
     }));
     screenPreset.addEventListener('change', () => {
       if (screenPreset.value === 'custom') return;
       selectPreset(screenPreset.value);
+      updateAdminPreviewContext();
     });
     previewWidth.addEventListener('input', () => {
       setPreviewWidth(Number(previewWidth.value));
       screenPreset.value = 'custom';
+      updateAdminPreviewContext();
+    });
+    function showCopyToast(message, isError = false) {
+      window.clearTimeout(copyToastTimeout);
+      copyToastMessage.textContent = message;
+      copyToast.classList.toggle('error', isError);
+      copyToast.hidden = false;
+      copyToastTimeout = window.setTimeout(() => { copyToast.hidden = true; }, 3500);
+    }
+    function closeCopyMenu() {
+      copyMenuOptions.hidden = true;
+      copyMenuTrigger.setAttribute('aria-expanded', 'false');
+    }
+    function switchSection(name, updateHistory = true) {
+      const activeTab = document.getElementById(`${name}-tab`);
+      sectionTabs.forEach(tab => {
+        const selected = tab === activeTab;
+        tab.setAttribute('aria-selected', String(selected));
+        tab.tabIndex = selected ? 0 : -1;
+      });
+      sectionPanels.forEach(panel => { panel.hidden = panel.id !== `${name}-view`; });
+      document.body.classList.toggle('demo-mode', name === 'demo');
+      (name === 'demo' ? demoStage : adminPreviewHost).append(previewStage);
+      if (name === 'demo') previewViewport.style.removeProperty('width');
+      else previewViewport.style.width = `${previewWidth.value}px`;
+      closeCopyMenu();
+      if (updateHistory) {
+        const url = new URL(window.location.href);
+        if (name === 'demo') url.searchParams.set('view', 'demo');
+        else url.searchParams.delete('view');
+        window.history.pushState({ view: name }, '', url);
+      }
+    }
+    sectionTabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => switchSection(tab.id === 'demo-tab' ? 'demo' : 'admin'));
+      tab.addEventListener('keydown', event => {
+        if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+        event.preventDefault();
+        const nextIndex = event.key === 'Home' ? 0
+          : event.key === 'End' ? sectionTabs.length - 1
+            : (index + (event.key === 'ArrowRight' ? 1 : sectionTabs.length - 1)) % sectionTabs.length;
+        sectionTabs[nextIndex].focus();
+        sectionTabs[nextIndex].click();
+      });
+    });
+    window.addEventListener('popstate', () => {
+      switchSection(new URL(window.location.href).searchParams.get('view') === 'demo' ? 'demo' : 'admin', false);
+    });
+    function getDemoUrl() {
+      const url = new URL(window.location.href);
+      url.hash = '';
+      url.search = '';
+      const params = new URLSearchParams({
+        view: 'demo',
+        preset: screenPreset.value,
+        width: String(previewWidth.value),
+        device: document.querySelector('input[name="device"]:checked')?.value || 'Desktop',
+        type: document.querySelector('input[name="capability"]:checked')?.value || 'EDS',
+        outcome: document.querySelector('input[name="outcome"]:checked')?.value || 'approved'
+      });
+      const capability = document.querySelector('input[name="capability-option"]:checked')?.value;
+      if (capability) params.set('capability', capability);
+      if (brandInput.value.trim()) params.set('brand', brandInput.value.trim());
+      url.search = params.toString();
+      return url;
+    }
+    function fallbackCopyText(text) {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.append(textarea);
+      textarea.select();
+      const copied = document.execCommand('copy');
+      textarea.remove();
+      if (!copied) throw new Error('Clipboard access is unavailable.');
+    }
+    async function copyDemoLink() {
+      try {
+        const url = getDemoUrl().href;
+        if (navigator.clipboard?.writeText) await navigator.clipboard.writeText(url);
+        else fallbackCopyText(url);
+      } catch {
+        fallbackCopyText(getDemoUrl().href);
+      }
+      showCopyToast('Demo copied!');
+    }
+    let html2canvasPromise;
+    function loadHtml2Canvas() {
+      if (!html2canvasPromise) {
+        html2canvasPromise = new Promise((resolve, reject) => {
+          const script = document.createElement('script');
+          script.src = 'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
+          script.integrity = 'sha384-ZZ1pncU3bQe8y31yfZdMFdSpttDoPmOZg2wguVK9almUodir1PghgT0eY7Mrty8H';
+          script.crossOrigin = 'anonymous';
+          script.onload = () => {
+            if (typeof window.html2canvas === 'function') resolve(window.html2canvas);
+            else reject(new Error('The image copying tool could not be loaded.'));
+          };
+          script.onerror = () => reject(new Error('The image copying tool could not be loaded.'));
+          document.head.append(script);
+        });
+      }
+      return html2canvasPromise;
+    }
+    async function renderPreviewImage() {
+      if (!navigator.clipboard?.write || typeof ClipboardItem === 'undefined') {
+        throw new Error('Image clipboard access is not supported in this browser.');
+      }
+      const capture = await loadHtml2Canvas();
+      const canvas = await capture(previewViewport, {
+        allowTaint: false,
+        backgroundColor: '#fff',
+        height: previewViewport.scrollHeight,
+        logging: false,
+        scale: 2,
+        useCORS: true,
+        width: previewViewport.clientWidth,
+        windowHeight: previewViewport.scrollHeight,
+        windowWidth: previewViewport.clientWidth
+      });
+      const blob = await new Promise((resolve, reject) => canvas.toBlob(result => {
+        if (result) resolve(result);
+        else reject(new Error('The demo image could not be created.'));
+      }, 'image/png'));
+      await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+    }
+    copyMenuTrigger.addEventListener('click', () => {
+      const expanded = copyMenuTrigger.getAttribute('aria-expanded') === 'true';
+      copyMenuOptions.hidden = expanded;
+      copyMenuTrigger.setAttribute('aria-expanded', String(!expanded));
+    });
+    copyMenuOptions.addEventListener('click', async event => {
+      const action = event.target.closest('[data-copy-action]')?.dataset.copyAction;
+      if (!action) return;
+      closeCopyMenu();
+      try {
+        if (action === 'image') {
+          await renderPreviewImage();
+          showCopyToast('Image copied!');
+        } else {
+          await copyDemoLink();
+        }
+      } catch (error) {
+        showCopyToast(error.message || 'Unable to copy. Please try again.', true);
+      }
+    });
+    document.addEventListener('click', event => {
+      if (!event.target.closest('.copy-menu')) closeCopyMenu();
+    });
+    copyMenuTrigger.addEventListener('keydown', event => {
+      if (event.key === 'Escape') closeCopyMenu();
     });
     function showScenarioDetails() {
       const edsSelected = document.querySelector('input[name="capability"]:checked')?.value === 'EDS';
@@ -851,28 +1279,11 @@
     }
     function showScreen(screen) {
       const screens = [details, secureCode, reviewDetails, authorizedUser, reviewSubmit, approval, verify, result, ...Object.values(breadPayScreens)];
-      const screenCopy = {
-        'details-screen': 'Tell us a little about yourself.',
-        'review-details-screen': 'Review and complete your application.',
-        'secure-code-screen': 'One quick security check.',
-        'authorized-user-screen': 'Customize your account.',
-        'review-submit-screen': 'Review the final disclosures.',
-        'approval-screen': 'Your application is complete.',
-        'verify-screen': 'One quick security check.',
-        'result-screen': 'Review your simulated next step.',
-        'breadpay-intro-screen': 'Choose a payment option.',
-        'breadpay-email-screen': 'Enter your email to get started.',
-        'breadpay-phone-screen': 'Verify your mobile number.',
-        'breadpay-address-screen': 'Enter your billing address.',
-        'breadpay-eligibility-screen': 'Check your eligibility.',
-        'breadpay-terms-screen': 'Review your eligible offer.'
-      };
       screens.forEach(item => item.classList.toggle('hidden', item !== screen));
       flowPanel.classList.toggle('breadpay-mode', screen.classList.contains('breadpay-screen'));
       const standardScreens = [details, secureCode, reviewDetails, authorizedUser, reviewSubmit, approval, verify, result];
       const screenIndex = standardScreens.indexOf(screen);
       steps.forEach((item, index) => { item.classList.toggle('active', index === Math.min(screenIndex, steps.length - 1)); item.classList.toggle('done', index < Math.min(screenIndex, steps.length - 1)); });
-      stepCopy.textContent = screenCopy[screen.id] || 'Bread Pay prequalification.';
     }
     function openBreadPayFlow(screen) {
       state.breadPayFlow = true;
@@ -889,7 +1300,6 @@
         && document.querySelector('input[name="outcome"]:checked')?.value === 'approved';
     }
     document.getElementById('continue').addEventListener('click', () => {
-      if (!document.getElementById('consent').checked) { document.getElementById('consent').focus(); return; }
       showScreen(verify);
     });
     document.getElementById('instant-continue').addEventListener('click', () => showScreen(secureCode));
@@ -1065,32 +1475,86 @@
       const isEds = input.value === 'EDS' && input.checked;
       document.getElementById('eds-options').classList.toggle('hidden', !isEds);
       document.getElementById('stand-alone-options').classList.toggle('hidden', isEds);
+      state.applicationEntryRequested = false;
       if (isBreadPayScenarioSelected()) openBreadPayFlow(breadPayScreens.intro);
-      else if (state.breadPayFlow) closeBreadPayFlow();
-      showScenarioDetails();
+      else {
+        state.breadPayFlow = false;
+        showScenarioDetails();
+        showScreen(details);
+      }
+      updateAdminPreviewContext();
     }));
     outcomeInputs.forEach(input => input.addEventListener('change', () => {
       state.outcome = input.value;
       if (isBreadPayScenarioSelected()) openBreadPayFlow(breadPayScreens.intro);
       else if (state.breadPayFlow) closeBreadPayFlow();
       showScenarioDetails();
+      updateAdminPreviewContext();
     }));
     capabilityOptionInputs.forEach(input => input.addEventListener('change', () => {
       state.applicationEntryRequested = false;
       showScenarioDetails();
       if (isBreadPayScenarioSelected()) {
         openBreadPayFlow(breadPayScreens.intro);
+        updateAdminPreviewContext();
         return;
       }
       state.breadPayFlow = false;
       showScreen(details);
+      updateAdminPreviewContext();
     }));
+    function restoreSharedSettings() {
+      const params = new URLSearchParams(window.location.search);
+      const device = params.get('device');
+      if (device) {
+        const deviceInput = [...deviceInputs].find(input => input.value === device);
+        if (deviceInput) {
+          deviceInput.checked = true;
+          deviceInput.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      }
+      const width = Number(params.get('width'));
+      const requestedPreset = params.get('preset');
+      if (requestedPreset && Object.hasOwn(previewPresets, requestedPreset)) {
+        screenPreset.value = requestedPreset;
+        selectPreset(requestedPreset);
+      } else if (Number.isFinite(width) && width >= 320 && width <= 1728) {
+        screenPreset.value = 'custom';
+        setPreviewWidth(width);
+      } else {
+        selectPreset(screenPreset.value);
+      }
+      const type = params.get('type');
+      const typeInput = [...capabilityTypeInputs].find(input => input.value === type);
+      if (typeInput) {
+        typeInput.checked = true;
+        typeInput.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+      const outcome = params.get('outcome');
+      const outcomeInput = [...outcomeInputs].find(input => input.value === outcome);
+      if (outcomeInput) {
+        outcomeInput.checked = true;
+        outcomeInput.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+      const capability = params.get('capability');
+      const capabilityInput = [...capabilityOptionInputs].find(input => input.value === capability);
+      if (capabilityInput) {
+        capabilityInput.checked = true;
+        capabilityInput.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+      const brand = params.get('brand');
+      if (brand) {
+        brandInput.value = brand;
+        brandInput.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+      switchSection(params.get('view') === 'demo' ? 'demo' : 'admin', false);
+    }
     capabilitySearch.addEventListener('input', renderCapabilities);
     ['instant-mobile', 'instant-ssn', 'instant-zip'].forEach(id => document.getElementById(id).addEventListener('input', event => {
       if (id === 'instant-ssn') document.getElementById('instant-ssn-mask').textContent = '*'.repeat(event.currentTarget.value.length);
       updateInstantContinue();
     }));
-    selectPreset(screenPreset.value);
+    restoreSharedSettings();
     showScenarioDetails();
     updateBreadPayActions();
     renderCapabilities();

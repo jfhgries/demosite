@@ -5,7 +5,7 @@
 - **ID:** `APP-PREQUAL-001`
 - **Status:** Pilot prototype
 - **Version:** `0.1.0`
-- **Brands or partners:** Demo brand
+- **Brands or partners:** AAA, Academy Sports, Burlington, Dell, Ford, HP, Loft, Ross
 - **Channels:** Desktop web, mobile web, embedded experience
 - **Product owner:** TBD
 - **Design owner:** TBD
@@ -49,6 +49,8 @@ A local coded prototype is available. It contains simulated data and outcomes on
 ## Screen gallery
 
 The prototype includes the standard prequalification journey and an enhanced Bread Pay path. The Bread Pay path is available when the scenario is set to EDS, Prequalification with Bread Pay, and Approved.
+The scenario selector includes logos for AAA, Academy Sports, Burlington, Dell, Ford, HP, Loft, and Ross; each logo has descriptive alternative text.
+The EDS Bread Pay flow uses the URBrand logo in its header; desktop headers have 24px horizontal insets. Form fields throughout the demo use the Figma default prompt and float/highlight on focus or when populated.
 
 | Screen | Journey step | Viewport | Description | Disclosures |
 | --- | --- | --- | --- | --- |
@@ -66,6 +68,9 @@ The prototype includes the standard prequalification journey and an enhanced Bre
 ## Interactive demo
 
 - **Demo type and link:** [Coded local prototype](./demo/index.html)
+- **Sections:** Use the Admin tab to choose brand, capability type, capability, device, and viewport settings. The live preview sits between the viewport controls and capability tags, and its active-settings summary updates immediately; the Demo tab displays that same experience full screen.
+- **Preview actions:** In Demo, copy a direct link (including the selected scenario and viewport settings) or copy the active demo image; confirmation toasts indicate successful copies.
+- **Presentation:** The demo flow omits the introductory title/status header, and the personal-details start screen has no soft-inquiry checkbox.
 - **Live or simulated:** Simulated
 - **Credentials required:** No
 - **External demonstration approved:** Review needed

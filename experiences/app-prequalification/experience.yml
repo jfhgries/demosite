@@ -25,7 +25,7 @@ ownership:
   content_owner: "TBD"
 
 coverage:
-  brands_and_partners: ["Demo brand"]
+  brands_and_partners: ["AAA", "Academy Sports", "Burlington", "Dell", "Ford", "HP", "Loft", "Ross"]
   journey_stages: ["awareness", "consideration", "prequalification", "verification", "decision"]
   entry_points: ["marketing_page", "credit_card_product_page", "product_detail_page"]
   exit_points: ["full_application", "product_detail_page", "servicing_portal"]
@@ -42,16 +42,16 @@ logos:
     license: null
     attribution: null
   - brand: "The Home Depot"
-s/the-home-depot.svg"
+    file: "./logos/the-home-depot.svg"
     source: "https://commons.wikimedia.org/wiki/File:The_Home_Depot_logo.svg"
     license: "Public domain"
     attribution: "Don Watt, via Wikimedia Commons"
-  - brand: "Academy Sports + Outdoors"
+  - brand: "Academy Sports"
     file: "./logos/academy-sports-outdoors.svg"
     source: "https://commons.wikimedia.org/wiki/File:Academy_Sports_%2B_Outdoors_Logo.svg"
     license: "Public domain"
     attribution: "Academy Sports and Outdoors, via Wikimedia Commons"
-  - brand: "Dell Pay"
+  - brand: "Dell"
     file: "./logos/dell.svg"
     source: "https://github.com/simple-icons/simple-icons/blob/develop/icons/dell.svg"
     license: "CC0 1.0 Universal"
@@ -82,7 +82,7 @@ s/the-home-depot.svg"
     license: "Public domain"
     attribution: "Burlington Stores, via Wikimedia Commons"
   - brand: "AAA"
-    file: "./logos/aaa.svg"
+    file: "./logos/aaa.png"
     source: "https://commons.wikimedia.org/wiki/File:AAA_LOGO_2.svg"
     license: "Public domain"
     attribution: null
