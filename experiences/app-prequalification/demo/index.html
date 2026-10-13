@@ -137,8 +137,13 @@
     .chip:hover, .chip:has(input:checked) { border-color: var(--ink); color: var(--ink); }
     .chip input { width: 16px; height: 16px; margin: 0; accent-color: var(--ink); }
     .brand-search { position: relative; display: grid; gap: 7px; color: var(--body); font-size: var(--type-body-small); }
-    .brand-search input { padding: 9px 10px; font-size: 16px; }
-    .brand-suggestions { position: absolute; z-index: 3; top: calc(100% - 1px); right: 0; left: 0; display: grid; gap: 2px; max-height: 240px; overflow-y: auto; padding: 6px; border: 1px solid #dedede; border-radius: 6px; background: var(--canvas); box-shadow: var(--shadow); }
+    .brand-input-wrap { position: relative; }
+    .brand-search input { padding: 9px 42px 9px 10px; font-size: 16px; }
+    .brand-dropdown-toggle { position: absolute; top: 0; right: 0; display: grid; place-items: center; width: 40px; height: 100%; border: 0; border-radius: 0 6px 6px 0; color: var(--body); background: transparent; }
+    .brand-dropdown-toggle:hover, .brand-dropdown-toggle[aria-expanded="true"] { background: var(--soft); }
+    .brand-dropdown-toggle svg { width: 16px; height: 16px; transition: transform 120ms ease; }
+    .brand-dropdown-toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
+    .brand-suggestions { position: absolute; z-index: 3; top: calc(100% + 1px); right: 0; left: 0; display: grid; gap: 2px; max-height: 240px; overflow-y: auto; overscroll-behavior: contain; padding: 6px; border: 1px solid #dedede; border-radius: 6px; background: var(--canvas); box-shadow: var(--shadow); }
     .brand-suggestions[hidden] { display: none; }
     .brand-suggestion { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 40px; padding: 6px 8px; border: 0; border-radius: 4px; color: var(--ink); background: transparent; text-align: left; font-size: var(--type-body-small); cursor: pointer; }
     .brand-suggestion:hover, .brand-suggestion:focus-visible, .brand-suggestion[aria-selected="true"] { background: #f0f1f2; outline: none; }
@@ -452,14 +457,20 @@
         <aside class="panel scenario" aria-labelledby="scenario-title">
           <h2 id="scenario-title">Demo scenario</h2>
           <h3>Brand</h3>
-          <label class="brand-search">Search brands
-            <input id="brand" role="combobox" aria-autocomplete="list" aria-controls="brand-suggestions" aria-expanded="false" placeholder="Start typing a brand" autocomplete="off">
-            <div class="brand-suggestions" id="brand-suggestions" role="listbox" hidden></div>
+          <div class="brand-search">
+            <label for="brand">Search brands</label>
+            <div class="brand-input-wrap">
+              <input id="brand" role="combobox" aria-autocomplete="list" aria-controls="brand-suggestions" aria-expanded="false" placeholder="Start typing a brand" autocomplete="off">
+              <button class="brand-dropdown-toggle" id="brand-dropdown-toggle" type="button" aria-label="Show brands" aria-controls="brand-suggestions" aria-expanded="false">
+                <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3 6 5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              </button>
+            </div>
+            <div class="brand-suggestions" id="brand-suggestions" role="listbox" aria-label="Available brands" hidden></div>
             <datalist id="brand-list">
               <option value="Ann Taylor"><option value="The Home Depot"><option value="Academy Sports"><option value="Academy Sports + Outdoors"><option value="Dell"><option value="Dell Pay"><option value="Ross"><option value="Caesars"><option value="Good Sam"><option value="Loft"><option value="Burlington"><option value="AAA"><option value="All Pet"><option value="Alphaeon"><option value="Boscovs"><option value="Ashley Stewart"><option value="B&amp;H Photo"><option value="Ballard Designs"><option value="Avenue"><option value="Bealls"><option value="Beyond Inc."><option value="Blue Nile"><option value="Bread Cashback"><option value="Bread Rewards"><option value="Brylane Home"><option value="Buckle"><option value="Carters"><option value="DentalFirst Financing"><option value="Ethan Allen"><option value="Fanatics"><option value="Torrid"><option value="Famous Footwear"><option value="Ford"><option value="Gamestop"><option value="Full Beauty"><option value="Hard Rock"><option value="HP">
             </datalist>
             <span class="brand-logo-preview hidden" id="brand-logo-preview" role="status" aria-live="polite"><img id="brand-logo-image" alt=""></span>
-          </label>
+          </div>
           <h3>Device type</h3>
           <div class="chip-group" id="device-types">
             <label class="chip"><input type="radio" name="device" value="Desktop" checked>Desktop</label>
@@ -886,6 +897,7 @@
     const capabilityOptionInputs = document.querySelectorAll('input[name="capability-option"]');
     const outcomeInputs = document.querySelectorAll('input[name="outcome"]');
     const brandInput = document.getElementById('brand');
+    const brandDropdownToggle = document.getElementById('brand-dropdown-toggle');
     const brandSuggestions = document.getElementById('brand-suggestions');
     const brandLogoPreview = document.getElementById('brand-logo-preview');
     const brandLogoImage = document.getElementById('brand-logo-image');
@@ -936,14 +948,16 @@
     function closeBrandSuggestions() {
       brandSuggestions.hidden = true;
       brandInput.setAttribute('aria-expanded', 'false');
+      brandDropdownToggle.setAttribute('aria-expanded', 'false');
+      brandDropdownToggle.setAttribute('aria-label', 'Show brands');
       brandInput.removeAttribute('aria-activedescendant');
       activeBrandSuggestion = -1;
     }
     function renderBrandSuggestions() {
       const query = brandInput.value.trim().toLowerCase();
       const matches = query
-        ? availableBrands.filter(name => name.toLowerCase().includes(query)).slice(0, 12)
-        : [];
+        ? availableBrands.filter(name => name.toLowerCase().includes(query))
+        : availableBrands;
       brandSuggestions.replaceChildren(...matches.map((name, index) => {
         const suggestion = document.createElement('button');
         suggestion.className = 'brand-suggestion';
@@ -970,9 +984,20 @@
       }));
       brandSuggestions.hidden = matches.length === 0;
       brandInput.setAttribute('aria-expanded', String(matches.length > 0));
+      brandDropdownToggle.setAttribute('aria-expanded', String(matches.length > 0));
+      brandDropdownToggle.setAttribute('aria-label', matches.length ? 'Hide brands' : 'Show brands');
       brandInput.removeAttribute('aria-activedescendant');
       activeBrandSuggestion = -1;
     }
+    brandDropdownToggle.addEventListener('pointerdown', event => event.preventDefault());
+    brandDropdownToggle.addEventListener('click', () => {
+      if (brandSuggestions.hidden) {
+        renderBrandSuggestions();
+        brandInput.focus();
+      } else {
+        closeBrandSuggestions();
+      }
+    });
     function setActiveBrandSuggestion(index) {
       const suggestions = [...brandSuggestions.querySelectorAll('.brand-suggestion')];
       if (!suggestions.length) return;
