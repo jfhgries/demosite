@@ -903,13 +903,19 @@
       ['loft', { name: 'Loft', file: 'loft.png' }],
       ['ross', { name: 'Ross', file: 'ross.png' }]
     ]);
+    const brandLogoBase = location.pathname.includes('/experiences/app-prequalification/demo/')
+      ? '../logos/'
+      : 'logos/';
+    function getBrandLogoUrl(file) {
+      return new URL(`${brandLogoBase}${file}`, document.baseURI).href;
+    }
     const availableBrands = [...document.querySelectorAll('#brand-list option')].map(option => option.value);
     function updateSelectedBrand() {
       const selected = brandInput.value.trim();
       const logo = brandLogos.get(selected.toLowerCase());
       brandLogoPreview.classList.toggle('hidden', !logo);
       if (logo) {
-        const logoPath = `./../logos/${logo.file}`;
+        const logoPath = getBrandLogoUrl(logo.file);
         brandLogoImage.src = logoPath;
         brandLogoImage.alt = `${logo.name} logo`;
         instantBrandLogo.src = logoPath;
@@ -949,7 +955,7 @@
         const image = document.createElement('img');
         image.alt = '';
         image.setAttribute('aria-hidden', 'true');
-        if (brand) image.src = `./../logos/${brand.file}`;
+        if (brand) image.src = getBrandLogoUrl(brand.file);
         else image.hidden = true;
         const label = document.createElement('span');
         label.textContent = name;
@@ -1083,7 +1089,7 @@
       previewBrand.textContent = brandName || 'Not selected';
       previewBrandLogo.hidden = !brandLogo;
       if (brandLogo) {
-        previewBrandLogo.src = `./../logos/${brandLogo.file}`;
+        previewBrandLogo.src = getBrandLogoUrl(brandLogo.file);
       } else {
         previewBrandLogo.removeAttribute('src');
       }
