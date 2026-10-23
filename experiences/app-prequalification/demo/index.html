@@ -59,7 +59,13 @@
     .admin-layout { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 24px; align-items: start; }
     .admin-settings { display: grid; gap: 20px; min-width: 0; }
     .admin-preview { margin-top: 0; overflow: hidden; background: #f0f1f2; }
-    .admin-preview-heading { margin: 0; padding: 16px 20px; border-bottom: 1px solid var(--hairline); background: var(--canvas); font-size: var(--type-h6); }
+    .admin-preview-heading-row { border-bottom: 1px solid var(--hairline); background: var(--canvas); }
+    .admin-preview-heading { margin: 0; padding: 16px 20px; font-size: var(--type-h6); }
+    .admin-preview-editbar { display: flex; justify-content: flex-end; padding: 0 0 10px; }
+    .demo-mode .admin-preview-editbar { display: none; }
+    .edit-page-button { min-height: 38px; padding: 0 16px; border: 1px solid #a1a1a1; border-radius: 7px; color: var(--ink); background: var(--canvas); font-size: var(--type-body-small); font-weight: 600; }
+    .edit-page-button:hover { background: var(--soft); }
+    .edit-page-button:focus-visible, .content-editor-dialog button:focus-visible, .content-editor-dialog input:focus-visible, .content-editor-dialog textarea:focus-visible { outline: 2px solid #134854; outline-offset: 2px; }
     .admin-preview-context { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; padding: 16px 20px; border-bottom: 1px solid var(--hairline); background: var(--canvas); }
     .admin-preview-context div { min-width: 0; }
     .admin-preview-context dt { color: var(--mute); font-size: var(--type-legal); line-height: var(--leading-type); }
@@ -92,16 +98,39 @@
     .copy-toast svg { width: 30px; height: 30px; flex: none; color: #008c84; }
     .copy-toast.error { border-color: #b42318; background: #fff1f0; }
     .copy-toast.error svg { color: #b42318; }
+    .content-editor-dialog { width: min(640px, calc(100vw - 32px)); max-width: none; max-height: min(86vh, 900px); padding: 0; overflow: hidden; border: 1px solid #dedede; border-radius: 12px; color: var(--ink); background: var(--canvas); box-shadow: 0 16px 48px #00000033; }
+    .content-editor-dialog::backdrop { background: #17171780; }
+    .content-editor-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 24px; border-bottom: 1px solid var(--hairline); }
+    .content-editor-header h2 { margin: 0; font-size: var(--type-h5); }
+    .content-editor-close { display: grid; place-items: center; width: 36px; height: 36px; padding: 0; border: 0; border-radius: 6px; color: var(--body); background: transparent; font-size: 24px; }
+    .content-editor-close:hover { background: var(--soft); }
+    .content-editor-body { max-height: calc(86vh - 148px); overflow-y: auto; padding: 20px 24px; }
+    .content-editor-intro, .content-editor-message { margin: 0 0 18px; color: var(--body); font-size: var(--type-body-small); line-height: var(--leading-type); }
+    .content-editor-section { display: grid; gap: 12px; margin-top: 20px; }
+    .content-editor-section:first-of-type { margin-top: 0; }
+    .content-editor-section h3 { margin: 0; font-size: var(--type-body); }
+    .content-editor-field { display: grid; gap: 6px; color: var(--body); font-size: var(--type-body-small); }
+    .content-editor-field input, .content-editor-field textarea { width: 100%; min-height: 42px; padding: 9px 11px; border: 1px solid #a1a1a1; border-radius: 6px; color: var(--ink); background: var(--canvas); font: inherit; font-size: 16px; line-height: var(--leading-type); }
+    .content-editor-field textarea { min-height: 88px; resize: vertical; }
+    .content-editor-actions { display: flex; justify-content: flex-end; gap: 10px; padding: 16px 24px; border-top: 1px solid var(--hairline); background: var(--canvas); }
+    .content-editor-button { min-height: 42px; padding: 0 18px; border: 1px solid #a1a1a1; border-radius: 7px; color: var(--ink); background: var(--canvas); font-size: var(--type-body-small); font-weight: 600; }
+    .content-editor-button.primary { border-color: #134854; color: #fff; background: #134854; }
+    .content-editor-button.primary:hover { background: #0e3b45; }
+    .content-editor-button.secondary:hover { background: var(--soft); }
+    .content-editor-confirm[hidden], .content-editor-saved[hidden], .content-editor-form[hidden] { display: none; }
+    .content-editor-confirm-copy { margin: 0; color: var(--body); font-size: var(--type-body); line-height: var(--leading-type); }
+    .content-editor-status { min-height: 20px; margin: 0; color: #b42318; font-size: var(--type-body-small); }
+    .content-editor-saved { padding: 20px 24px; color: #134854; font-size: var(--type-body); font-weight: 600; }
     .demo-toolbar { display: flex; justify-content: flex-end; padding: 12px 24px; border-bottom: 1px solid var(--hairline); background: var(--canvas); }
     .demo-toast-host { position: fixed; z-index: 10; right: 24px; bottom: 24px; }
     .preview-stage { width: 100%; overflow: auto; background: var(--canvas); }
     .preview-viewport { width: 1280px; max-width: none; margin: 0 auto; container: preview / inline-size; }
     .demo-mode .shell { max-width: none; min-height: calc(100vh - 64px); padding: 0; }
     .demo-mode .demo-stage { min-height: calc(100vh - 122px); }
-    .demo-mode .preview-stage { min-height: calc(100vh - 122px); padding: 0; }
+    .demo-mode .preview-stage { min-height: calc(100vh - 122px); padding: 12px; background: #f0f1f2; }
     .demo-mode .preview-viewport { min-height: calc(100vh - 122px); margin: 0 auto; }
-    .demo-mode .preview-viewport > .flow { min-height: calc(100vh - 122px); border: 0; border-radius: 0; box-shadow: none; }
-    .demo-mode .preview-viewport > .flow.breadpay-mode { min-height: 0; }
+    .demo-mode .preview-viewport > .flow { min-height: calc(100vh - 122px); box-shadow: 0 2px 8px #00000014; }
+    .demo-mode .preview-viewport > .flow.breadpay-mode { min-height: 0; border: 1px solid var(--hairline); border-radius: 12px; box-shadow: 0 2px 8px #00000014; }
     .panel { background: var(--canvas); border: 1px solid var(--hairline); border-radius: 12px; box-shadow: var(--shadow); }
     .flow { padding: 32px; }
     .steps { display: flex; gap: 8px; padding: 24px 0 32px; }
@@ -244,11 +273,11 @@
     .breadpay-screen { min-height: 640px; color: #0f2233; background: #fff; font-family: var(--font-product); }
     .bp-header { height: 90px; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; border-bottom: 1px solid #cfd8dc; }
     .bp-logo { display: block; width: 140px; height: 42px; object-fit: contain; }
+    .bp-logo[hidden] { display: none; }
     .bp-header button { width: 40px; height: 40px; margin-left: auto; padding: 0; color: #080707; background: transparent; border: 0; font-size: 30px; line-height: 1; }
     .bp-content { width: min(920px, calc(100% - 48px)); margin: 42px auto 64px; }
     .bp-narrow { width: min(540px, 100%); margin-right: auto; margin-left: auto; }
     .bp-intro { width: min(720px, calc(100% - 48px)); margin: 48px auto 54px; text-align: center; }
-    .bp-intro .bp-logo { width: 180px; height: 54px; margin: 0 auto 26px; }
     .bp-intro h2, .bp-title { margin: 0; color: #0f2233; font-size: var(--type-h2); font-weight: 700; line-height: var(--leading-type); }
     .bp-powered { margin: 4px 0 26px; color: #0f2233; font-size: var(--type-body-small); line-height: var(--leading-type); letter-spacing: .2px; }
     .bp-powered strong { color: #15505b; }
@@ -257,7 +286,7 @@
     .bp-product-toggle { display: block; width: 100%; padding: 16px; color: inherit; background: transparent; border: 0; text-align: left; }
     .bp-product-heading { display: flex; align-items: center; gap: 8px; font-size: var(--type-h7); line-height: var(--leading-type); font-weight: 700; letter-spacing: .5px; }
     .bp-card-thumbnail { width: 32px; height: 22px; border-radius: 3px; object-fit: cover; }
-    .bp-brand-wordmark { color: #15505b; font-size: 10px; font-weight: 700; letter-spacing: -.5px; }
+    .bp-pay-logo { display: block; width: 56px; height: 22px; object-fit: contain; }
     .bp-product-summary { display: flex; justify-content: space-between; gap: 12px; margin-top: 8px; color: #0f2233; font-size: var(--type-body-small); line-height: var(--leading-type); letter-spacing: .2px; }
     .bp-chevron { flex: 0 0 auto; width: 8px; height: 8px; margin: 3px 4px 0 0; border-right: 1.5px solid #53616d; border-bottom: 1.5px solid #53616d; transform: rotate(45deg); }
     .bp-product[aria-expanded="true"] .bp-chevron { transform: rotate(225deg); }
@@ -388,6 +417,9 @@
       .demo-mode .preview-viewport > .flow { padding: 24px; }
       .copy-toast { right: 12px; bottom: 12px; min-height: 64px; padding: 12px 18px; font-size: 20px; }
       .admin-preview-context { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .admin-preview-heading { padding: 14px 12px; }
+      .content-editor-header, .content-editor-body { padding-right: 18px; padding-left: 18px; }
+      .content-editor-actions { padding-right: 18px; padding-left: 18px; }
     }
   </style>
 </head>
@@ -434,7 +466,9 @@
             <p class="admin-hint">Choose the scenario and viewport, then switch to Demo to view it full screen.</p>
           </section>
           <section class="admin-preview panel" aria-labelledby="admin-preview-title">
-            <h2 class="admin-preview-heading" id="admin-preview-title">Live demo preview</h2>
+            <div class="admin-preview-heading-row">
+              <h2 class="admin-preview-heading" id="admin-preview-title">Live demo preview</h2>
+            </div>
             <dl class="admin-preview-context" aria-label="Active preview settings">
               <div><dt>Brand</dt><dd class="admin-preview-brand"><img id="preview-brand-logo" alt="" hidden><span id="preview-brand">Not selected</span></dd></div>
               <div><dt>Capability type</dt><dd id="preview-capability-type">EDS</dd></div>
@@ -530,6 +564,7 @@
       </div>
       <div class="demo-stage" id="demo-stage">
         <div class="preview-stage" id="preview-stage">
+          <div class="admin-preview-editbar"><button class="edit-page-button" id="edit-page-button" type="button">Edit page</button></div>
           <div class="preview-viewport" id="preview-viewport">
             <section class="panel flow" aria-label="Prequalification demo">
         <div class="steps" aria-label="Progress"><span class="step active"></span><span class="step"></span><span class="step"></span><span class="step"></span></div>
@@ -648,24 +683,23 @@
         <div id="breadpay-intro-screen" class="screen breadpay-screen hidden">
           <header class="bp-header"><img class="bp-logo" src="./urbrand-logo.png" alt="URBrand"><button type="button" data-bp-close aria-label="Close prequalification">&times;</button></header>
           <div class="bp-intro">
-            <img class="bp-logo" src="./urbrand-logo.png" alt="" aria-hidden="true">
             <h2>Let’s Get Started</h2>
             <p class="bp-powered">Powered by <strong>Bread Financial</strong></p>
             <div class="bp-product-list" aria-label="Payment options">
               <section class="bp-product" data-bp-product aria-expanded="true">
                 <button class="bp-product-toggle" type="button" aria-expanded="true">
-                  <span class="bp-product-heading"><img class="bp-card-thumbnail" src="./urbrand-credit-card.png" alt=""> URBrand Credit Card</span>
-                  <span class="bp-product-summary">Low pricing for 12 months with the URBrand Credit Card <span class="bp-chevron" aria-hidden="true"></span></span>
+                  <span class="bp-product-heading"><span data-bp-brand-credit-card>URBrand Credit Card</span></span>
+                  <span class="bp-product-summary"><span data-bp-credit-card-summary>Low pricing for 12 months with the URBrand Credit Card</span> <span class="bp-chevron" aria-hidden="true"></span></span>
                 </button>
                 <div class="bp-product-panel">
                   <p><strong>Plus more perks like:</strong></p>
-                  <ul><li>Get 10% off your first purchase when you open and use the URBrand card at URBrand.com.</li><li>$50 store credit for any URBrand purchases for orders over $200.</li></ul>
+                  <ul><li>Get 10% off your first purchase when you open and use the <span data-bp-benefit-brand>URBrand</span> card at <span data-bp-benefit-brand>URBrand</span>.com.</li><li>$50 store credit for any <span data-bp-benefit-brand>URBrand</span> purchases for orders over $200.</li></ul>
                 </div>
               </section>
               <div class="bp-or" aria-hidden="true">Or</div>
               <section class="bp-product" data-bp-product aria-expanded="false">
                 <button class="bp-product-toggle" type="button" aria-expanded="false">
-                  <span class="bp-product-heading"><span class="bp-brand-wordmark" aria-hidden="true">URBRAND</span> Installments</span>
+                  <span class="bp-product-heading"><img class="bp-pay-logo" src="./bread-pay-logo.png" alt="Bread Pay"> Installments</span>
                   <span class="bp-product-summary">Flexible monthly payment plans starting at 0.00% APR<sup>§</sup><span class="bp-chevron" aria-hidden="true"></span></span>
                 </button>
                 <div class="bp-product-panel" hidden>
@@ -677,7 +711,7 @@
               </section>
               <section class="bp-product" data-bp-product aria-expanded="false">
                 <button class="bp-product-toggle" type="button" aria-expanded="false">
-                  <span class="bp-product-heading"><span class="bp-brand-wordmark" aria-hidden="true">URBRAND</span> SplitPay</span>
+                  <span class="bp-product-heading"><img class="bp-pay-logo" src="./bread-pay-logo.png" alt="Bread Pay"> SplitPay</span>
                   <span class="bp-product-summary">4 interest-free payments every 2 weeks<span class="bp-chevron" aria-hidden="true"></span></span>
                 </button>
                 <div class="bp-product-panel" hidden>
@@ -780,10 +814,10 @@
             <section class="bp-offer">
               <div class="bp-offer-banner">PREQUALIFIED FOR UP TO <strong>$1,200.00</strong><sup>‡</sup></div>
               <div class="bp-offer-body">
-                <div class="bp-offer-heading"><img class="bp-card-thumbnail" src="./urbrand-credit-card.png" alt=""> URBrand Credit Card</div>
-                <p>As low as <strong>$100.00/month</strong><sup>1</sup> for 12 months with the URBrand Credit Card for a total payment of <strong>$1,200.00</strong></p>
+                <div class="bp-offer-heading"><img class="bp-card-thumbnail" src="./urbrand-credit-card.png" alt=""> <span data-bp-brand-credit-card>URBrand Credit Card</span></div>
+                <p>As low as <strong>$100.00/month</strong><sup>1</sup> for 12 months with the <span data-bp-brand-credit-card>URBrand Credit Card</span> for a total payment of <strong>$1,200.00</strong></p>
                 <p class="bp-offer-note">‡This credit limit is based on your prequalification and may increase or decrease based on information provided with your credit application. <strong>Back to content</strong></p>
-                <div class="bp-perks"><p>Plus more perks like:</p><ul><li><strong>10% off your first purchase when you use your URBrand Credit Card.</strong><sup>1</sup></li><li><strong>$50 store credit for any URBrand purchases for orders over $200.</strong><sup>2</sup></li></ul><p><a href="#bp-offer-disclosure">Learn more ›</a></p></div>
+                <div class="bp-perks"><p>Plus more perks like:</p><ul><li><strong>10% off your first purchase when you use your <span data-bp-benefit-brand>URBrand</span> Credit Card.</strong><sup>1</sup></li><li><strong>$50 store credit for any <span data-bp-benefit-brand>URBrand</span> purchases for orders over $200.</strong><sup>2</sup></li></ul><p><a href="#bp-offer-disclosure">Learn more ›</a></p></div>
               </div>
               <div class="bp-offer-actions">
                 <p>Accepting the credit card offer may result in a hard inquiry, which may impact your credit score.</p>
@@ -794,7 +828,7 @@
             <div class="bp-terms-options" aria-label="More payment options">
               <section class="bp-product" data-bp-product aria-expanded="false">
                 <button class="bp-product-toggle" type="button" aria-expanded="false">
-                  <span class="bp-product-heading"><span class="bp-brand-wordmark" aria-hidden="true">URBRAND</span> Installments</span>
+                  <span class="bp-product-heading"><img class="bp-pay-logo" src="./bread-pay-logo.png" alt="Bread Pay"> Installments</span>
                   <span class="bp-product-summary">Flexible monthly payment plans starting at 0.00% APR<sup>§</sup><span class="bp-chevron" aria-hidden="true"></span></span>
                 </button>
                 <div class="bp-product-panel" hidden>
@@ -805,7 +839,7 @@
               </section>
               <section class="bp-product" data-bp-product aria-expanded="false">
                 <button class="bp-product-toggle" type="button" aria-expanded="false">
-                  <span class="bp-product-heading"><span class="bp-brand-wordmark" aria-hidden="true">URBRAND</span> SplitPay</span>
+                  <span class="bp-product-heading"><img class="bp-pay-logo" src="./bread-pay-logo.png" alt="Bread Pay"> SplitPay</span>
                   <span class="bp-product-summary">4 interest-free payments every 2 weeks<span class="bp-chevron" aria-hidden="true"></span></span>
                 </button>
                 <div class="bp-product-panel" hidden>
@@ -829,6 +863,31 @@
       </div>
     </section>
   </main>
+  <dialog class="content-editor-dialog" id="content-editor-dialog" aria-labelledby="content-editor-title">
+    <div class="content-editor-header">
+      <h2 id="content-editor-title">Edit page</h2>
+      <button class="content-editor-close" id="content-editor-close" type="button" aria-label="Close editor">&times;</button>
+    </div>
+    <form class="content-editor-form" id="content-editor-form">
+      <div class="content-editor-body" id="content-editor-fields"></div>
+      <p class="content-editor-status" id="content-editor-status" role="status" aria-live="polite"></p>
+      <div class="content-editor-actions">
+        <button class="content-editor-button secondary" id="content-editor-cancel" type="button">Cancel</button>
+        <button class="content-editor-button primary" id="content-editor-save" type="submit">Save</button>
+      </div>
+    </form>
+    <section class="content-editor-confirm" id="content-editor-confirm" hidden>
+      <div class="content-editor-body">
+        <p class="content-editor-confirm-copy">Save these content changes?</p>
+        <p class="content-editor-status" id="content-editor-confirm-status" role="status" aria-live="polite"></p>
+      </div>
+      <div class="content-editor-actions">
+        <button class="content-editor-button secondary" id="content-editor-keep-editing" type="button">Keep editing</button>
+        <button class="content-editor-button primary" id="content-editor-confirm-save" type="button">Yes</button>
+      </div>
+    </section>
+    <p class="content-editor-saved" id="content-editor-saved" role="status" aria-live="polite" hidden>Your changes have been saved</p>
+  </dialog>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script>
     const publicSiteUrl = 'https://jfhgries.github.io/demosite/';
@@ -876,6 +935,281 @@
     const sectionTabs = [...document.querySelectorAll('[role="tab"]')];
     const sectionPanels = [...document.querySelectorAll('[role="tabpanel"]')];
     let copyToastTimeout;
+    const contentEditorDialog = document.getElementById('content-editor-dialog');
+    const contentEditorButton = document.getElementById('edit-page-button');
+    const contentEditorTitle = document.getElementById('content-editor-title');
+    const contentEditorForm = document.getElementById('content-editor-form');
+    const contentEditorFields = document.getElementById('content-editor-fields');
+    const contentEditorStatus = document.getElementById('content-editor-status');
+    const contentEditorConfirm = document.getElementById('content-editor-confirm');
+    const contentEditorConfirmStatus = document.getElementById('content-editor-confirm-status');
+    const contentEditorSaved = document.getElementById('content-editor-saved');
+    const contentRevisionStorageKey = 'demosite-content-revisions';
+    let contentRevisions = {};
+    let contentRevisionLoadError = '';
+    let activeContentEditScreen = null;
+    let pendingContentRevisions = [];
+    let contentEditorCloseTimeout;
+    let contentEditorReturnFocus = null;
+    try {
+      const savedContentRevisions = localStorage.getItem(contentRevisionStorageKey);
+      if (savedContentRevisions) {
+        const parsedContentRevisions = JSON.parse(savedContentRevisions);
+        if (!parsedContentRevisions || typeof parsedContentRevisions !== 'object' || Array.isArray(parsedContentRevisions)) {
+          throw new Error('Saved content revisions have an invalid format.');
+        }
+        contentRevisions = parsedContentRevisions;
+      }
+    } catch (error) {
+      contentRevisionLoadError = error.message || 'Saved content revisions could not be loaded.';
+      console.error('Unable to load saved content revisions.', error);
+    }
+    function isVisibleScreenContent(element, screen) {
+      let current = element;
+      while (current && current !== screen.parentElement) {
+        if (current.hidden || current.classList.contains('hidden')) return false;
+        if (current === screen) break;
+        current = current.parentElement;
+      }
+      return true;
+    }
+    function currentPreviewScreen() {
+      return previewViewport.querySelector('.screen:not(.hidden)');
+    }
+    function contentScreenScope(screen) {
+      const activeChild = [...screen.children].find(element =>
+        element.id
+        && isVisibleScreenContent(element, screen)
+        && element.querySelector('h1, h2, h3')
+      );
+      return activeChild?.id || screen.id;
+    }
+    function createContentDescriptor(screen, section, key, element, label, value, property = 'textContent') {
+      const storageKey = `${contentScreenScope(screen)}:${section}:${key}`;
+      element.dataset.contentEditKey = storageKey;
+      return { element, key: storageKey, label, property, section, value };
+    }
+    function collectContentDescriptors(screen) {
+      if (!screen) return [];
+      const descriptors = [];
+      const visible = element => isVisibleScreenContent(element, screen);
+      const header = [...screen.querySelectorAll('h1, h2, h3')].find(element => visible(element) && element.textContent.trim());
+      if (header) descriptors.push(createContentDescriptor(screen, 'header', 'main', header, 'Header text', header.textContent.trim()));
+      const preferredSubheaderSelectors = [
+        '.application-header .subtitle',
+        '.instant-subtitle',
+        '.bp-lead',
+        '.bp-terms-title > p',
+        '.bp-intro > .bp-disclaimer',
+        '.bp-powered'
+      ];
+      let subheader = preferredSubheaderSelectors
+        .flatMap(selector => [...screen.querySelectorAll(selector)])
+        .find(element => visible(element) && element.textContent.trim());
+      if (!subheader) {
+        subheader = [...screen.querySelectorAll('p')].find(element =>
+          visible(element)
+          && element.textContent.trim()
+          && !element.matches('.fineprint, .bp-disclosure, .bp-disclaimer, .instant-privacy, .bp-offer-note, .secure-note')
+          && !element.closest('.bp-disclaimer, .bp-perks, .bp-product-panel')
+        );
+      }
+      if (subheader) descriptors.push(createContentDescriptor(screen, 'subheader', 'main', subheader, 'Sub header text', subheader.textContent.trim()));
+
+      const textInputs = [...screen.querySelectorAll('input, select, textarea')].filter(element =>
+        visible(element) && !['hidden', 'checkbox', 'radio', 'button', 'submit', 'reset', 'image'].includes(element.type)
+      );
+      textInputs.forEach((input, index) => {
+        const fieldName = input.id || String(index + 1);
+        const field = input.closest('.form-field, .bp-field, .application-field, .instant-field, label');
+        const label = field?.querySelector('.form-field-label') || input.labels?.[0];
+        if (label?.textContent.trim()) {
+          descriptors.push(createContentDescriptor(
+            screen, 'input-label', fieldName, label, `Input field: ${label.textContent.trim()}`, label.textContent.trim()
+          ));
+        }
+        if (typeof input.placeholder === 'string' && input.placeholder.trim() && input.placeholder.trim() !== ' ') {
+          descriptors.push(createContentDescriptor(
+            screen, 'input-placeholder', fieldName, input, `Placeholder: ${label?.textContent.trim() || fieldName}`, input.placeholder, 'placeholder'
+          ));
+        }
+      });
+
+      const disclosureCandidates = [...screen.querySelectorAll(
+        '.fineprint, .bp-disclosure, .bp-disclaimer, .instant-privacy, .bp-offer-note, .secure-note, .consent-card, .approval-footer, .bp-offer-actions > p'
+      )];
+      const disclosures = disclosureCandidates.flatMap(element =>
+        element.matches('.bp-disclaimer') && element.querySelector('p')
+          ? [...element.querySelectorAll('p')]
+          : [element]
+      ).filter(element =>
+        visible(element)
+        && element.textContent.trim()
+        && !element.matches('.bp-intro > .bp-disclaimer')
+      );
+      disclosures.forEach((element, index) => {
+        descriptors.push(createContentDescriptor(
+          screen, 'disclosure', String(index + 1), element, `Disclosure ${index + 1}`, element.textContent.trim()
+        ));
+      });
+
+      const primaryButton = [...screen.querySelectorAll('button.button.primary, button.bp-cta, button.instant-continue')]
+        .find(button => visible(button) && button.textContent.trim());
+      if (primaryButton) {
+        descriptors.push(createContentDescriptor(
+          screen, 'button', 'primary', primaryButton, 'Primary button', primaryButton.textContent.trim()
+        ));
+      }
+      const secondaryButton = [...screen.querySelectorAll(
+        'button.button.secondary, button.bp-text-button, button.text-action, button.instant-cancel'
+      )].find(button => visible(button) && button.textContent.trim());
+      if (secondaryButton) {
+        descriptors.push(createContentDescriptor(
+          screen, 'button', 'secondary', secondaryButton, 'Secondary button', secondaryButton.textContent.trim()
+        ));
+      }
+      return descriptors;
+    }
+    function applyContentRevisions(screen) {
+      if (!screen) return;
+      collectContentDescriptors(screen).forEach(descriptor => {
+        if (Object.hasOwn(contentRevisions, descriptor.key)
+          && descriptor.element[descriptor.property] !== contentRevisions[descriptor.key]) {
+          descriptor.element[descriptor.property] = contentRevisions[descriptor.key];
+        }
+      });
+      if (screen === currentPreviewScreen()) updateContentEditorButton(screen);
+    }
+    function updateContentEditorButton(screen = currentPreviewScreen()) {
+      contentEditorButton.hidden = !screen;
+      if (screen) {
+        const header = [...screen.querySelectorAll('h1, h2, h3')]
+          .find(element => isVisibleScreenContent(element, screen) && element.textContent.trim());
+        contentEditorButton.setAttribute('aria-label', `Edit page${header ? `: ${header.textContent.trim()}` : ''}`);
+      }
+    }
+    function appendContentEditorField(section, descriptor, multiline = false) {
+      const label = document.createElement('label');
+      label.className = 'content-editor-field';
+      label.textContent = descriptor.label;
+      const control = document.createElement(multiline ? 'textarea' : 'input');
+      if (!multiline) control.type = 'text';
+      control.value = descriptor.value;
+      control.dataset.contentEditorKey = descriptor.key;
+      label.append(control);
+      section.append(label);
+    }
+    function addContentEditorSection(container, title, descriptors, multiline = false) {
+      if (!descriptors.length) return;
+      const section = document.createElement('section');
+      section.className = 'content-editor-section';
+      const heading = document.createElement('h3');
+      heading.textContent = title;
+      section.append(heading);
+      descriptors.forEach(descriptor => appendContentEditorField(section, descriptor, multiline));
+      container.append(section);
+    }
+    function openContentEditor() {
+      activeContentEditScreen = currentPreviewScreen();
+      if (!activeContentEditScreen) return;
+      contentEditorReturnFocus = document.activeElement;
+      const descriptors = collectContentDescriptors(activeContentEditScreen);
+      contentEditorFields.replaceChildren();
+      contentEditorStatus.textContent = contentRevisionLoadError;
+      contentEditorConfirmStatus.textContent = '';
+      const sectionOrder = ['header', 'subheader', 'input-label', 'input-placeholder', 'disclosure', 'button'];
+      const sectionTitles = {
+        header: 'Header',
+        subheader: 'Sub header',
+        'input-label': 'Input fields',
+        'input-placeholder': 'Input fields',
+        disclosure: 'Disclosures',
+        button: 'Buttons'
+      };
+      const groupedDescriptors = new Map(sectionOrder.map(section => [section, []]));
+      descriptors.forEach(descriptor => groupedDescriptors.get(descriptor.section)?.push(descriptor));
+      const groupedInputs = [
+        ...groupedDescriptors.get('input-label'),
+        ...groupedDescriptors.get('input-placeholder')
+      ];
+      sectionOrder.filter(section => section !== 'input-placeholder').forEach(section => {
+        const fields = section === 'input-label' ? groupedInputs : groupedDescriptors.get(section);
+        addContentEditorSection(contentEditorFields, sectionTitles[section], fields, section === 'disclosure');
+      });
+      contentEditorTitle.textContent = 'Edit page';
+      contentEditorForm.hidden = false;
+      contentEditorConfirm.hidden = true;
+      contentEditorSaved.hidden = true;
+      if (contentEditorCloseTimeout) clearTimeout(contentEditorCloseTimeout);
+      contentEditorDialog.showModal();
+      document.getElementById('content-editor-close').focus();
+    }
+    function closeContentEditor() {
+      if (contentEditorCloseTimeout) clearTimeout(contentEditorCloseTimeout);
+      if (contentEditorDialog.open) contentEditorDialog.close();
+      activeContentEditScreen = null;
+      pendingContentRevisions = [];
+      contentEditorTitle.textContent = 'Edit page';
+      contentEditorForm.hidden = false;
+      contentEditorConfirm.hidden = true;
+      contentEditorSaved.hidden = true;
+      contentEditorStatus.textContent = '';
+      contentEditorConfirmStatus.textContent = '';
+      contentEditorReturnFocus?.focus();
+    }
+    function requestContentEditConfirmation(event) {
+      event.preventDefault();
+      if (contentRevisionLoadError) {
+        contentEditorStatus.textContent = contentRevisionLoadError;
+        return;
+      }
+      pendingContentRevisions = [...contentEditorFields.querySelectorAll('[data-content-editor-key]')]
+        .map(control => ({ key: control.dataset.contentEditorKey, value: control.value }));
+      contentEditorTitle.textContent = 'Confirm change';
+      contentEditorForm.hidden = true;
+      contentEditorConfirm.hidden = false;
+      contentEditorConfirmStatus.textContent = '';
+      document.getElementById('content-editor-keep-editing').focus();
+    }
+    function confirmContentEdit() {
+      if (!activeContentEditScreen) return;
+      const nextRevisions = { ...contentRevisions };
+      pendingContentRevisions.forEach(revision => {
+        nextRevisions[revision.key] = revision.value;
+      });
+      try {
+        localStorage.setItem(contentRevisionStorageKey, JSON.stringify(nextRevisions));
+      } catch (error) {
+        contentEditorConfirmStatus.textContent = error.message || 'Your changes could not be saved. Please try again.';
+        console.error('Unable to save content revisions.', error);
+        return;
+      }
+      contentRevisions = nextRevisions;
+      applyContentRevisions(activeContentEditScreen);
+      contentEditorConfirm.hidden = true;
+      contentEditorSaved.hidden = false;
+      contentEditorTitle.textContent = 'Edit page';
+      contentEditorCloseTimeout = setTimeout(closeContentEditor, 2000);
+    }
+    contentEditorButton.addEventListener('click', openContentEditor);
+    contentEditorForm.addEventListener('submit', requestContentEditConfirmation);
+    document.getElementById('content-editor-confirm-save').addEventListener('click', confirmContentEdit);
+    document.getElementById('content-editor-keep-editing').addEventListener('click', () => {
+      contentEditorTitle.textContent = 'Edit page';
+      contentEditorConfirm.hidden = true;
+      contentEditorForm.hidden = false;
+      document.getElementById('content-editor-save').focus();
+    });
+    document.getElementById('content-editor-close').addEventListener('click', closeContentEditor);
+    document.getElementById('content-editor-cancel').addEventListener('click', closeContentEditor);
+    contentEditorDialog.addEventListener('cancel', event => {
+      event.preventDefault();
+      closeContentEditor();
+    });
+    contentEditorDialog.addEventListener('click', event => {
+      if (event.target === contentEditorDialog) closeContentEditor();
+    });
+    contentEditorDialog.addEventListener('close', () => contentEditorReturnFocus?.focus());
     const previewPresets = {
       'mobile-small': { device: 'Mobile', width: 320 },
       'mobile-medium': { device: 'Mobile', width: 376 },
@@ -902,6 +1236,10 @@
     const brandLogoPreview = document.getElementById('brand-logo-preview');
     const brandLogoImage = document.getElementById('brand-logo-image');
     const instantBrandLogo = document.getElementById('instant-brand-logo');
+    const breadPayBrandLogos = document.querySelectorAll('.bp-header .bp-logo');
+    const breadPayCreditCardLabels = document.querySelectorAll('[data-bp-brand-credit-card]');
+    const breadPayCreditCardSummaries = document.querySelectorAll('[data-bp-credit-card-summary]');
+    const breadPayBenefitBrands = document.querySelectorAll('[data-bp-benefit-brand]');
     const instantFooterBrand = document.getElementById('instant-footer-brand');
     const brandLogos = new Map([
       ['aaa', { name: 'AAA', file: 'aaa.png' }],
@@ -922,9 +1260,44 @@
       return new URL(`${brandLogoBase}${file}`, document.baseURI).href;
     }
     const availableBrands = [...document.querySelectorAll('#brand-list option')].map(option => option.value);
+    function isHomeDepotSelected() {
+      return brandInput.value.trim().toLowerCase() === 'the home depot';
+    }
+    function updateSelectorConstraints(source) {
+      const flexLoanInput = [...capabilityTypeInputs].find(input => input.value === 'FlexLoan');
+      const edsInput = [...capabilityTypeInputs].find(input => input.value === 'EDS');
+      if (source === 'brand') {
+        if (isHomeDepotSelected() && !flexLoanInput.checked) {
+          flexLoanInput.checked = true;
+          flexLoanInput.dispatchEvent(new Event('change', { bubbles: true }));
+          return;
+        }
+        if (!isHomeDepotSelected() && flexLoanInput.checked) {
+          edsInput.checked = true;
+          edsInput.dispatchEvent(new Event('change', { bubbles: true }));
+          return;
+        }
+      }
+      if (source === 'capability' && flexLoanInput.checked && brandInput.value.trim() && !isHomeDepotSelected()) {
+        brandInput.value = '';
+        updateSelectedBrand();
+      }
+      const homeDepotSelected = isHomeDepotSelected();
+      const flexLoanSelected = flexLoanInput.checked;
+      const capabilityUnavailable = homeDepotSelected || flexLoanSelected;
+      capabilityTypeInputs.forEach(input => {
+        input.closest('.chip').classList.toggle('hidden', homeDepotSelected && input !== flexLoanInput);
+      });
+      document.getElementById('capability-options').classList.toggle('hidden', capabilityUnavailable);
+      capabilityOptionInputs.forEach(input => {
+        input.disabled = capabilityUnavailable;
+        if (capabilityUnavailable) input.checked = false;
+      });
+    }
     function updateSelectedBrand() {
       const selected = brandInput.value.trim();
       const logo = brandLogos.get(selected.toLowerCase());
+      const selectedBrandName = logo?.name || selected;
       brandLogoPreview.classList.toggle('hidden', !logo);
       if (logo) {
         const logoPath = getBrandLogoUrl(logo.file);
@@ -940,8 +1313,28 @@
         instantBrandLogo.alt = '';
         instantBrandLogo.classList.add('hidden');
       }
-      const brandName = logo?.name || selected || 'Choose a brand';
+      const breadPayLogoPath = logo ? getBrandLogoUrl(logo.file) : selected ? '' : './urbrand-logo.png';
+      breadPayBrandLogos.forEach(image => {
+        image.hidden = !breadPayLogoPath;
+        if (breadPayLogoPath) image.src = breadPayLogoPath;
+        else image.removeAttribute('src');
+        image.alt = image.getAttribute('aria-hidden') === 'true' ? '' : `${logo?.name || 'URBrand'} logo`;
+      });
+      breadPayCreditCardLabels.forEach(label => {
+        label.textContent = `${selectedBrandName || 'URBrand'} Credit Card`;
+      });
+      breadPayCreditCardSummaries.forEach(summary => {
+        summary.textContent = `Low pricing for 12 months with the ${selectedBrandName || 'URBrand'} Credit Card`;
+      });
+      const benefitBrandName = selectedBrandName?.toLowerCase().startsWith('academy sports')
+        ? 'Academy'
+        : selectedBrandName || 'URBrand';
+      breadPayBenefitBrands.forEach(brand => {
+        brand.textContent = benefitBrandName;
+      });
+      const brandName = selectedBrandName || 'Choose a brand';
       instantFooterBrand.textContent = brandName;
+      applyContentRevisions(currentPreviewScreen());
       updateAdminPreviewContext();
     }
     let activeBrandSuggestion = -1;
@@ -955,9 +1348,12 @@
     }
     function renderBrandSuggestions() {
       const query = brandInput.value.trim().toLowerCase();
-      const matches = query
+      const matchingBrands = query
         ? availableBrands.filter(name => name.toLowerCase().includes(query))
         : availableBrands;
+      const matches = document.querySelector('input[name="capability"]:checked')?.value === 'FlexLoan'
+        ? matchingBrands.filter(name => name.toLowerCase() === 'the home depot')
+        : matchingBrands;
       brandSuggestions.replaceChildren(...matches.map((name, index) => {
         const suggestion = document.createElement('button');
         suggestion.className = 'brand-suggestion';
@@ -977,6 +1373,7 @@
         suggestion.addEventListener('pointerdown', event => event.preventDefault());
         suggestion.addEventListener('click', () => {
           brandInput.value = name;
+          updateSelectorConstraints('brand');
           updateSelectedBrand();
           closeBrandSuggestions();
         });
@@ -1010,6 +1407,7 @@
       brandInput.setAttribute('aria-activedescendant', suggestions[activeBrandSuggestion].id);
     }
     brandInput.addEventListener('input', () => {
+      updateSelectorConstraints('brand');
       updateSelectedBrand();
       renderBrandSuggestions();
     });
@@ -1313,6 +1711,8 @@
       const screens = [details, secureCode, reviewDetails, authorizedUser, reviewSubmit, approval, verify, result, ...Object.values(breadPayScreens)];
       screens.forEach(item => item.classList.toggle('hidden', item !== screen));
       flowPanel.classList.toggle('breadpay-mode', screen.classList.contains('breadpay-screen'));
+      applyContentRevisions(screen);
+      updateContentEditorButton(screen);
       const standardScreens = [details, secureCode, reviewDetails, authorizedUser, reviewSubmit, approval, verify, result];
       const screenIndex = standardScreens.indexOf(screen);
       steps.forEach((item, index) => { item.classList.toggle('active', index === Math.min(screenIndex, steps.length - 1)); item.classList.toggle('done', index < Math.min(screenIndex, steps.length - 1)); });
@@ -1504,6 +1904,8 @@
       });
     });
     capabilityTypeInputs.forEach(input => input.addEventListener('change', () => {
+      updateSelectorConstraints('capability');
+      if (!brandSuggestions.hidden) renderBrandSuggestions();
       const isEds = input.value === 'EDS' && input.checked;
       document.getElementById('eds-options').classList.toggle('hidden', !isEds);
       document.getElementById('stand-alone-options').classList.toggle('hidden', isEds);
@@ -1570,7 +1972,7 @@
       }
       const capability = params.get('capability');
       const capabilityInput = [...capabilityOptionInputs].find(input => input.value === capability);
-      if (capabilityInput) {
+      if (capabilityInput && !capabilityInput.disabled) {
         capabilityInput.checked = true;
         capabilityInput.dispatchEvent(new Event('change', { bubbles: true }));
       }
@@ -1590,6 +1992,7 @@
     showScenarioDetails();
     updateBreadPayActions();
     renderCapabilities();
+    updateContentEditorButton();
   </script>
 </body>
 </html>
