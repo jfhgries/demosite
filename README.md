@@ -20,6 +20,10 @@ This repository is the searchable source of truth for credit application experie
 
 The Apply prequalification prototype is configured for publication at [jfhgries.github.io/demosite](https://jfhgries.github.io/demosite/). It will be available after the GitHub Actions workflow in `.github/workflows/deploy-demo.yml` runs on `main`.
 
+## Local demo
+
+In VS Code, run the **Serve prequalification demo** task to serve the demo on port 8000. The port opens in a browser and serves `experiences/app-prequalification/demo/index.html` at its root. The server runs until you stop the task.
+
 ## Design principles
 
 - Metadata is structured for search and comparison; narrative pages explain the experience.
