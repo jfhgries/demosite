@@ -1,0 +1,9 @@
+{
+  "remote.portsAttributes": {
+    "8000": {
+      "label": "Apply prequalification demo",
+      "onAutoForward": "openBrowser",
+      "visibility": "private"
+    }
+  }
+}
