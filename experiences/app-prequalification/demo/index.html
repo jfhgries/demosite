@@ -84,7 +84,12 @@
     .device-size-chevron { position: absolute; top: 14px; right: 16px; width: 9px; height: 9px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; color: #134854; pointer-events: none; transform: rotate(45deg); }
     .preview-width-control { display: flex; width: min(333px, 100%); flex: 0 1 333px; flex-direction: column; gap: 8px; }
     .preview-width-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; color: #0f2233; font-size: var(--type-body-small); }
-    .preview-width-heading output { display: inline-flex; min-height: 24px; align-items: center; justify-content: center; padding: 2px 6px; border: 1px solid #134854; border-radius: 8px; white-space: nowrap; }
+    .preview-width-heading input[type="number"] { width: 82px; min-height: 28px; padding: 2px 6px; border: 1px solid #134854; border-radius: 8px; color: #0f2233; background: var(--canvas); font: inherit; text-align: center; }
+    .preview-width-heading input[type="number"]:focus-visible { outline: 2px solid #134854; outline-offset: 2px; }
+    .preview-width-error { display: flex; width: min(276.97px, 100%); align-items: flex-start; gap: 6px; color: #e03c31; font-size: 12px; line-height: 1.3; }
+    .preview-width-error[hidden] { display: none; }
+    .preview-width-error-icon { display: block; width: 16px; height: 16px; flex: none; }
+    .preview-width-error p { width: 235px; margin: -1px 0 0; }
     .preview-width-slider { position: relative; width: 100%; height: 24px; }
     .preview-width-track, .preview-width-fill { position: absolute; top: 8px; left: 0; height: 8px; border-radius: 100px; }
     .preview-width-track { width: calc(100% + 1px); background: #dcdfe0; }
@@ -465,14 +470,21 @@
                 </div>
                 <div class="preview-width-control">
                   <div class="preview-width-heading">
-                    <label for="preview-width">Preview width</label>
-                    <output id="preview-width-output" for="preview-width">320px</output>
+                    <label for="preview-width-output">Preview width</label>
+                    <input id="preview-width-output" type="number" min="320" max="1920" step="any" value="320" aria-label="Preview width in pixels" aria-describedby="preview-width-error">
                   </div>
                   <div class="preview-width-slider">
                     <div class="preview-width-track" aria-hidden="true"></div>
                     <div class="preview-width-fill" id="preview-width-fill" aria-hidden="true"></div>
                     <div class="preview-width-thumb" id="preview-width-thumb" aria-hidden="true"></div>
                     <input id="preview-width" type="range" min="0" max="11" step="1" value="0" aria-label="Preview width" aria-valuetext="320px">
+                  </div>
+                  <div class="preview-width-error" id="preview-width-error" role="alert" aria-live="polite" hidden>
+                    <svg class="preview-width-error-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                      <circle cx="8" cy="8" r="6.5" stroke="currentColor"></circle>
+                      <path d="M8 4.5v4M8 11.25v.25" stroke="currentColor" stroke-linecap="round"></path>
+                    </svg>
+                    <p>Please enter a device width between 320px and 1920px</p>
                   </div>
                 </div>
               </div>
@@ -952,6 +964,7 @@
     const deviceSize = document.getElementById('device-size');
     const previewWidth = document.getElementById('preview-width');
     const previewWidthOutput = document.getElementById('preview-width-output');
+    const previewWidthError = document.getElementById('preview-width-error');
     const previewWidthFill = document.getElementById('preview-width-fill');
     const previewWidthThumb = document.getElementById('preview-width-thumb');
     let currentPreviewWidth = 320;
@@ -1583,8 +1596,9 @@
       previewWidth.value = nearestIndex;
       previewWidth.setAttribute('aria-valuetext', `${width}px`);
       previewViewport.style.width = `${width}px`;
-      previewWidthOutput.value = `${width}px`;
-      previewWidthOutput.textContent = `${width}px`;
+      if (Number(previewWidthOutput.value) !== width) previewWidthOutput.value = width;
+      previewWidthOutput.setAttribute('aria-invalid', 'false');
+      previewWidthError.hidden = true;
       previewWidthFill.style.width = `${Math.min(sliderPosition + 24, 333)}px`;
       previewWidthThumb.style.left = `${sliderPosition}px`;
       if (matchingDevice) {
@@ -1649,6 +1663,20 @@
       screenPreset.value = 'custom';
       updateAdminPreviewContext();
     });
+    function validateEnteredPreviewWidth(showEmptyError = false) {
+      const value = previewWidthOutput.value.trim();
+      const width = Number(value);
+      const isValid = value !== '' && Number.isFinite(width) && width >= 320 && width <= 1920;
+      const showError = !isValid && (showEmptyError || value !== '');
+      previewWidthError.hidden = !showError;
+      previewWidthOutput.setAttribute('aria-invalid', String(showError));
+      if (!isValid) return false;
+      screenPreset.value = 'custom';
+      setPreviewWidth(width);
+      return true;
+    }
+    previewWidthOutput.addEventListener('input', () => validateEnteredPreviewWidth());
+    previewWidthOutput.addEventListener('blur', () => validateEnteredPreviewWidth(true));
     function showCopyToast(message, isError = false) {
       window.clearTimeout(copyToastTimeout);
       copyToastMessage.textContent = message;
