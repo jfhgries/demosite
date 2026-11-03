@@ -75,13 +75,28 @@
     .admin-preview-brand img[hidden] { display: none; }
     .admin-preview .preview-stage { min-height: 240px; padding: 12px; }
     .preview-controls { display: grid; gap: 16px; }
-    .preview-control-primary { display: grid; grid-template-columns: minmax(0, 1fr) minmax(180px, 1fr); gap: 24px; align-items: end; padding: 24px; background: var(--canvas); }
+    .preview-control-primary { display: flex; align-items: end; justify-content: center; gap: 10px; padding: 16px 10px; background: var(--canvas); }
+    .preview-control-inner { display: flex; flex: 1; align-items: end; justify-content: space-between; gap: 24px; padding: 0 14px; }
+    .preview-control-device { display: flex; width: min(285px, 100%); flex: 0 1 285px; flex-direction: column; gap: 5px; }
+    .preview-control-device label { padding-left: 15px; color: #134854; font-size: var(--type-body-small); }
+    .device-size-select-wrap { position: relative; }
+    .preview-controls select.device-size-select { min-height: 40px; padding: 8px 40px 8px 15px; border-color: #134854; border-radius: 20px; color: #134854; appearance: none; }
+    .device-size-chevron { position: absolute; top: 14px; right: 16px; width: 9px; height: 9px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; color: #134854; pointer-events: none; transform: rotate(45deg); }
+    .preview-width-control { display: flex; width: min(333px, 100%); flex: 0 1 333px; flex-direction: column; gap: 8px; }
+    .preview-width-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; color: #0f2233; font-size: var(--type-body-small); }
+    .preview-width-heading output { display: inline-flex; min-height: 24px; align-items: center; justify-content: center; padding: 2px 6px; border: 1px solid #134854; border-radius: 8px; white-space: nowrap; }
+    .preview-width-slider { position: relative; width: 100%; height: 24px; }
+    .preview-width-track, .preview-width-fill { position: absolute; top: 8px; left: 0; height: 8px; border-radius: 100px; }
+    .preview-width-track { width: calc(100% + 1px); background: #dcdfe0; }
+    .preview-width-fill { background: #7c878e; }
+    .preview-width-thumb { position: absolute; top: 0; width: 24px; height: 24px; border-radius: 100px; background: linear-gradient(180deg, #59bec9 0%, #007dba 100%); pointer-events: none; }
+    .preview-width-slider input[type="range"] { position: absolute; inset: 0; z-index: 1; width: 100%; height: 24px; margin: 0; opacity: 0; cursor: pointer; }
+    .preview-width-slider:focus-within { outline: 2px solid #134854; outline-offset: 3px; border-radius: 4px; }
+    .preview-controls select.device-size-select:focus-visible { outline: 2px solid #134854; outline-offset: 2px; }
     .preview-control-actions { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
     .admin-hint { margin: -4px 0 0; color: var(--mute); font-size: var(--type-body-small); }
     .preview-controls label { gap: 6px; color: var(--body); font-size: var(--type-body-small); }
     .preview-controls select { width: 100%; min-height: 38px; border: 1px solid #a1a1a1; border-radius: 6px; padding: 8px 10px; color: var(--ink); background: var(--canvas); font: inherit; }
-    .preview-width-heading { display: flex; justify-content: space-between; gap: 8px; }
-    .preview-width-control input[type="range"] { width: 100%; height: 22px; margin: 0; padding: 0; border: 0; accent-color: var(--ink); }
     .restart-demo { min-height: 56px; border: 1px solid #a1a1a1; border-radius: 9px; padding: 0 16px; color: var(--ink); background: var(--canvas); font-size: 16px; font-weight: 400; }
     .restart-demo:hover { background: var(--soft); }
     .copy-menu { position: relative; z-index: 4; width: 220px; }
@@ -408,7 +423,9 @@
       .topbar { padding: 0 20px; }
       .shell { padding: 20px 20px 40px; }
       .admin-layout { grid-template-columns: 1fr; }
-      .preview-control-primary { grid-template-columns: 1fr; gap: 16px; padding: 18px; }
+      .preview-control-primary { align-items: stretch; padding: 18px; }
+      .preview-control-inner { flex-direction: column; align-items: stretch; gap: 16px; padding: 0; }
+      .preview-control-device, .preview-width-control { width: 100%; flex-basis: auto; }
       .preview-control-actions { align-items: stretch; gap: 12px; }
       .copy-menu { width: min(220px, calc(100% - 140px)); }
       .capability-tags { padding: 18px; }
@@ -438,8 +455,28 @@
         <div class="admin-settings">
           <section class="preview-controls" aria-label="Preview settings">
             <div class="preview-control-primary panel">
-            <label for="screen-preset">Screen size
-              <select id="screen-preset">
+              <div class="preview-control-inner">
+                <div class="preview-control-device">
+                  <label for="device-size">Device size</label>
+                  <div class="device-size-select-wrap">
+                    <select class="device-size-select" id="device-size" aria-label="Device size"></select>
+                    <span class="device-size-chevron" aria-hidden="true"></span>
+                  </div>
+                </div>
+                <div class="preview-width-control">
+                  <div class="preview-width-heading">
+                    <label for="preview-width">Preview width</label>
+                    <output id="preview-width-output" for="preview-width">320px</output>
+                  </div>
+                  <div class="preview-width-slider">
+                    <div class="preview-width-track" aria-hidden="true"></div>
+                    <div class="preview-width-fill" id="preview-width-fill" aria-hidden="true"></div>
+                    <div class="preview-width-thumb" id="preview-width-thumb" aria-hidden="true"></div>
+                    <input id="preview-width" type="range" min="0" max="11" step="1" value="0" aria-label="Preview width" aria-valuetext="320px">
+                  </div>
+                </div>
+              </div>
+              <select id="screen-preset" hidden aria-hidden="true" tabindex="-1">
                 <optgroup label="Mobile">
                   <option value="mobile-small">Small: 320-375px</option>
                   <option value="mobile-medium">Medium: 376-414px</option>
@@ -457,13 +494,8 @@
                 </optgroup>
                 <option value="custom">Custom width</option>
               </select>
-            </label>
-            <label class="preview-width-control" for="preview-width">
-              <span class="preview-width-heading"><span>Preview width</span><output id="preview-width-output" for="preview-width">1280px</output></span>
-              <input id="preview-width" type="range" min="320" max="1728" step="1" value="1280">
-            </label>
             </div>
-            <p class="admin-hint">Choose the scenario and viewport, then switch to Demo to view it full screen.</p>
+            <p class="admin-hint">Choose the scenario and viewport, then switch to Demo to view the prototype.</p>
           </section>
           <section class="admin-preview panel" aria-labelledby="admin-preview-title">
             <div class="admin-preview-heading-row">
@@ -917,8 +949,12 @@
     const resultCopy = document.getElementById('result-copy');
     const deviceInputs = document.querySelectorAll('input[name="device"]');
     const screenPreset = document.getElementById('screen-preset');
+    const deviceSize = document.getElementById('device-size');
     const previewWidth = document.getElementById('preview-width');
     const previewWidthOutput = document.getElementById('preview-width-output');
+    const previewWidthFill = document.getElementById('preview-width-fill');
+    const previewWidthThumb = document.getElementById('preview-width-thumb');
+    let currentPreviewWidth = 320;
     const previewViewport = document.getElementById('preview-viewport');
     const previewStage = document.getElementById('preview-stage');
     const adminPreviewHost = document.getElementById('admin-preview-host');
@@ -1210,6 +1246,44 @@
       if (event.target === contentEditorDialog) closeContentEditor();
     });
     contentEditorDialog.addEventListener('close', () => contentEditorReturnFocus?.focus());
+    const deviceOptions = [
+      { label: 'Mobile: 320px', value: 320, device: 'Mobile' },
+      { label: 'Mobile: 375px', value: 375, device: 'Mobile' },
+      { label: 'Mobile: 390px', value: 390, device: 'Mobile' },
+      { label: 'Mobile: 430px', value: 430, device: 'Mobile' },
+      { label: 'Mobile: 466px', value: 466, device: 'Mobile' },
+      { label: 'Tablet: 600px', value: 600, device: 'Tablet' },
+      { label: 'Tablet: 768px', value: 768, device: 'Tablet' },
+      { label: 'Tablet/Desktop: 1024px', value: 1024, device: 'Desktop' },
+      { label: 'Desktop: 1280px', value: 1280, device: 'Desktop' },
+      { label: 'Desktop: 1440px', value: 1440, device: 'Desktop' },
+      { label: 'EDS Modal: 720px', value: 720, device: 'Desktop' },
+      { label: 'EDS Modal: 800px', value: 800, device: 'Desktop' }
+    ];
+    const previewWidths = [
+      { value: 320, position: 0 },
+      { value: 375, position: 26 },
+      { value: 390, position: 43 },
+      { value: 430, position: 71 },
+      { value: 466, position: 83 },
+      { value: 600, position: 120 },
+      { value: 720, position: 152 },
+      { value: 760, position: 169 },
+      { value: 800, position: 181 },
+      { value: 1024, position: 237 },
+      { value: 1280, position: 279 },
+      { value: 1440, position: 311 }
+    ];
+    deviceOptions.forEach(option => {
+      const element = document.createElement('option');
+      element.value = String(option.value);
+      element.textContent = option.label;
+      deviceSize.append(element);
+    });
+    const customDeviceSize = document.createElement('option');
+    customDeviceSize.value = 'custom';
+    customDeviceSize.disabled = true;
+    deviceSize.append(customDeviceSize);
     const previewPresets = {
       'mobile-small': { device: 'Mobile', width: 320 },
       'mobile-medium': { device: 'Mobile', width: 376 },
@@ -1500,10 +1574,26 @@
       renderCapabilities();
     });
     function setPreviewWidth(width) {
-      previewWidth.value = width;
+      const nearestIndex = previewWidths.reduce((bestIndex, option, index) =>
+        Math.abs(option.value - width) < Math.abs(previewWidths[bestIndex].value - width) ? index : bestIndex,
+      0);
+      const matchingDevice = deviceOptions.find(option => option.value === width);
+      const sliderPosition = previewWidths[nearestIndex].position;
+      currentPreviewWidth = width;
+      previewWidth.value = nearestIndex;
+      previewWidth.setAttribute('aria-valuetext', `${width}px`);
       previewViewport.style.width = `${width}px`;
       previewWidthOutput.value = `${width}px`;
       previewWidthOutput.textContent = `${width}px`;
+      previewWidthFill.style.width = `${Math.min(sliderPosition + 24, 333)}px`;
+      previewWidthThumb.style.left = `${sliderPosition}px`;
+      if (matchingDevice) {
+        deviceSize.value = String(width);
+        customDeviceSize.textContent = 'Custom width';
+      } else {
+        customDeviceSize.textContent = `Custom: ${width}px`;
+        deviceSize.value = 'custom';
+      }
       updateAdminPreviewContext();
     }
     function updateAdminPreviewContext() {
@@ -1519,7 +1609,7 @@
       const selectedCapability = document.querySelector('input[name="capability-option"]:checked')?.value;
       previewCapabilityType.textContent = document.querySelector('input[name="capability"]:checked')?.value || 'Not selected';
       previewCapability.textContent = selectedCapability || 'Not selected';
-      previewDevice.textContent = `${document.querySelector('input[name="device"]:checked')?.value || 'Not selected'} · ${previewWidth.value}px`;
+      previewDevice.textContent = `${document.querySelector('input[name="device"]:checked')?.value || 'Not selected'} · ${currentPreviewWidth}px`;
     }
     function selectPreset(presetId) {
       const preset = previewPresets[presetId];
@@ -1527,6 +1617,20 @@
       document.querySelector(`input[name="device"][value="${preset.device}"]`).checked = true;
       setPreviewWidth(preset.width);
     }
+    function selectDeviceForWidth(width) {
+      const option = deviceOptions.find(deviceOption => deviceOption.value === width) ??
+        deviceOptions.reduce((nearest, deviceOption) =>
+          Math.abs(deviceOption.value - width) < Math.abs(nearest.value - width) ? deviceOption : nearest,
+        deviceOptions[0]);
+      document.querySelector(`input[name="device"][value="${option.device}"]`).checked = true;
+    }
+    deviceSize.addEventListener('change', () => {
+      const selectedOption = deviceOptions.find(option => String(option.value) === deviceSize.value);
+      if (!selectedOption) return;
+      document.querySelector(`input[name="device"][value="${selectedOption.device}"]`).checked = true;
+      screenPreset.value = 'custom';
+      setPreviewWidth(selectedOption.value);
+    });
     deviceInputs.forEach(input => input.addEventListener('change', () => {
       const presetId = deviceDefaults[input.value];
       screenPreset.value = presetId;
@@ -1539,7 +1643,9 @@
       updateAdminPreviewContext();
     });
     previewWidth.addEventListener('input', () => {
-      setPreviewWidth(Number(previewWidth.value));
+      const width = previewWidths[Number(previewWidth.value)].value;
+      selectDeviceForWidth(width);
+      setPreviewWidth(width);
       screenPreset.value = 'custom';
       updateAdminPreviewContext();
     });
@@ -1564,7 +1670,7 @@
       sectionPanels.forEach(panel => { panel.hidden = panel.id !== `${name}-view`; });
       document.body.classList.toggle('demo-mode', name === 'demo');
       (name === 'demo' ? demoStage : adminPreviewHost).append(previewStage);
-      previewViewport.style.width = `${previewWidth.value}px`;
+      previewViewport.style.width = `${currentPreviewWidth}px`;
       closeCopyMenu();
       if (updateHistory) {
         const url = new URL(window.location.href);
@@ -1595,7 +1701,7 @@
       const params = new URLSearchParams({
         view: 'demo',
         preset: screenPreset.value,
-        width: String(previewWidth.value),
+        width: String(currentPreviewWidth),
         device: document.querySelector('input[name="device"]:checked')?.value || 'Desktop',
         type: document.querySelector('input[name="capability"]:checked')?.value || 'EDS',
         outcome: document.querySelector('input[name="outcome"]:checked')?.value || 'approved'
@@ -1949,7 +2055,7 @@
       }
       const width = Number(params.get('width'));
       const requestedPreset = params.get('preset');
-      if (requestedPreset && Object.hasOwn(previewPresets, requestedPreset)) {
+      if (requestedPreset && requestedPreset !== 'custom' && Object.hasOwn(previewPresets, requestedPreset)) {
         screenPreset.value = requestedPreset;
         selectPreset(requestedPreset);
       } else if (Number.isFinite(width) && width >= 320 && width <= 1728) {
